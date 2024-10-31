@@ -5,25 +5,30 @@ import "./inspectionPage.css";
 import Appbar from "../../components/common/appbar/Appbar";
 import SuccessIcon from "../../components/iconsSvg/successIcon";
 import RejectIcon from "../../components/iconsSvg/rejectIcon";
-import { toRedableDate, toRedableDateAndTime } from "../../components/utils/redableDate";
+
 import InspectionRejectModal from "../inspections/reject-modal/inspectionRejectModal";
 import InspectionApproveModal from "../inspections/approve-modal/inspectionApproveModal";
+import {
+  toRedableDate,
+  toRedableDateAndTime,
+} from "../../components/utils/redableDate";
 
 const InspectionPage = () => {
   const [meetingScheduledUsers, setMeetingScheduledUsrs] = useState([]);
-  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-  const [isApprovedModalOpen, setIsApprovedModalOpen] = useState(false);
+  const [modalState, setModalState] = useState({
+    open: false,
+    type: "",
+    userData: null,
+  });
 
-  // approve modal open handler
-  const openApproveModalHandler = () => setIsApprovedModalOpen(true);
-  // approve modal close handler
-  const closeApproveModalHandler = () => setIsApprovedModalOpen(false);
-
-  // rejection modal close handler
-  const closeRejectModalHandler = () => setIsRejectModalOpen(false);
-
-  // rejection modal open handler
-  const openRejectModalHandler = () => setIsRejectModalOpen(true);
+  // modal open handler
+  const openModalHandler = (type, userValue) => {
+    setModalState({ open: true, type: type, userData: userValue });
+  };
+  // modal close handler
+  const closeModalHandler = () => {
+    setModalState({ open: false, type: "", userData: null });
+  };
 
   // initial scheduled meeting user data handler
   const meetingScheduledUserDataHandler = async () => {
@@ -63,8 +68,8 @@ const InspectionPage = () => {
               </thead>
               <tbody>
                 {meetingScheduledUsers.length > 0 &&
-                  meetingScheduledUsers.map((scheduledUsers, index) => (
-                    <tr key={index}>
+                  meetingScheduledUsers.map((scheduledUsers) => (
+                    <tr key={scheduledUsers?._id}>
                       <td>
                         {toRedableDateAndTime(
                           scheduledUsers?.meetingScheduleDate
@@ -79,33 +84,22 @@ const InspectionPage = () => {
                       <td>{scheduledUsers?.phoneNumber}</td>
                       <td>
                         <div className="inspectionPage-content-table-actions">
-                          <button onClick={openRejectModalHandler}>
+                          <button
+                            onClick={() =>
+                              openModalHandler("reject", scheduledUsers)
+                            }
+                          >
                             <RejectIcon />
                           </button>
-                          <button onClick={openApproveModalHandler}>
+                          <button
+                            onClick={() =>
+                              openModalHandler("approve", scheduledUsers)
+                            }
+                          >
                             <SuccessIcon />
                           </button>
                         </div>
                       </td>
-                      {/* reject modal */}
-                      <InspectionRejectModal
-                        isShow={isRejectModalOpen}
-                        closeHandler={closeRejectModalHandler}
-                        userId={scheduledUsers._id}
-                      />
-                      {/* aprrove modal */}
-                      <InspectionApproveModal
-                        isShow={isApprovedModalOpen}
-                        closeHandler={closeApproveModalHandler}
-                        providerData={{
-                          username: scheduledUsers?.licenseNo,
-                          phoneNumber: scheduledUsers?.phoneNumber,
-                          noOfCourses: scheduledUsers?.noOfCourses,
-                          email: scheduledUsers?.email,
-                          fullName: scheduledUsers?.fullName,
-                          userId: scheduledUsers?._id,
-                        }}
-                      />
                     </tr>
                   ))}
               </tbody>
@@ -113,6 +107,34 @@ const InspectionPage = () => {
           </div>
         </div>
       </div>
+      {/* reject modal */}
+      {modalState.open && modalState.type === "reject" && (
+        <InspectionRejectModal
+          isShow={modalState.open && modalState.type === "reject"}
+          closeHandler={closeModalHandler}
+          userId={modalState.userData?._id}
+          emailId={modalState.userData?.email}
+        />
+      )}
+      {/* aprrove modal */}
+      {modalState.open && modalState.type === "approve" && modalState.userData && (
+        <InspectionApproveModal
+          isShow={
+            modalState.open &&
+            modalState.type === "approve" &&
+            modalState.userData
+          }
+          closeHandler={closeModalHandler}
+          providerData={{
+            username: modalState.userData?.licenseNo,
+            phoneNumber: modalState.userData?.phoneNumber,
+            noOfCourses: modalState.userData?.noOfCourses,
+            email: modalState.userData?.email,
+            fullName: modalState.userData?.fullName,
+            userId: modalState.userData?._id,
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -12,6 +12,11 @@
   overflow-y: hidden;
 }
 
+.dashboard-content-h3 {
+  color: var(--app-blue-color);
+  font-size: x-large;
+}
+
 .dashboardpage-tiles-container {
   display: grid;
   grid-template-rows: auto;
@@ -136,7 +141,6 @@
   .dashboardpage-tiles h2 {
     font-size: 70px;
     padding-left: 30px;
-
   }
 
   .dashboardpage-table-container {
@@ -152,7 +156,6 @@
   }
 
   .dashboardpage-tables {
-
     padding: 2rem;
   }
 
@@ -163,14 +166,12 @@
     margin-top: 15px;
   }
 
-
   .dashboard-content-h3 {
     font-size: 35px;
   }
 
   .dashboardpage-tiles {
     padding: 0px 1rem;
-
   }
 
   .dashboardpage-table-header-h3 {
@@ -178,6 +179,4 @@
     padding-top: 20px;
     padding-bottom: 20px;
   }
-
-
 }
