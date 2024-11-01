@@ -70,9 +70,8 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
 
   return (
     <div
-      className={`inspection-approve-modal-wrapper ${
-        isShow ? "show" : "hidden"
-      }`}
+      className={`inspection-approve-modal-wrapper ${isShow ? "show" : "hidden"
+        }`}
     >
       <div className={`inspection-approve-modal-container`}>
         <span onClick={closeHandler}>
@@ -84,7 +83,7 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
             <p>Username</p>
             <input
               type="text"
-              value="CR0735"
+              value={providerCredential.username}
               name="provider-credential-username"
               readOnly={true}
             />
