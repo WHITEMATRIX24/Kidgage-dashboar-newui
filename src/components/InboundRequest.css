@@ -198,3 +198,44 @@ h2 {
   right: -7px;
   margin-top: 14px;
 }
+
+@media (min-width: 2000px) {
+  .inbound-heading {
+    font-size: 35px;
+    padding-top: 2rem;
+
+  }
+
+  .inbound-table-container {
+    font-size: 35px;
+   }
+
+  table td {
+    font-size: 25px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: var(--app-text-blueshade);
+  }
+
+  table th {
+    font-size: 30px;
+    padding-left: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .inbound-img img {
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    /* padding-right: 3px; */
+
+  }
+
+  .inbound-details {
+
+    margin-left: 30px;
+  }
+
+}

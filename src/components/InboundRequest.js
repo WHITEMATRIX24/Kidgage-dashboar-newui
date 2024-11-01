@@ -94,6 +94,7 @@ function InboundRequest() {
     }, []);
 
     return (
+        
         <div className="inbound-container">
             <Appbar />
             <div className="inbound-heading">
@@ -101,7 +102,7 @@ function InboundRequest() {
             </div>
             {pendingUsers.length > 0 ? (
                 <div className="inbound-table-container">
-                    <h3 style={{ marginBottom: '1rem' }}>Inbound Requests</h3>
+                    <h3   style={{ marginBottom: '1rem' }}>Inbound Requests</h3>
                     <table className="inbound-details">
                         <thead>
                             <tr>

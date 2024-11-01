@@ -65,16 +65,18 @@ function ActivityProviders() {
                 <div className='activity-heading'> <h1 className="activity-heading-h3">Activity Providers</h1>
                 </div>
                 {loading ? (
-                    <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'red' }}> Loading</h1>
+                    <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'red' }}> Loading...</h1>
                 ) : Users?.length > 0 ? (<div className='activity-table-container'>
-                    <h3 className="activity-table-h3" style={{ marginBottom: '1rem' }}>Activity Providers</h3>
+                 <div style={{position:'sticky',top:'0',padding:'15px',backgroundColor:'white'}}>  <h3 className="activity-table-h3" style={{ marginBottom: '3px' }}>Activity Providers</h3></div>
                     <table className='activity-details '>
-                        <thead>
+                    
+                        <thead className='activity-table-head'>
                             <th>Academy Name </th>
                             <th> Request Date</th>
                             <th> Address</th>
                             <th>Contact Number</th>
                             <th>No. of Classes</th>
+                            <th></th>
 
 
                         </thead>
