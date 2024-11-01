@@ -30,18 +30,13 @@ body {
   background-color: white;
   margin-top: 2%;
   margin-left: 0;
-  /* display: flex;
-   align-items: center;
-   justify-content: center; */
   width: 100%;
-  padding: 2rem 1.5rem;
+  /* padding: 2rem 1.5rem; */
   /* height: 500px; */
   border-radius: 10px;
   box-shadow: 10px;
-
   max-height: 100%;
   overflow-y: scroll;
-
 
 }
 
@@ -50,6 +45,7 @@ body {
   width: 97%;
   align-self: center;
   margin-left: 10px;
+
 }
 
 thead,
@@ -84,18 +80,17 @@ td {
   font-weight: 600;
 }
 
-table th {
+.activity-table-head{
   color: gray;
   position: sticky;
-  top: 0;
-
-
+  top:63px;
+  background-color: white;
+  
 }
 
 #activity-profile-name {
   border-bottom: none;
   overflow-wrap: break-word;
-
 
 }
 
@@ -140,8 +135,7 @@ table th {
 
   .activity-table-h3 {
     font-size: 35px;
-    padding: 20px;
-  }
+   }
 
   table td {
     font-size: 25px;
