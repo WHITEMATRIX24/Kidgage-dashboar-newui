@@ -32,46 +32,36 @@
     margin-top: 2%;
     margin-left: 0;
     width: 100%;
-    padding: 0.40rem 1.5rem;
+    padding: 0.40rem 1.3rem;
     /* height: 500px; */
     border-radius: 10px;
     /* box-shadow: 50px; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     /* max-height: 100%; */
     height: 500px;
     overflow-y: scroll;
+  }
   
-  }
-  .banner-types{
-    display: flex;
-   font-size: 15px;
-   font-weight: 600;
-   padding: 10px;
-  }
-
-  .banner-types h3{
-   margin-right: 40px;
-  }
   .grid-banner-container{
   display: grid;
   grid-template-columns: auto auto auto;
   /* background-color:antiquewhite; */
-  padding: 10px;
+  /* padding: 10px; */
   width: 100%;
   border-bottom: 1px solid gray;
   }
 
   .grid-item ,.grid-item-button{
-    /* background-color: rgba(255, 255, 255, 0.8); */
-    padding:10px;
+     padding:10px;
     font-size: 15px;
     align-items: center;
   }
 
-  .grid-item-button{
-    margin-left: 40px;
-  }
+  /* .grid-item-button{
+    margin-left: 30px;
+  } */
   .banner-img{
-    width:250px;
+    width:300px;
     height: 200px;
   }
   .add-campaign-button{
@@ -83,18 +73,25 @@
     font-size: medium;
   }
   .campaign-button-container{
-  padding: 10px;
+  padding-bottom: 30px;
   float: right;
-  padding: 20px;
-  margin-right: 20px;
+  /* padding: 20px; */
+  /* margin-right: 20px; */
+  }
+
+  .campaign-actions{
+    max-width: 100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
   }
   
 /* Style for Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 48px;
+  height: 24px;
 }
 
 .switch input { 
@@ -118,8 +115,8 @@
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 18px;
+  width: 18px;
   left: 4px;
   bottom: 4px;
   background-color: white;
@@ -154,7 +151,8 @@ input:checked + .slider:before {
 /* tab style */
 
 .campaign-details p{
-  padding: 10px; 
+  padding: 5px; 
+  font-size: small;
 }
 .tabs {
   position: relative;

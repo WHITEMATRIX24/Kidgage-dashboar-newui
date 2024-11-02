@@ -30,13 +30,13 @@ function Campaigns() {
                                         </div>
                                 </div>
                                 <div className='grid-item '>
-                                    <div className='campaign-actions'>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><label class="switch">
+                                <div className='campaign-actions'>
+                                        <label class="switch">
                                             <input type='checkbox'></input>
                                             <span class="slider round"></span>
                                         </label>
                                             <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' /></div>
+                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
 
                                     </div>
                                 </div>
@@ -64,13 +64,13 @@ function Campaigns() {
                                 </div>
                                 <div className='grid-item '>
 
-                                    <div className='campaign-actions'>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><label class="switch">
+                                <div className='campaign-actions'>
+                                        <label class="switch">
                                             <input type='checkbox'></input>
                                             <span class="slider round"></span>
                                         </label>
                                             <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' /></div>
+                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
 
                                     </div>
                                 </div>
@@ -99,12 +99,12 @@ function Campaigns() {
                                 <div className='grid-item '>
 
                                     <div className='campaign-actions'>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><label class="switch">
+                                        <label class="switch">
                                             <input type='checkbox'></input>
                                             <span class="slider round"></span>
                                         </label>
                                             <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' /></div>
+                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
 
                                     </div>
                                 </div>
@@ -121,13 +121,13 @@ function Campaigns() {
                                 </div>
                                 <div className='grid-item '>
 
-                                    <div className='campaign-actions'>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><label class="switch">
+                                <div className='campaign-actions'>
+                                        <label class="switch">
                                             <input type='checkbox'></input>
                                             <span class="slider round"></span>
                                         </label>
                                             <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' /></div>
+                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
 
                                     </div>
                                 </div>
@@ -144,13 +144,13 @@ function Campaigns() {
                                 </div>
                                 <div className='grid-item '>
 
-                                    <div className='campaign-actions'>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><label class="switch">
+                                <div className='campaign-actions'>
+                                        <label class="switch">
                                             <input type='checkbox'></input>
                                             <span class="slider round"></span>
                                         </label>
                                             <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' /></div>
+                                            <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
 
                                     </div>
                                 </div>
