@@ -8,10 +8,16 @@ const Course = require('../models/Course');
 const fs = require('fs');
 const { writeFileSync } = require("fs");
 const { createEvent } = require("ics");
+const s3 = require('../aws-config');
+const { PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3'); // Import PutObjectCommand from AWS SDK v3
+const crypto = require('crypto');
+const path = require('path');
+const { promisify } = require('util');
+
+// Generate a random file name
+const randomBytes = promisify(crypto.randomBytes);
 
 const router = express.Router();
-
-// Set up multer for file handling
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const transporter = nodemailer.createTransport({
@@ -21,6 +27,50 @@ const transporter = nodemailer.createTransport({
     pass: 'tkxj mgpk cewx crni'  // your sender Gmail password or app-specific password
   },
 });
+async function uploadImageToS3(file) {
+  try {
+    // Generate a unique name for the image
+    const rawBytes = await randomBytes(16);
+    const imageName = rawBytes.toString('hex') + path.extname(file.originalname);
+
+    const params = {
+      Bucket: 'kidgage', // The bucket name from .env
+      Key: imageName, // The unique file name
+      Body: file.buffer, // The file buffer
+      ContentType: 'image/jpeg',
+      AWS_REGION: 'eu-north-1', // The file type (e.g., image/jpeg)
+      // Set the file to be publicly accessible
+    };
+
+    const command = new PutObjectCommand(params); // Create PutObjectCommand
+    await s3.send(command); // Send the command to S3 to upload the file
+
+    // Construct the public URL of the uploaded image
+    const imageUrl = `https://${params.Bucket}.s3.${params.AWS_REGION}.amazonaws.com/${params.Key}`;
+    return imageUrl; // Return the URL of the uploaded image
+  } catch (error) {
+    console.error('Error uploading image to S3:', error);
+    throw error; // Re-throw the error to be handled by the calling function
+  }
+}
+async function deleteImageFromS3(imageUrl) {
+  try {
+    const urlParts = imageUrl.split('/');
+    const key = urlParts[urlParts.length - 1]; // Extract the file name from the URL
+
+    const params = {
+      Bucket: 'kidgage',
+      Key: key,
+    };
+
+    const command = new DeleteObjectCommand(params); // Create DeleteObjectCommand
+    await s3.send(command); // Send the command to S3 to delete the file
+  } catch (error) {
+    console.error('Error deleting image from S3:', error);
+    throw error;
+  }
+}
+// Route to get all banners
 
 router.post("/send-email", (req, res) => {
   const { email, date } = req.body; // now looking for 'date' instead of 'dateTime'
@@ -413,54 +463,119 @@ router.get('/provider/:id', async (req, res) => {
   }
 });
 
+// router.put('/update/:id', upload.fields([{ name: 'logo' }, { name: 'crFile' }, { name: 'academyImg' }]), async (req, res) => {
+//   const { id } = req.params;
+//   const { username, email, phoneNumber, fullName, designation, description, location, website, instaId, licenseNo } = req.body;
+
+//   // Convert files to base64 if they are provided
+//   let logoBase64 = null;
+//   let crFileBase64 = null;
+//   let academyImgBase64 = null;
+
+//   if (req.files.logo) {
+//     logoBase64 = req.files.logo[0].buffer.toString('base64');
+//   }
+//   if (req.files.crFile) {
+//     crFileBase64 = req.files.crFile[0].buffer.toString('base64');
+//   }
+//   if (req.files.academyImg) {
+//     academyImgBase64 = req.files.academyImg[0].buffer.toString('base64');
+//   }
+//   console.log('Received files:', req.files);
+//   console.log('Received body:', req.body);
+
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(id, {
+//       username,
+//       email,
+//       phoneNumber,
+//       fullName,
+//       designation,
+//       description,
+//       location,
+//       website,
+//       instaId,
+//       licenseNo,
+//       logo: logoBase64 || undefined, // Only update logo if a new file is provided
+//       crFile: crFileBase64 || undefined, // Only update CR file if a new file is provided
+//       academyImg: academyImgBase64 || undefined // Only update academyImg if a new file is provided
+//     }, { new: true });
+
+//     if (!updatedUser) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     res.status(200).json(updatedUser);
+//   } catch (error) {
+//     console.error('Error updating user:', error);
+//     res.status(500).json({ message: 'Internal server error. Please try again later.' });
+//   }
+// });
 router.put('/update/:id', upload.fields([{ name: 'logo' }, { name: 'crFile' }, { name: 'academyImg' }]), async (req, res) => {
   const { id } = req.params;
   const { username, email, phoneNumber, fullName, designation, description, location, website, instaId, licenseNo } = req.body;
 
-  // Convert files to base64 if they are provided
-  let logoBase64 = null;
-  let crFileBase64 = null;
-  let academyImgBase64 = null;
-
-  if (req.files.logo) {
-    logoBase64 = req.files.logo[0].buffer.toString('base64');
-  }
-  if (req.files.crFile) {
-    crFileBase64 = req.files.crFile[0].buffer.toString('base64');
-  }
-  if (req.files.academyImg) {
-    academyImgBase64 = req.files.academyImg[0].buffer.toString('base64');
-  }
-  console.log('Received files:', req.files);
-  console.log('Received body:', req.body);
-
   try {
-    const updatedUser = await User.findByIdAndUpdate(id, {
-      username,
-      email,
-      phoneNumber,
-      fullName,
-      designation,
-      description,
-      location,
-      website,
-      instaId,
-      licenseNo,
-      logo: logoBase64 || undefined, // Only update logo if a new file is provided
-      crFile: crFileBase64 || undefined, // Only update CR file if a new file is provided
-      academyImg: academyImgBase64 || undefined // Only update academyImg if a new file is provided
-    }, { new: true });
-
-    if (!updatedUser) {
+    const user = await User.findById(id);
+    if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json(updatedUser);
+    // Update basic user info
+    user.username = username;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.fullName = fullName;
+    user.designation = designation;
+    user.description = description;
+    user.location = location;
+    user.website = website;
+    user.instaId = instaId;
+    user.licenseNo = licenseNo;
+
+    if (req.files) {
+      if (req.files.logo && req.files.logo[0]) {
+        // Delete existing logo from S3 if it exists
+        if (user.logo) await deleteImageFromS3(user.logo);
+
+        // Upload new logo to S3 (assumed as image)
+        user.logo = await uploadImageToS3(req.files.logo[0]);
+      }
+
+      if (req.files.crFile && req.files.crFile[0]) {
+        // Delete existing CR file from S3 if it exists
+        if (user.crFile) await deleteImageFromS3(user.crFile);
+
+        // Upload new CR file to S3 as PDF
+        const crFileParams = {
+          Bucket: 'kidgage',
+          Key: `${Date.now()}_${req.files.crFile[0].originalname}`, // Unique file name
+          Body: req.files.crFile[0].buffer,
+          ContentType: 'application/pdf', // Set ContentType for PDF
+          ACL: 'public-read'
+        };
+        const crFileCommand = new PutObjectCommand(crFileParams);
+        await s3.send(crFileCommand);
+        user.crFile = `https://${crFileParams.Bucket}.s3.${crFileParams.AWS_REGION}.amazonaws.com/${crFileParams.Key}`;
+      }
+
+      if (req.files.academyImg && req.files.academyImg[0]) {
+        // Delete existing academy image from S3 if it exists
+        if (user.academyImg) await deleteImageFromS3(user.academyImg);
+
+        // Upload new academy image to S3
+        user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
+      }
+    }
+
+    await user.save();
+    res.status(200).json(user);
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ message: 'Internal server error. Please try again later.' });
   }
 });
+
 
 // New route to delete academy by id
 router.delete("/academy/:id/:message", async (req, res) => {
@@ -537,6 +652,40 @@ router.get('/email/:email', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+// router.post('/complete/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }]), async (req, res) => {
+//   const { userId } = req.params;
+//   const { licenseNo } = req.body;
+
+//   try {
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     // Update the license number and verification status
+//     user.licenseNo = licenseNo;
+//     user.verificationStatus = 'verified'; // Set the verification status to 'verified'
+
+//     // Convert files to Base64 and update the user record
+//     if (req.files) {
+//       if (req.files.academyImg && req.files.academyImg[0]) {
+//         user.academyImg = req.files.academyImg[0].buffer.toString('base64'); // Convert Academy Image to Base64
+//       }
+
+//       if (req.files.logo && req.files.logo[0]) {
+//         user.logo = req.files.logo[0].buffer.toString('base64'); // Convert Logo to Base64
+//       }
+//     }
+
+//     await user.save();
+
+//     res.json({ message: 'User details updated successfully!' });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+
 router.post('/complete/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }]), async (req, res) => {
   const { userId } = req.params;
   const { licenseNo } = req.body;
@@ -549,23 +698,30 @@ router.post('/complete/:userId', upload.fields([{ name: 'academyImg' }, { name: 
 
     // Update the license number and verification status
     user.licenseNo = licenseNo;
-    user.verificationStatus = 'verified'; // Set the verification status to 'verified'
+    user.verificationStatus = 'verified';
 
-    // Convert files to Base64 and update the user record
     if (req.files) {
       if (req.files.academyImg && req.files.academyImg[0]) {
-        user.academyImg = req.files.academyImg[0].buffer.toString('base64'); // Convert Academy Image to Base64
+        // Delete existing academy image from S3 if it exists
+        if (user.academyImg) await deleteImageFromS3(user.academyImg);
+
+        // Upload new academy image to S3
+        user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
       }
 
       if (req.files.logo && req.files.logo[0]) {
-        user.logo = req.files.logo[0].buffer.toString('base64'); // Convert Logo to Base64
+        // Delete existing logo from S3 if it exists
+        if (user.logo) await deleteImageFromS3(user.logo);
+
+        // Upload new logo to S3
+        user.logo = await uploadImageToS3(req.files.logo[0]);
       }
     }
 
     await user.save();
-
     res.json({ message: 'User details updated successfully!' });
   } catch (error) {
+    console.error('Error updating user details:', error);
     res.status(500).json({ message: error.message });
   }
 });
