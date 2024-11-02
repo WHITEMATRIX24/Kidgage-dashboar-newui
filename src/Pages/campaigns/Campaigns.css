@@ -51,9 +51,9 @@
   border-bottom: 1px solid gray;
   }
 
-  .grid-item ,.grid-item-button{
-     padding:10px;
-    font-size: 15px;
+  .grid-item{
+    padding:15px;
+    /* font-size: 15px; */
     align-items: center;
   }
 
@@ -61,8 +61,8 @@
     margin-left: 30px;
   } */
   .banner-img{
-    width:300px;
-    height: 200px;
+    width:250px;
+    height: 150px;
   }
   .add-campaign-button{
     background-color: blue;
@@ -195,6 +195,7 @@ input:checked + .slider:before {
   transition: top 0.25s;
 }
 .tab-content {
+  width:100%;
   height: 12rem;
   position: absolute;
   z-index: 1;
@@ -204,7 +205,6 @@ input:checked + .slider:before {
   background: #fff;
   color: #2c3e50;
   border-top: 1px solid #bdc3c7;
-
   opacity: 0;
   transition: all 0.35s;
 }
