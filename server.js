@@ -46,8 +46,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/advertisement", advertisementRoutes);
 app.use("/api/promoted", promotedRoutes);
 app.use("/api/leads", leadsRoutes);
-api.use("/api/desktop-banners", desktopBannerRoutes);
-api.use("/api/mobile-banners", mobileBannerRoutes);
+app.use("/api/desktop-banners", desktopBannerRoutes);
+app.use("/api/mobile-banners", mobileBannerRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
