@@ -15,6 +15,8 @@ const adminRoutes = require("./routes/adminRoutes");
 const advertisementRoutes = require("./routes/advertisementRoutes");
 const promotedRoutes = require("./routes/promotedRoute");
 const leadsRoutes = require("./routes/leadsRoutes");
+const desktopBannerRoutes = require("./routes/desktopBanner");
+const mobileBannerRoutes = require("./routes/mobileBanner");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -44,6 +46,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/advertisement", advertisementRoutes);
 app.use("/api/promoted", promotedRoutes);
 app.use("/api/leads", leadsRoutes);
+app.use("/api/desktop-banners", desktopBannerRoutes);
+app.use("/api/mobile-banners", mobileBannerRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

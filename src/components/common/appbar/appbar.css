@@ -6,7 +6,7 @@
   width: 100%;
   display: flex;
   gap: 8px;
-  padding: .5rem;
+  padding: 0.5rem;
   align-items: center;
   width: 65%;
   border-radius: 25px;
@@ -62,4 +62,34 @@
 
 .profile-info p {
   color: gray;
+}
+
+/* media query */
+
+@media (min-width: 2000px) {
+  .appbar-container {
+    margin-bottom: 15px;
+  }
+  .search-inputbar {
+    padding: 20px 5px;
+    font-size: 25px;
+  }
+  .searchbar-magnifyglass {
+    width: 30px;
+    height: 30px;
+  }
+  .appbar-serarch-container {
+    border-radius: 35px;
+  }
+  .appbar-bellicon {
+    height: 45px;
+    width: 45px;
+  }
+  .avatar {
+    width: 55px;
+    height: 55px;
+  }
+  .profile-info h1 {
+    font-size: x-large;
+  }
 }

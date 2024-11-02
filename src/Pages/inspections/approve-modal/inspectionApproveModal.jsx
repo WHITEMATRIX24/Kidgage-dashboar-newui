@@ -25,7 +25,7 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
   };
 
   //   create Handler
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     const { password, username } = providerCredential;
     if (!password || !username) {
       alert("username and password missing");
@@ -41,8 +41,17 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
     };
 
     try {
-      axios.post();
+      const res = await axios.post(
+        `http://localhost:5001/api/users/verify/${providerData.userId}`,
+        dataForServer
+      );
+      if (res.status === 200) {
+        alert("Successfully created admin");
+      }
     } catch (error) {
+      if (error.status === 400) {
+        alert("admin exists");
+      }
       console.log(
         `error in creating provider from inspection schedule error: ${error}`
       );
@@ -61,8 +70,9 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
 
   return (
     <div
-      className={`inspection-approve-modal-wrapper ${isShow ? "show" : "hidden"
-        }`}
+      className={`inspection-approve-modal-wrapper ${
+        isShow ? "show" : "hidden"
+      }`}
     >
       <div className={`inspection-approve-modal-container`}>
         <span onClick={closeHandler}>
@@ -74,7 +84,7 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
             <p>Username</p>
             <input
               type="text"
-              value="CR0735"
+              value={providerCredential.username}
               name="provider-credential-username"
               readOnly={true}
             />
@@ -98,6 +108,7 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
             disabled={
               !providerCredential.username || !providerCredential.password
             }
+            onClick={handleCreateAccount}
           >
             Create Account
           </button>

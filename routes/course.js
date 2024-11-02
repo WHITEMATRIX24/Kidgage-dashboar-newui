@@ -1,13 +1,95 @@
+const { PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3'); // Import PutObjectCommand from AWS SDK v3
 const express = require('express');
 const multer = require('multer');
-
-const router = express.Router();
 const Course = require('../models/Course');
+const s3 = require('../aws-config'); // AWS S3 v3 config
+const crypto = require('crypto');
+const path = require('path');
+const { promisify } = require('util');
 
 // Set up multer for file handling
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+const router = express.Router();
+
+// Generate a random file name
+const randomBytes = promisify(crypto.randomBytes);
+
+async function uploadImageToS3(file) {
+  try {
+    // Generate a unique name for the image
+    const rawBytes = await randomBytes(16);
+    const imageName = rawBytes.toString('hex') + path.extname(file.originalname);
+
+    const params = {
+      Bucket: 'kidgage', // The bucket name from .env
+      Key: imageName, // The unique file name
+      Body: file.buffer, // The file buffer
+      ContentType: 'image/jpeg',
+      AWS_REGION: 'eu-north-1', // The file type (e.g., image/jpeg)
+      // Set the file to be publicly accessible
+    };
+
+    const command = new PutObjectCommand(params); // Create PutObjectCommand
+    await s3.send(command); // Send the command to S3 to upload the file
+
+    // Construct the public URL of the uploaded image
+    const imageUrl = `https://${params.Bucket}.s3.${params.AWS_REGION}.amazonaws.com/${params.Key}`;
+    return imageUrl; // Return the URL of the uploaded image
+  } catch (error) {
+    console.error('Error uploading image to S3:', error);
+    throw error; // Re-throw the error to be handled by the calling function
+  }
+}
+// Upload multiple images to S3
+async function uploadImagesToS3(files) {
+  try {
+    const imageUrls = await Promise.all(
+      files.map(async (file) => {
+        // Generate a unique name for the image
+        const rawBytes = await randomBytes(16);
+        const imageName = rawBytes.toString('hex') + path.extname(file.originalname);
+
+        const params = {
+          Bucket: 'kidgage', // The bucket name
+          Key: imageName, // The unique file name
+          Body: file.buffer, // The file buffer
+          ContentType: file.mimetype, // The file type
+          AWS_REGION: 'eu-north-1', // The AWS region
+        };
+
+        const command = new PutObjectCommand(params); // Create the PutObjectCommand
+        await s3.send(command); // Send the command to S3 to upload the file
+
+        // Construct the public URL of the uploaded image
+        return `https://${params.Bucket}.s3.${params.AWS_REGION}.amazonaws.com/${params.Key}`;
+      })
+    );
+    return imageUrls; // Return array of uploaded image URLs
+  } catch (error) {
+    console.error('Error uploading images to S3:', error);
+    throw error;
+  }
+}
+
+async function deleteImageFromS3(imageUrl) {
+  try {
+    const urlParts = imageUrl.split('/');
+    const key = urlParts[urlParts.length - 1]; // Extract the file name from the URL
+
+    const params = {
+      Bucket: 'kidgage',
+      Key: key,
+    };
+
+    const command = new DeleteObjectCommand(params); // Create DeleteObjectCommand
+    await s3.send(command); // Send the command to S3 to delete the file
+  } catch (error) {
+    console.error('Error deleting image from S3:', error);
+    throw error;
+  }
+}
 
 // Add a new course
 router.post('/addcourse', upload.array('academyImg', 10), async (req, res) => {
@@ -37,7 +119,7 @@ router.post('/addcourse', upload.array('academyImg', 10), async (req, res) => {
     const parsedAge = typeof ageGroup === 'string' ? JSON.parse(ageGroup) : ageGroup;
 
     // Handle the images
-    const images = req.files ? req.files.map((file) => file.buffer.toString('base64')) : [];
+    const images = req.files ? await uploadImagesToS3(req.files) : [];
 
     const newCourse = new Course({
       providerId,
@@ -139,12 +221,18 @@ router.delete('/delete/:id', async (req, res) => {
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
-    res.json({ message: 'Course deleted successfully' });
+
+    // If the course has images, delete each one from S3
+    if (course.images && course.images.length > 0) {
+      await Promise.all(course.images.map(imageUrl => deleteImageFromS3(imageUrl)));
+    }
+
+    res.json({ message: 'Course and associated images deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Error deleting course or images:', err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
-
 
 // Route to get courses by provider IDs
 router.get('/by-providers', async (req, res) => {
@@ -159,13 +247,5 @@ router.get('/by-providers', async (req, res) => {
   }
 });
 
-router.get("/get-all-courses", async (req, res) => {
-  try {
-    const allCoursesData = await Course.find({});
-    const totalCourseCounts = allCoursesData.length;
-    res.status(200).json({ courseCounts: totalCourseCounts, allCoursesData });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
-  }
-});
+
 module.exports = router;

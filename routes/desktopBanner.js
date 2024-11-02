@@ -1,11 +1,11 @@
 const { PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3"); // Import PutObjectCommand from AWS SDK v3
 const express = require("express");
 const multer = require("multer");
-const Banner = require("../models/Banner");
 const s3 = require("../aws-config"); // AWS S3 v3 config
 const crypto = require("crypto");
 const path = require("path");
 const { promisify } = require("util");
+const DesktopBanner = require("../models/desktopBanner");
 
 // Set up multer for file handling
 const storage = multer.memoryStorage();
@@ -63,7 +63,7 @@ async function deleteImageFromS3(imageUrl) {
 // Route to get all banners
 router.get("/", async (req, res) => {
   try {
-    const banners = await Banner.find();
+    const banners = await DesktopBanner.find();
     res.json(banners);
   } catch (error) {
     console.error("Error fetching banners:", error);
@@ -87,7 +87,7 @@ router.post("/addbanner", upload.single("image"), async (req, res) => {
     const isActive = campaignStartDate <= today;
 
     // Create new banner with the provided data
-    const newBanner = new Banner({
+    const newBanner = new DesktopBanner({
       title,
       imageUrl,
       bookingLink,
@@ -118,7 +118,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
       updateData.imageUrl = image;
     }
 
-    const updatedBanner = await Banner.findByIdAndUpdate(
+    const updatedBanner = await DesktopBanner.findByIdAndUpdate(
       req.params.id,
       updateData,
       { new: true }
@@ -138,7 +138,7 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     // Find the banner to get the image URL
-    const banner = await Banner.findById(id);
+    const banner = await DesktopBanner.findById(id);
     if (!banner) {
       return res.status(404).json({ message: "Banner not found" });
     }
@@ -147,7 +147,7 @@ router.delete("/:id", async (req, res) => {
     await deleteImageFromS3(banner.imageUrl);
 
     // Delete the banner from the database
-    await Banner.findByIdAndDelete(id);
+    await DesktopBanner.findByIdAndDelete(id);
 
     res.json({ message: "Banner and image deleted successfully" });
   } catch (error) {
