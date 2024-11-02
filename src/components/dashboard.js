@@ -33,6 +33,7 @@ import DashboardPage from "../Pages/dashboard/DashboardPage";
 import InboundRequest from "./InboundRequest";
 import InspectionPage from "../Pages/inspection/InspectionPage";
 import ActivityProviders from "../Pages/academy/ActivityProviders";
+import Campaigns from "../Pages/campaigns/Campaigns";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -201,8 +202,9 @@ const Dashboard = () => {
                 <EditStudentForm onDelete={handleDeleteStudent} />
               </section>
               <section id="campaigns" className="db-section">
-                <EditBannerForm />
-                <AddBannerForm />
+                {/* <EditBannerForm />
+                <AddBannerForm /> */}
+                <Campaigns/>
               </section>
               <section id="event-posters" className="db-section">
                 <EditPosterForm onDelete={handleDeletePoster} />
