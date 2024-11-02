@@ -20,13 +20,13 @@
 
 .campaign-addmodal-container {
   background-color: white;
-  width: 60rem;
-  height: 30rem;
+  width: 50rem;
+  min-height: 30rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 1rem 3rem;
+  /* gap: 2rem; */
+  padding: 1rem 2rem;
   border-radius: 10px;
   align-items: center;
   position: relative;
@@ -45,31 +45,37 @@
 /* form */
 .campaign-addmodal-form {
   display: grid;
+  gap: 20px;
   width: 100%;
   grid-template-rows: repeat(1, minmax(0, 1fr));
   grid-template-columns: repeat(2, minmax(0, 1fr));
   color: var(--app-text-blueshade);
+  margin-top: 2rem;
 }
 .campaign-addmodal-form-left {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+.campaign-addmodal-form-fieldcontainer {
+  width: 100%;
+}
 .campaign-addmodal-form-fieldcontainer p {
   padding: 0px 0px 5px 5px;
 }
 .campaign-addmodal-form-datecontainer {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  width: 100%;
 }
 .campaign-addmodal-form-input {
   padding: 10px 15px;
-  border-radius: 20px;
+  border-radius: 15px;
   border: 1px solid #d9dadb;
   outline: none;
   background-color: var(--app-backgroundcolor-gray);
   color: var(--app-text-blueshade);
+  width: 100%;
 }
 .campaign-addmodal-form-right {
   display: flex;

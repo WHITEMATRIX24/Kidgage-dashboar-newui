@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./homeCampaignAddModal.css";
+import "./campaignAddModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-const HomeCampaignAddModal = ({ isShow, closeHandler }) => {
+const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
   const [newCampaignFormData, setNewCampaignFormData] = useState({
     campaignName: "",
     link: "",
@@ -13,6 +13,34 @@ const HomeCampaignAddModal = ({ isShow, closeHandler }) => {
     campaignFees: "",
     imageUploded: null,
   });
+
+  // api based on tab
+  const apiBasedOnTab = () => {
+    switch (tab) {
+      case "home":
+        return "http://localhost:5001/api/banners/addbanner";
+      case "desktop":
+        return "http://localhost:5001/api/banners/addbanner";
+      case "mobile":
+        return "http://localhost:5001/api/banners/addbanner";
+      default:
+        return "";
+    }
+  };
+
+  // text based on tab
+  const textBasedOnTab = () => {
+    switch (tab) {
+      case "home":
+        return "Select image (1055 x 275)";
+      case "desktop":
+        return "Select image (342 x 634)";
+      case "mobile":
+        return "Select image (634 x 342)";
+      default:
+        return "";
+    }
+  };
 
   // handle publish
   const handlePublish = async (e) => {
@@ -51,10 +79,7 @@ const HomeCampaignAddModal = ({ isShow, closeHandler }) => {
     formData.append("image", imageUploded);
 
     try {
-      const res = await axios.post(
-        "http://localhost:5001/api/banners/addbanner",
-        formData
-      );
+      const res = await axios.post(apiBasedOnTab(), formData);
 
       if (res.status === 201) {
         alert(res.data.message);
@@ -154,7 +179,7 @@ const HomeCampaignAddModal = ({ isShow, closeHandler }) => {
           {/* form right side */}
           <div className="campaign-addmodal-form-right">
             <div className="campaign-addmodal-form-fieldcontainer">
-              <p>Select image (520 x 520)</p>
+              <p>{textBasedOnTab()}</p>
               <label
                 htmlFor="campaign-addmodal-form-imageuploder"
                 className="campaign-addmodal-form-imageuploder-container"
@@ -195,4 +220,4 @@ const HomeCampaignAddModal = ({ isShow, closeHandler }) => {
   );
 };
 
-export default HomeCampaignAddModal;
+export default CampaignAddModal;

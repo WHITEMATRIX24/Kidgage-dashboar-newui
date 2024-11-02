@@ -8,15 +8,20 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import HomeCampaignAddModal from "../../components/homeCampaign/homeCampaignAddModal";
+import HomeCampaignAddModal from "../../components/campaignAddModal/campaignAddModal";
 
 function Campaigns() {
-  const [showHomeBannerModal, setShowHomeBannerModal] = useState(false);
+  const [showHomeBannerModal, setShowHomeBannerModal] = useState({
+    isShow: false,
+    tab: null,
+  });
 
   // home banner open modal handler
-  const openHomeBannerModalHandler = () => setShowHomeBannerModal(true);
+  const openHomeBannerModalHandler = (tab) =>
+    setShowHomeBannerModal({ isShow: true, tab });
   // home banner close modal handler
-  const closeHomeBannerModalHandler = () => setShowHomeBannerModal(false);
+  const closeHomeBannerModalHandler = () =>
+    setShowHomeBannerModal({ isShow: false, tab: null });
 
   return (
     <div className="campaign-container">
@@ -42,7 +47,7 @@ function Campaigns() {
               <div className="campaign-button-container">
                 <button
                   className="add-campaign-button"
-                  onClick={openHomeBannerModalHandler}
+                  onClick={() => openHomeBannerModalHandler("home")}
                 >
                   <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
                   Add campaign
@@ -112,7 +117,10 @@ function Campaigns() {
             </label>
             <div className="tab-content">
               <div className="campaign-button-container">
-                <button className="add-campaign-button">
+                <button
+                  className="add-campaign-button"
+                  onClick={() => openHomeBannerModalHandler("desktop")}
+                >
                   <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
                   Add campaign
                 </button>
@@ -181,7 +189,10 @@ function Campaigns() {
             </label>
             <div className="tab-content">
               <div className="campaign-button-container">
-                <button className="add-campaign-button">
+                <button
+                  className="add-campaign-button"
+                  onClick={() => openHomeBannerModalHandler("mobile")}
+                >
                   <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
                   Add campaign
                 </button>
@@ -335,10 +346,11 @@ function Campaigns() {
         </div>
       </div>
       {/* home banner Modal */}
-      {showHomeBannerModal && (
+      {showHomeBannerModal.isShow && (
         <HomeCampaignAddModal
-          isShow={showHomeBannerModal}
+          isShow={showHomeBannerModal.isShow}
           closeHandler={closeHomeBannerModalHandler}
+          tab={showHomeBannerModal.tab}
         />
       )}
     </div>
