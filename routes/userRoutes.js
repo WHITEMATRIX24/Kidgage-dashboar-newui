@@ -1,18 +1,18 @@
-const express = require('express');
-const multer = require('multer');
-const bcrypt = require('bcrypt');
-const User = require('../models/User'); // Adjust the path as necessary
-const nodemailer = require('nodemailer');
-const Admin = require('../models/adminModel');
-const Course = require('../models/Course');
-const fs = require('fs');
+const express = require("express");
+const multer = require("multer");
+const bcrypt = require("bcrypt");
+const User = require("../models/User"); // Adjust the path as necessary
+const nodemailer = require("nodemailer");
+const Admin = require("../models/adminModel");
+const Course = require("../models/Course");
+const fs = require("fs");
 const { writeFileSync } = require("fs");
 const { createEvent } = require("ics");
-const s3 = require('../aws-config');
-const { PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3'); // Import PutObjectCommand from AWS SDK v3
-const crypto = require('crypto');
-const path = require('path');
-const { promisify } = require('util');
+const s3 = require("../aws-config");
+const { PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3"); // Import PutObjectCommand from AWS SDK v3
+const crypto = require("crypto");
+const path = require("path");
+const { promisify } = require("util");
 
 // Generate a random file name
 const randomBytes = promisify(crypto.randomBytes);
@@ -23,22 +23,23 @@ const upload = multer({ storage });
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: 'whitematrix2024@gmail.com',
-    pass: 'tkxj mgpk cewx crni'  // your sender Gmail password or app-specific password
+    user: "whitematrix2024@gmail.com",
+    pass: "tkxj mgpk cewx crni", // your sender Gmail password or app-specific password
   },
 });
 async function uploadImageToS3(file) {
   try {
     // Generate a unique name for the image
     const rawBytes = await randomBytes(16);
-    const imageName = rawBytes.toString('hex') + path.extname(file.originalname);
+    const imageName =
+      rawBytes.toString("hex") + path.extname(file.originalname);
 
     const params = {
-      Bucket: 'kidgage', // The bucket name from .env
+      Bucket: "kidgage", // The bucket name from .env
       Key: imageName, // The unique file name
       Body: file.buffer, // The file buffer
-      ContentType: 'image/jpeg',
-      AWS_REGION: 'eu-north-1', // The file type (e.g., image/jpeg)
+      ContentType: "image/jpeg",
+      AWS_REGION: "eu-north-1", // The file type (e.g., image/jpeg)
       // Set the file to be publicly accessible
     };
 
@@ -49,24 +50,24 @@ async function uploadImageToS3(file) {
     const imageUrl = `https://${params.Bucket}.s3.${params.AWS_REGION}.amazonaws.com/${params.Key}`;
     return imageUrl; // Return the URL of the uploaded image
   } catch (error) {
-    console.error('Error uploading image to S3:', error);
+    console.error("Error uploading image to S3:", error);
     throw error; // Re-throw the error to be handled by the calling function
   }
 }
 async function deleteImageFromS3(imageUrl) {
   try {
-    const urlParts = imageUrl.split('/');
+    const urlParts = imageUrl.split("/");
     const key = urlParts[urlParts.length - 1]; // Extract the file name from the URL
 
     const params = {
-      Bucket: 'kidgage',
+      Bucket: "kidgage",
       Key: key,
     };
 
     const command = new DeleteObjectCommand(params); // Create DeleteObjectCommand
     await s3.send(command); // Send the command to S3 to delete the file
   } catch (error) {
-    console.error('Error deleting image from S3:', error);
+    console.error("Error deleting image from S3:", error);
     throw error;
   }
 }
@@ -112,8 +113,12 @@ router.post("/send-email", (req, res) => {
       writeFileSync("./event.ics", value); // Save the ICS file temporarily
 
       // Format date and time for email content
-      const formattedDate = `${day.toString().padStart(2, '0')}-${(month + 1).toString().padStart(2, '0')}-${year}`;
-      const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+      const formattedDate = `${day.toString().padStart(2, "0")}-${(month + 1)
+        .toString()
+        .padStart(2, "0")}-${year}`;
+      const formattedTime = `${hour
+        .toString()
+        .padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
       const mailOptions = {
         from: "whitematrix2024@gmail.com",
@@ -145,30 +150,15 @@ router.post("/send-email", (req, res) => {
     res.status(500).send("An unexpected error occurred.");
   }
 });
-router.post('/signup', upload.fields([
-  { name: 'logo', maxCount: 1 },
-  { name: 'crFile', maxCount: 1 },
-  { name: 'academyImg', maxCount: 1 }
-]), async (req, res) => {
-  const { username, email, phoneNumber, fullName, designation, description, location, website, licenseNo, instaId, agreeTerms } = req.body;
-
-  const files = req.files;
-  const fileBase64 = {};
-
-  if (files) {
-    if (files.logo) fileBase64.logo = files.logo[0].buffer.toString('base64');
-    if (files.crFile) fileBase64.crFile = files.crFile[0].buffer.toString('base64');
-    if (files.academyImg) fileBase64.academyImg = files.academyImg[0].buffer.toString('base64');
-  }
-
-  try {
-    const existingUser = await User.findOne({ $or: [{ email }, { phoneNumber }] });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User with this email or phone number already exists.' });
-    }
-
-    // Construct the new user object based on the updated schema
-    const newUser = new User({
+router.post(
+  "/signup",
+  upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "crFile", maxCount: 1 },
+    { name: "academyImg", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    const {
       username,
       email,
       phoneNumber,
@@ -176,76 +166,120 @@ router.post('/signup', upload.fields([
       designation,
       description,
       location,
+      website,
       licenseNo,
-      website: website || null, // Optional
-      instaId: instaId || null, // Optional
-      logo: fileBase64.logo,
-      crFile: fileBase64.crFile,
-      academyImg: fileBase64.academyImg,
-      agreeTerms: agreeTerms === 'true', // Ensure agreeTerms is parsed as a Boolean
-    });
+      instaId,
+      agreeTerms,
+    } = req.body;
 
-    await newUser.save();
-    res.status(201).json({ message: 'User registered successfully!' });
-    const existingAdmin = await Admin.findOne({ name: email });
-    if (existingAdmin) {
-      console.log('Admin with this email already exists');
-      return res.status(400).json({ message: 'Admin with this email already exists' });
+    const files = req.files;
+    const fileBase64 = {};
+
+    if (files) {
+      if (files.logo) fileBase64.logo = files.logo[0].buffer.toString("base64");
+      if (files.crFile)
+        fileBase64.crFile = files.crFile[0].buffer.toString("base64");
+      if (files.academyImg)
+        fileBase64.academyImg = files.academyImg[0].buffer.toString("base64");
     }
 
-    // Hash the phone number to use as password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(phoneNumber, salt);
-    const role = "provider";
-    // Create a new Admin account using the provided user data
-    const admin = new Admin({
-      name: email,
-      password: hashedPassword,
-      fullName: fullName,
-      role: role,
-      userId: newUser._id
-    });
+    try {
+      const existingUser = await User.findOne({
+        $or: [{ email }, { phoneNumber }],
+      });
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({
+            message: "User with this email or phone number already exists.",
+          });
+      }
 
-    // Save the new Admin account
-    await admin.save();
-    console.log('Admin saved successfully:', admin);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error.' });
+      // Construct the new user object based on the updated schema
+      const newUser = new User({
+        username,
+        email,
+        phoneNumber,
+        fullName,
+        designation,
+        description,
+        location,
+        licenseNo,
+        website: website || null, // Optional
+        instaId: instaId || null, // Optional
+        logo: fileBase64.logo,
+        crFile: fileBase64.crFile,
+        academyImg: fileBase64.academyImg,
+        agreeTerms: agreeTerms === "true", // Ensure agreeTerms is parsed as a Boolean
+      });
+
+      await newUser.save();
+      res.status(201).json({ message: "User registered successfully!" });
+      const existingAdmin = await Admin.findOne({ name: email });
+      if (existingAdmin) {
+        console.log("Admin with this email already exists");
+        return res
+          .status(400)
+          .json({ message: "Admin with this email already exists" });
+      }
+
+      // Hash the phone number to use as password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(phoneNumber, salt);
+      const role = "provider";
+      // Create a new Admin account using the provided user data
+      const admin = new Admin({
+        name: email,
+        password: hashedPassword,
+        fullName: fullName,
+        role: role,
+        userId: newUser._id,
+      });
+
+      // Save the new Admin account
+      await admin.save();
+      console.log("Admin saved successfully:", admin);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error." });
+    }
   }
-});
+);
 // Sign-In Route
-router.post('/signin', async (req, res) => {
+router.post("/signin", async (req, res) => {
   const { emailOrPhone, password } = req.body;
 
   try {
     // Find the user by email or phone number
     const user = await User.findOne({
-      $or: [{ email: emailOrPhone }, { phoneNumber: emailOrPhone }]
+      $or: [{ email: emailOrPhone }, { phoneNumber: emailOrPhone }],
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Email/phone is incorrect' });
+      return res.status(400).json({ message: "Email/phone is incorrect" });
     }
 
     // Check if the password matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Password is incorrect' });
+      return res.status(400).json({ message: "Password is incorrect" });
     }
 
     // Successful sign-in
-    res.status(200).json({ message: 'Sign-in successful', user });
+    res.status(200).json({ message: "Sign-in successful", user });
   } catch (err) {
-    console.error('Sign-in error:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Sign-in error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
-router.post('/updateVerification', async (req, res) => {
+router.post("/updateVerification", async (req, res) => {
   const { userId, date } = req.body;
   try {
     // Update user's verification status in the database
-    await User.findByIdAndUpdate(userId, { verificationStatus: "meeting-scheduled", meetingScheduleDate: date });
+    await User.findByIdAndUpdate(userId, {
+      verificationStatus: "meeting-scheduled",
+      meetingScheduleDate: date,
+    });
     res.status(200).send("User updated successfully");
   } catch (error) {
     console.error("Error updating user:", error);
@@ -253,28 +287,27 @@ router.post('/updateVerification', async (req, res) => {
   }
 });
 
-router.get('/pending', async (req, res) => {
+router.get("/pending", async (req, res) => {
   try {
-    const pendingUsers = await User.find({ verificationStatus: 'pending' });
-    console.log('Fetched Pending Users:', pendingUsers); // Debugging log
+    const pendingUsers = await User.find({ verificationStatus: "pending" });
+    console.log("Fetched Pending Users:", pendingUsers); // Debugging log
     res.status(200).json(pendingUsers);
   } catch (error) {
-    console.error('Error fetching pending users:', error.message); // Debugging log for errors
+    console.error("Error fetching pending users:", error.message); // Debugging log for errors
     res.status(400).json({ message: error.message });
   }
 });
 
-router.get('/accepted', async (req, res) => {
+router.get("/accepted", async (req, res) => {
   try {
-    const acceptedUsers = await User.find({ verificationStatus: 'accepted' });
-    console.log('Fetched Accepted Users:', acceptedUsers); // Debugging log
+    const acceptedUsers = await User.find({ verificationStatus: "accepted" });
+    console.log("Fetched Accepted Users:", acceptedUsers); // Debugging log
     res.status(200).json(acceptedUsers);
   } catch (error) {
-    console.error('Error fetching accepted users:', error.message); // Debugging log for errors
+    console.error("Error fetching accepted users:", error.message); // Debugging log for errors
     res.status(400).json({ message: error.message });
   }
 });
-
 
 router.post("/verify/:id", async (req, res) => {
   try {
@@ -358,8 +391,6 @@ router.post("/verify/:id", async (req, res) => {
   }
 });
 
-
-
 // Rejection endpoint
 router.post("/reject/:id", async (req, res) => {
   const { username, email, fullName, reason } = req.body;
@@ -416,24 +447,24 @@ Team Kidgage`,
   }
 });
 // Search Route
-router.get('/search', async (req, res) => {
+router.get("/search", async (req, res) => {
   const { query } = req.query;
 
   try {
     // Find the user by email or phone number
     const user = await User.findOne({
-      $or: [{ email: query }, { phoneNumber: query }]
+      $or: [{ email: query }, { phoneNumber: query }],
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: "User not found." });
     }
 
     // Send the user details
     res.status(200).json(user);
   } catch (error) {
-    console.error('Search error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Search error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -451,15 +482,15 @@ router.get("/all", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-router.get('/provider/:id', async (req, res) => {
+router.get("/provider/:id", async (req, res) => {
   try {
     const provider = await User.findById(req.params.id);
     if (!provider) {
-      return res.status(404).json({ message: 'Provider not found' });
+      return res.status(404).json({ message: "Provider not found" });
     }
     res.status(200).json(provider);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: "Server error", error });
   }
 });
 
@@ -511,71 +542,87 @@ router.get('/provider/:id', async (req, res) => {
 //     res.status(500).json({ message: 'Internal server error. Please try again later.' });
 //   }
 // });
-router.put('/update/:id', upload.fields([{ name: 'logo' }, { name: 'crFile' }, { name: 'academyImg' }]), async (req, res) => {
-  const { id } = req.params;
-  const { username, email, phoneNumber, fullName, designation, description, location, website, instaId, licenseNo } = req.body;
+router.put(
+  "/update/:id",
+  upload.fields([{ name: "logo" }, { name: "crFile" }, { name: "academyImg" }]),
+  async (req, res) => {
+    const { id } = req.params;
+    const {
+      username,
+      email,
+      phoneNumber,
+      fullName,
+      designation,
+      description,
+      location,
+      website,
+      instaId,
+      licenseNo,
+    } = req.body;
 
-  try {
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    try {
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Update basic user info
+      user.username = username;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
+      user.fullName = fullName;
+      user.designation = designation;
+      user.description = description;
+      user.location = location;
+      user.website = website;
+      user.instaId = instaId;
+      user.licenseNo = licenseNo;
+
+      if (req.files) {
+        if (req.files.logo && req.files.logo[0]) {
+          // Delete existing logo from S3 if it exists
+          if (user.logo) await deleteImageFromS3(user.logo);
+
+          // Upload new logo to S3 (assumed as image)
+          user.logo = await uploadImageToS3(req.files.logo[0]);
+        }
+
+        if (req.files.crFile && req.files.crFile[0]) {
+          // Delete existing CR file from S3 if it exists
+          if (user.crFile) await deleteImageFromS3(user.crFile);
+
+          // Upload new CR file to S3 as PDF
+          const crFileParams = {
+            Bucket: "kidgage",
+            Key: `${Date.now()}_${req.files.crFile[0].originalname}`, // Unique file name
+            Body: req.files.crFile[0].buffer,
+            ContentType: "application/pdf", // Set ContentType for PDF
+            ACL: "public-read",
+          };
+          const crFileCommand = new PutObjectCommand(crFileParams);
+          await s3.send(crFileCommand);
+          user.crFile = `https://${crFileParams.Bucket}.s3.${crFileParams.AWS_REGION}.amazonaws.com/${crFileParams.Key}`;
+        }
+
+        if (req.files.academyImg && req.files.academyImg[0]) {
+          // Delete existing academy image from S3 if it exists
+          if (user.academyImg) await deleteImageFromS3(user.academyImg);
+
+          // Upload new academy image to S3
+          user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
+        }
+      }
+
+      await user.save();
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res
+        .status(500)
+        .json({ message: "Internal server error. Please try again later." });
     }
-
-    // Update basic user info
-    user.username = username;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.fullName = fullName;
-    user.designation = designation;
-    user.description = description;
-    user.location = location;
-    user.website = website;
-    user.instaId = instaId;
-    user.licenseNo = licenseNo;
-
-    if (req.files) {
-      if (req.files.logo && req.files.logo[0]) {
-        // Delete existing logo from S3 if it exists
-        if (user.logo) await deleteImageFromS3(user.logo);
-
-        // Upload new logo to S3 (assumed as image)
-        user.logo = await uploadImageToS3(req.files.logo[0]);
-      }
-
-      if (req.files.crFile && req.files.crFile[0]) {
-        // Delete existing CR file from S3 if it exists
-        if (user.crFile) await deleteImageFromS3(user.crFile);
-
-        // Upload new CR file to S3 as PDF
-        const crFileParams = {
-          Bucket: 'kidgage',
-          Key: `${Date.now()}_${req.files.crFile[0].originalname}`, // Unique file name
-          Body: req.files.crFile[0].buffer,
-          ContentType: 'application/pdf', // Set ContentType for PDF
-          ACL: 'public-read'
-        };
-        const crFileCommand = new PutObjectCommand(crFileParams);
-        await s3.send(crFileCommand);
-        user.crFile = `https://${crFileParams.Bucket}.s3.${crFileParams.AWS_REGION}.amazonaws.com/${crFileParams.Key}`;
-      }
-
-      if (req.files.academyImg && req.files.academyImg[0]) {
-        // Delete existing academy image from S3 if it exists
-        if (user.academyImg) await deleteImageFromS3(user.academyImg);
-
-        // Upload new academy image to S3
-        user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
-      }
-    }
-
-    await user.save();
-    res.status(200).json(user);
-  } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ message: 'Internal server error. Please try again later.' });
   }
-});
-
+);
 
 // New route to delete academy by id
 router.delete("/academy/:id/:message", async (req, res) => {
@@ -622,7 +669,7 @@ router.delete("/academy/:id/:message", async (req, res) => {
   }
 });
 
-router.get('/user/:id', async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id;
 
@@ -630,26 +677,26 @@ router.get('/user/:id', async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error fetching user details:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-router.get('/email/:email', async (req, res) => {
+router.get("/email/:email", async (req, res) => {
   const { email } = req.params;
   try {
     const provider = await User.findOne({ email: email }); // Check for email field match
     if (!provider) {
-      return res.status(404).json({ message: 'Provider not found' });
+      return res.status(404).json({ message: "Provider not found" });
     }
     res.json(provider);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 });
 // router.post('/complete/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }]), async (req, res) => {
@@ -685,131 +732,159 @@ router.get('/email/:email', async (req, res) => {
 //   }
 // });
 
+router.post(
+  "/complete/:userId",
+  upload.fields([{ name: "academyImg" }, { name: "logo" }]),
+  async (req, res) => {
+    const { userId } = req.params;
+    const { licenseNo } = req.body;
 
-router.post('/complete/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }]), async (req, res) => {
-  const { userId } = req.params;
-  const { licenseNo } = req.body;
-
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Update the license number and verification status
-    user.licenseNo = licenseNo;
-    user.verificationStatus = 'verified';
-
-    if (req.files) {
-      if (req.files.academyImg && req.files.academyImg[0]) {
-        // Delete existing academy image from S3 if it exists
-        if (user.academyImg) await deleteImageFromS3(user.academyImg);
-
-        // Upload new academy image to S3
-        user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
       }
 
-      if (req.files.logo && req.files.logo[0]) {
-        // Delete existing logo from S3 if it exists
-        if (user.logo) await deleteImageFromS3(user.logo);
+      // Update the license number and verification status
+      user.licenseNo = licenseNo;
+      user.verificationStatus = "verified";
 
-        // Upload new logo to S3
-        user.logo = await uploadImageToS3(req.files.logo[0]);
+      if (req.files) {
+        if (req.files.academyImg && req.files.academyImg[0]) {
+          // Delete existing academy image from S3 if it exists
+          if (user.academyImg) await deleteImageFromS3(user.academyImg);
+
+          // Upload new academy image to S3
+          user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
+        }
+
+        if (req.files.logo && req.files.logo[0]) {
+          // Delete existing logo from S3 if it exists
+          if (user.logo) await deleteImageFromS3(user.logo);
+
+          // Upload new logo to S3
+          user.logo = await uploadImageToS3(req.files.logo[0]);
+        }
       }
-    }
 
-    await user.save();
-    res.json({ message: 'User details updated successfully!' });
-  } catch (error) {
-    console.error('Error updating user details:', error);
-    res.status(500).json({ message: error.message });
+      await user.save();
+      res.json({ message: "User details updated successfully!" });
+    } catch (error) {
+      console.error("Error updating user details:", error);
+      res.status(500).json({ message: error.message });
+    }
   }
-});
+);
 
-router.post('/edit/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }]), async (req, res) => {
-  const { userId } = req.params;
-  const { licenseNo, fullName, designation, description, website, instaId, location, email, phoneNumber } = req.body;
+router.post(
+  "/edit/:userId",
+  upload.fields([{ name: "academyImg" }, { name: "logo" }]),
+  async (req, res) => {
+    const { userId } = req.params;
+    const {
+      licenseNo,
+      fullName,
+      designation,
+      description,
+      website,
+      instaId,
+      location,
+      email,
+      phoneNumber,
+    } = req.body;
 
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    console.log(req.files.logo);
-    // Update the license number and verification status
-    user.licenseNo = licenseNo;
-    user.fullName = fullName;
-    user.designation = designation;
-    user.description = description;
-    user.location = location;
-    user.website = website || null;
-    user.instaId = instaId || null;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      console.log(req.files.logo);
+      // Update the license number and verification status
+      user.licenseNo = licenseNo;
+      user.fullName = fullName;
+      user.designation = designation;
+      user.description = description;
+      user.location = location;
+      user.website = website || null;
+      user.instaId = instaId || null;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
 
+      // Convert files to Base64 and update the user record
+      if (req.files) {
+        if (req.files.academyImg && req.files.academyImg[0]) {
+          user.academyImg = req.files.academyImg[0].buffer.toString("base64"); // Convert Academy Image to Base64
+        }
 
-    // Convert files to Base64 and update the user record
-    if (req.files) {
-      if (req.files.academyImg && req.files.academyImg[0]) {
-        user.academyImg = req.files.academyImg[0].buffer.toString('base64'); // Convert Academy Image to Base64
+        if (req.files.logo && req.files.logo[0]) {
+          user.logo = req.files.logo[0].buffer.toString("base64"); // Convert Logo to Base64
+        }
       }
 
-      if (req.files.logo && req.files.logo[0]) {
-        user.logo = req.files.logo[0].buffer.toString('base64'); // Convert Logo to Base64
-      }
+      await user.save();
+
+      res.json({ message: "User details updated successfully!" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-
-    await user.save();
-
-    res.json({ message: 'User details updated successfully!' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
-});
+);
 
+router.post(
+  "/edits/:userId",
+  upload.fields([{ name: "academyImg" }, { name: "logo" }, { name: "crFile" }]),
+  async (req, res) => {
+    const { userId } = req.params;
+    const {
+      licenseNo,
+      fullName,
+      designation,
+      description,
+      website,
+      instaId,
+      location,
+      email,
+      phoneNumber,
+    } = req.body;
 
-router.post('/edits/:userId', upload.fields([{ name: 'academyImg' }, { name: 'logo' }, { name: 'crFile' }]), async (req, res) => {
-  const { userId } = req.params;
-  const { licenseNo, fullName, designation, description, website, instaId, location, email, phoneNumber } = req.body;
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      // Update the license number and verification status
+      user.licenseNo = licenseNo;
+      user.fullName = fullName;
+      user.designation = designation;
+      user.description = description;
+      user.location = location;
+      user.website = website || null;
+      user.instaId = instaId || null;
+      user.email = email;
+      user.phoneNumber = phoneNumber;
 
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      // Convert files to Base64 and update the user record
+      if (req.files) {
+        if (req.files.academyImg && req.files.academyImg[0]) {
+          user.academyImg = req.files.academyImg[0].buffer.toString("base64"); // Convert Academy Image to Base64
+        }
+
+        if (req.files.logo && req.files.logo[0]) {
+          user.logo = req.files.logo[0].buffer.toString("base64"); // Convert Logo to Base64
+        }
+        if (req.files.crFile && req.files.crFile[0]) {
+          user.crFile = req.files.crFile[0].buffer.toString("base64"); // Convert Logo to Base64
+        }
+      }
+
+      await user.save();
+
+      res.json({ message: "User details updated successfully!" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-    // Update the license number and verification status
-    user.licenseNo = licenseNo;
-    user.fullName = fullName;
-    user.designation = designation;
-    user.description = description;
-    user.location = location;
-    user.website = website || null;
-    user.instaId = instaId || null;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-
-
-    // Convert files to Base64 and update the user record
-    if (req.files) {
-      if (req.files.academyImg && req.files.academyImg[0]) {
-        user.academyImg = req.files.academyImg[0].buffer.toString('base64'); // Convert Academy Image to Base64
-      }
-
-      if (req.files.logo && req.files.logo[0]) {
-        user.logo = req.files.logo[0].buffer.toString('base64'); // Convert Logo to Base64
-      }
-      if (req.files.crFile && req.files.crFile[0]) {
-        user.crFile = req.files.crFile[0].buffer.toString('base64'); // Convert Logo to Base64
-      }
-    }
-
-    await user.save();
-
-    res.json({ message: 'User details updated successfully!' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
-});
+);
 router.get("/meeting-scheduled-users", async (req, res) => {
   try {
     const meetingScheduledUsers = await User.find({
@@ -820,16 +895,16 @@ router.get("/meeting-scheduled-users", async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 });
-router.get('/allUser', async (req, res) => {
+router.get("/allUser", async (req, res) => {
   try {
     // Fetch all users with the specified fields (username, logo)
     const users = await User.find();
-    console.log('Fetched Users:', users); // Debugging log
+    console.log("Fetched Users:", users); // Debugging log
     res.status(200).json(users);
   } catch (error) {
-    console.error('Error fetching users:', error.message); // Debugging log for errors
+    console.error("Error fetching users:", error.message); // Debugging log for errors
     res.status(400).json({ message: error.message });
   }
-})
+});
 
 module.exports = router;

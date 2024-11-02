@@ -46,7 +46,7 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
         dataForServer
       );
       if (res.status === 200) {
-        alert("Successfully rejected");
+        alert("Successfully created admin");
       }
     } catch (error) {
       if (error.status === 400) {
@@ -70,8 +70,9 @@ const InspectionApproveModal = ({ isShow, closeHandler, providerData }) => {
 
   return (
     <div
-      className={`inspection-approve-modal-wrapper ${isShow ? "show" : "hidden"
-        }`}
+      className={`inspection-approve-modal-wrapper ${
+        isShow ? "show" : "hidden"
+      }`}
     >
       <div className={`inspection-approve-modal-container`}>
         <span onClick={closeHandler}>
