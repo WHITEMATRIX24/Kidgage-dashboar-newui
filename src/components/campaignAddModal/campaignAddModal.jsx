@@ -20,9 +20,9 @@ const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
       case "home":
         return "http://localhost:5001/api/banners/addbanner";
       case "desktop":
-        return "http://localhost:5001/api/banners/addbanner";
+        return "http://localhost:5001/api/desktop-banners/addbanner";
       case "mobile":
-        return "http://localhost:5001/api/banners/addbanner";
+        return "http://localhost:5001/api/mobile-banners/addbanner";
       default:
         return "";
     }
@@ -91,9 +91,8 @@ const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
 
   return (
     <div
-      className={`campaign-addmodal-wrapper ${
-        isShow ? "campaign-addmodal-show" : "campaign-addmodal-hide"
-      }`}
+      className={`campaign-addmodal-wrapper ${isShow ? "campaign-addmodal-show" : "campaign-addmodal-hide"
+        }`}
     >
       <div className="campaign-addmodal-container">
         <span onClick={closeHandler}>
