@@ -19,11 +19,12 @@ body {
 
 .activity-heading-h3 {
   font-size: 25px;
-  padding-left: 10px;
+
 }
 
 .activity-table-h3 {
   font-size: 20px;
+
 }
 
 .activity-table-container {
@@ -33,8 +34,9 @@ body {
   width: 100%;
   /* padding: 2rem 1.5rem; */
   /* height: 500px; */
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 10px;
+  padding: 1.5rem 1.5rem;
   max-height: 100%;
   overflow-y: scroll;
 
@@ -80,12 +82,12 @@ td {
   font-weight: 600;
 }
 
-.activity-table-head{
+.activity-table-head {
   color: gray;
   position: sticky;
-  top:63px;
+  top: 63px;
   background-color: white;
-  
+
 }
 
 #activity-profile-name {
@@ -135,7 +137,7 @@ td {
 
   .activity-table-h3 {
     font-size: 35px;
-   }
+  }
 
   table td {
     font-size: 25px;

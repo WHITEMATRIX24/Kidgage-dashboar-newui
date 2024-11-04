@@ -17,7 +17,7 @@
 .inspectionPage-content-h3 {
   color: var(--app-blue-color);
   font-size: 25px;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 
 .inspectionPage-table-h3 {
