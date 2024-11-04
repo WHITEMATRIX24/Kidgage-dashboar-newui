@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./Campaigns.css";
 import {
   faPenToSquare,
@@ -10,21 +10,37 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomeCampaignAddModal from "../../components/campaignAddModal/campaignAddModal";
+import CampaignEditModal from "../../components/campaignEditModal/campaignEditModal";
 
 function Campaigns() {
   const [showHomeBannerModal, setShowHomeBannerModal] = useState({
     isShow: false,
     tab: null,
   });
-
-  // home banner open modal handler
-  const openHomeBannerModalHandler = (tab) =>
-    setShowHomeBannerModal({ isShow: true, tab });
-  // home banner close modal handler
-  const closeHomeBannerModalHandler = () =>
-    setShowHomeBannerModal({ isShow: false, tab: null });
+  const [showBannerEditModal, setShowBannerEditModal] = useState({
+    isShow: false,
+    tab: null,
+    data: null,
+  });
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("tab-1");
+
+  // home banner add open modal handler
+  const openHomeBannerModalHandler = (tab) =>
+    setShowHomeBannerModal({ isShow: true, tab });
+  // home banner add close modal handler
+  const closeHomeBannerModalHandler = () =>
+    setShowHomeBannerModal({ isShow: false, tab: null });
+
+  // banner edit modal open handler
+  const openBannerEditModal = (tab, data) => {
+    setShowBannerEditModal({ isShow: true, tab, data });
+  };
+  // banner edit modal close handler
+  const closeBannerEditModal = () => {
+    setShowBannerEditModal({ isShow: false, tab: null, data: null });
+  };
 
   const fetchBanners = async () => {
     setLoading(true);
@@ -45,178 +61,347 @@ function Campaigns() {
 
   console.log(banners);
 
-
   return (
-
-    <div className='campaign-container'>
-      <div className='campaign-heading'> <h1 className="campaign-heading-h3"> Campaigns</h1>
+    <div className="campaign-container">
+      <div className="campaign-heading">
+        {" "}
+        <h1 className="campaign-heading-h3"> Campaigns</h1>
       </div>
-      <div className='campaign-box-container'>
+      <div className="campaign-box-container">
         {loading ? (
-          <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'red' }}> Loading...</h1>
-        ) : banners.length > 0 ? (<div className='tabs'>
-          <div className='tab'>
-            <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch"></input>
-            <label for="tab-1" class="tab-label">Home Banner</label>
+          <h1
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "red",
+            }}
+          >
+            {" "}
+            Loading...
+          </h1>
+        ) : banners.length > 0 ? (
+          <div className="tabs">
+            <div className="tab">
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-1"
+                class="tab-switch"
+                checked={selectedTab === "tab-1"}
+                onChange={() => setSelectedTab("tab-1")}
+              ></input>
+              <label for="tab-1" class="tab-label">
+                Home Banner
+              </label>
 
-            <div className='tab-content'>
-              <div className='campaign-button-container'>
-                <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("home")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
-              </div>
-              {banners.map((item) => (<div className='grid-banner-container'>
-                <div className='grid-item '><img className='banner-img' src={item.imageUrl} alt='no image' /></div>
-                <div className='grid-item '>
-                  <div className='campaign-details'>
-                    <p>{item.title}</p>
-                    <p>{item.bookingLink}</p>
-                    <div className='campaign-date-container' > <p>Starting Date :{item.startDate}</p> <p>Ending Date :{item.endDate}</p></div>
-                  </div>
+              <div className="tab-content">
+                <div className="campaign-button-container">
+                  <button
+                    className="add-campaign-button"
+                    onClick={() => openHomeBannerModalHandler("home")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ color: "#ffffff" }}
+                    />
+                    Add campaign
+                  </button>
                 </div>
-                <div className='grid-item '>
-                  <div className='campaign-actions'>
-                    <label class="switch">
-                      <input type='checkbox'></input>
-                      <span class="slider round"></span>
-                    </label>
-                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
-
+                {banners.map((item) => (
+                  <div className="grid-banner-container">
+                    <div className="grid-item ">
+                      <img
+                        className="banner-img"
+                        src={item.imageUrl}
+                        alt="no image"
+                      />
+                    </div>
+                    <div className="grid-item ">
+                      <div className="campaign-details">
+                        <p>{item.title}</p>
+                        <p>{item.bookingLink}</p>
+                        <div className="campaign-date-container">
+                          {" "}
+                          <p>Starting Date :{item.startDate}</p>{" "}
+                          <p>Ending Date :{item.endDate}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid-item ">
+                      <div className="campaign-actions">
+                        <label class="switch">
+                          <input type="checkbox"></input>
+                          <span class="slider round"></span>
+                        </label>
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{ color: "#106cb1" }}
+                          size="2x"
+                          onClick={() => openBannerEditModal("home", item)}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          style={{ color: "#d70404" }}
+                          size="2x"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-              </div>))}
-
-            </div>
-          </div>
-
-          <div className='tab'>
-            <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch"></input>
-            <label for="tab-2" class="tab-label">Desktop Banner</label>
-            <div className='tab-content'>
-
-              <div className='campaign-button-container'>
-                <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("desktop")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
-              </div>
-              <div className='grid-banner-container'>
-                <div className='grid-item '><img className='banner-img' src='https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg' alt='no image' /></div>
-                <div className='grid-item '>
-                  <div className='campaign-details'>
-                    <p>Kidga Accedemy phy activity</p>
-                    <p>Link : https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/</p>
-                    <div className='campaign-date-container' > <p>Starting Date :</p> <p>Ending Date :</p></div>
-                  </div>
-                </div>
-                <div className='grid-item '>
-
-                  <div className='campaign-actions'>
-                    <label class="switch">
-                      <input type='checkbox'></input>
-                      <span class="slider round"></span>
-                    </label>
-                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div className='tab'>
-            <input type="radio" name="css-tabs" id="tab-3" checked class="tab-switch"></input>
-            <label for="tab-3" class="tab-label">Mobile Banner</label>
-            <div className='tab-content'>
-
-              <div className='campaign-button-container'>
-                <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("mobile")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
-              </div>
-              <div className='grid-banner-container'>
-                <div className='grid-item '><img className='banner-img' src='https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg' alt='no image' /></div>
-                <div className='grid-item '>
-                  <div className='campaign-details'>
-                    <p>Kidga Accedemy phy activity</p>
-                    <p>Link : https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/</p>
-                    <div className='campaign-date-container' > <p>Starting Date :</p> <p>Ending Date :</p></div>
-                  </div>
-                </div>
-                <div className='grid-item '>
-
-                  <div className='campaign-actions'>
-                    <label class="switch">
-                      <input type='checkbox'></input>
-                      <span class="slider round"></span>
-                    </label>
-                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
-
-                  </div>
-                </div>
-
-              </div>
-              <div className='grid-banner-container'>
-                <div className='grid-item '><img className='banner-img' src='https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg' alt='no image' /></div>
-                <div className='grid-item '>
-                  <div className='campaign-details'>
-                    <p>Kidga Accedemy phy activity</p>
-                    <p>Link : https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/</p>
-                    <div className='campaign-date-container' > <p>Starting Date :</p> <p>Ending Date :</p></div>
-                  </div>
-                </div>
-                <div className='grid-item '>
-
-                  <div className='campaign-actions'>
-                    <label class="switch">
-                      <input type='checkbox'></input>
-                      <span class="slider round"></span>
-                    </label>
-                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
-
-                  </div>
-                </div>
-
-              </div>
-              <div className='grid-banner-container'>
-                <div className='grid-item '><img className='banner-img' src='https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg' alt='no image' /></div>
-                <div className='grid-item '>
-                  <div className='campaign-details'>
-                    <p>Kidga Accedemy phy activity</p>
-                    <p>Link : https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/</p>
-                    <div className='campaign-date-container' > <p>Starting Date :</p> <p>Ending Date :</p></div>
-                  </div>
-                </div>
-                <div className='grid-item '>
-
-                  <div className='campaign-actions'>
-                    <label class="switch">
-                      <input type='checkbox'></input>
-                      <span class="slider round"></span>
-                    </label>
-                    <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} size='2x' />
-                    <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} size='2x' />
-
-                  </div>
-                </div>
-
+                ))}
               </div>
             </div>
+
+            <div className="tab">
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-2"
+                class="tab-switch"
+                checked={selectedTab === "tab-2"}
+                onChange={() => setSelectedTab("tab-2")}
+              ></input>
+              <label for="tab-2" class="tab-label">
+                Desktop Banner
+              </label>
+              <div className="tab-content">
+                <div className="campaign-button-container">
+                  <button
+                    className="add-campaign-button"
+                    onClick={() => openHomeBannerModalHandler("desktop")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ color: "#ffffff" }}
+                    />
+                    Add campaign
+                  </button>
+                </div>
+                <div className="grid-banner-container">
+                  <div className="grid-item ">
+                    <img
+                      className="banner-img"
+                      src="https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg"
+                      alt="no image"
+                    />
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-details">
+                      <p>Kidga Accedemy phy activity</p>
+                      <p>
+                        Link :
+                        https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/
+                      </p>
+                      <div className="campaign-date-container">
+                        {" "}
+                        <p>Starting Date :</p> <p>Ending Date :</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-actions">
+                      <label class="switch">
+                        <input type="checkbox"></input>
+                        <span class="slider round"></span>
+                      </label>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{ color: "#106cb1" }}
+                        size="2x"
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{ color: "#d70404" }}
+                        size="2x"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="tab">
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-3"
+                class="tab-switch"
+                checked={selectedTab === "tab-3"}
+                onChange={() => setSelectedTab("tab-3")}
+              ></input>
+              <label for="tab-3" class="tab-label">
+                Mobile Banner
+              </label>
+              <div className="tab-content">
+                <div className="campaign-button-container">
+                  <button
+                    className="add-campaign-button"
+                    onClick={() => openHomeBannerModalHandler("mobile")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ color: "#ffffff" }}
+                    />
+                    Add campaign
+                  </button>
+                </div>
+                <div className="grid-banner-container">
+                  <div className="grid-item ">
+                    <img
+                      className="banner-img"
+                      src="https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg"
+                      alt="no image"
+                    />
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-details">
+                      <p>Kidga Accedemy phy activity</p>
+                      <p>
+                        Link :
+                        https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/
+                      </p>
+                      <div className="campaign-date-container">
+                        {" "}
+                        <p>Starting Date :</p> <p>Ending Date :</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-actions">
+                      <label class="switch">
+                        <input type="checkbox"></input>
+                        <span class="slider round"></span>
+                      </label>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{ color: "#106cb1" }}
+                        size="2x"
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{ color: "#d70404" }}
+                        size="2x"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid-banner-container">
+                  <div className="grid-item ">
+                    <img
+                      className="banner-img"
+                      src="https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg"
+                      alt="no image"
+                    />
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-details">
+                      <p>Kidga Accedemy phy activity</p>
+                      <p>
+                        Link :
+                        https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/
+                      </p>
+                      <div className="campaign-date-container">
+                        {" "}
+                        <p>Starting Date :</p> <p>Ending Date :</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-actions">
+                      <label class="switch">
+                        <input type="checkbox"></input>
+                        <span class="slider round"></span>
+                      </label>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{ color: "#106cb1" }}
+                        size="2x"
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{ color: "#d70404" }}
+                        size="2x"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid-banner-container">
+                  <div className="grid-item ">
+                    <img
+                      className="banner-img"
+                      src="https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg"
+                      alt="no image"
+                    />
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-details">
+                      <p>Kidga Accedemy phy activity</p>
+                      <p>
+                        Link :
+                        https://pixabay.com/photos/boys-kids-children-happy-sitting-286245/
+                      </p>
+                      <div className="campaign-date-container">
+                        {" "}
+                        <p>Starting Date :</p> <p>Ending Date :</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid-item ">
+                    <div className="campaign-actions">
+                      <label class="switch">
+                        <input type="checkbox"></input>
+                        <span class="slider round"></span>
+                      </label>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{ color: "#106cb1" }}
+                        size="2x"
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{ color: "#d70404" }}
+                        size="2x"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        ) : <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'red', fontSize: '30px', marginTop: '70px' }}>
-          Nothing to Display   </p>}
-
-
+        ) : (
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "red",
+              fontSize: "30px",
+              marginTop: "70px",
+            }}
+          >
+            Nothing to Display{" "}
+          </p>
+        )}
       </div>
-      {showHomeBannerModal && (
+      {/* Add modal */}
+      {showHomeBannerModal.isShow && (
         <HomeCampaignAddModal
           isShow={showHomeBannerModal.isShow}
           closeHandler={closeHomeBannerModalHandler}
           tab={showHomeBannerModal.tab}
         />
       )}
+      {/* edit modal */}
+      {showBannerEditModal.isShow && (
+        <CampaignEditModal
+          isShow={showBannerEditModal.isShow}
+          closeHandler={closeBannerEditModal}
+          tab={showBannerEditModal.tab}
+          modalData={showBannerEditModal.data}
+        />
+      )}
     </div>
-  )
+  );
 }
 
-export default Campaigns
+export default Campaigns;
