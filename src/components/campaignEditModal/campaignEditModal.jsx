@@ -85,7 +85,7 @@ const CampaignEditModal = ({ isShow, closeHandler, tab, modalData }) => {
     try {
       const res = await axios.put(apiBasedOnTab(), formData);
 
-      if (res.status !== 201) {
+      if (res.status !== 200) {
         alert(res.data.message);
         return;
       }

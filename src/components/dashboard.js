@@ -34,6 +34,7 @@ import InboundRequest from "./InboundRequest";
 import InspectionPage from "../Pages/inspection/InspectionPage";
 import ActivityProviders from "../Pages/academy/ActivityProviders";
 import Campaigns from "../Pages/campaigns/Campaigns";
+import CategoryPage from "../Pages/category/categoryPage";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -204,7 +205,7 @@ const Dashboard = () => {
               <section id="campaigns" className="db-section">
                 {/* <EditBannerForm />
                 <AddBannerForm /> */}
-                <Campaigns/>
+                <Campaigns />
               </section>
               <section id="event-posters" className="db-section">
                 <EditPosterForm onDelete={handleDeletePoster} />
@@ -216,8 +217,9 @@ const Dashboard = () => {
                 <AddAdvertisement2 />
               </section>
               <section id="categories" className="db-section">
-                <EditCourseCategoryForm />
-                <AddCourseCategoryForm />
+                {/* <EditCourseCategoryForm />
+                <AddCourseCategoryForm /> */}
+                <CategoryPage />
               </section>
               <section id="settings" className="db-section">
                 <div className="settings-content">
