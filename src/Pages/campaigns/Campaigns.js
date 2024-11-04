@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomeCampaignAddModal from "../../components/campaignAddModal/campaignAddModal";
 import CampaignEditModal from "../../components/campaignEditModal/campaignEditModal";
 import Appbar from '../../components/common/appbar/Appbar';
+import CampaignDeleteModal from "../../components/campaignDeleteModal/campaignDeleteModal";
 function Campaigns() {
   const [showHomeBannerModal, setShowHomeBannerModal] = useState({
     isShow: false,
@@ -22,6 +23,11 @@ function Campaigns() {
     tab: null,
     data: null,
   });
+  const [showBannerDeleteModal, setShowBannnerDeleteModal] = useState({
+    idShow: false,
+    tab: null,
+    data: null,
+  })
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState("tab-1");
@@ -45,6 +51,12 @@ function Campaigns() {
   const closeBannerEditModal = () => {
     setShowBannerEditModal({ isShow: false, tab: null, data: null });
   };
+  const openBannerDeleteModal = (tab, data) => {
+    setShowBannnerDeleteModal({ isShow: true, tab, data });
+  }
+  const closeBannerDeleteModal = () => {
+    setShowBannnerDeleteModal({ isShow: false, tab: null, data: null })
+  }
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString("en-GB").replace(/\//g, ".");
@@ -177,7 +189,7 @@ function Campaigns() {
                         <FontAwesomeIcon
                           icon={faTrash}
                           style={{ color: "#d70404" }}
-
+                          onClick={() => openBannerDeleteModal("home", item)}
                         />
                       </div>
                     </div>
@@ -217,7 +229,7 @@ function Campaigns() {
                         <span class="slider round"></span>
                       </label>
                         <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", marginLeft: "20px" }} />
-                        <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", marginLeft: "15px" }} />
+                        <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", marginLeft: "15px" }} onClick={() => openBannerDeleteModal("desktop", item)} />
                       </div>
                     </div>
                   </div>
@@ -258,7 +270,7 @@ function Campaigns() {
                         <span class="slider round"></span>
                       </label>
                       <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} />
-                      <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} />
+                      <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} onClick={() => openBannerDeleteModal("mobile", item)} />
 
                     </div>
                   </div>
@@ -300,6 +312,14 @@ function Campaigns() {
           closeHandler={closeBannerEditModal}
           tab={showBannerEditModal.tab}
           modalData={showBannerEditModal.data}
+        />
+      )}
+      {showBannerDeleteModal.isShow && (
+        <CampaignDeleteModal
+          isShow={showBannerDeleteModal.isShow}
+          closeHandler={closeBannerDeleteModal}
+          tab={showBannerDeleteModal.tab}
+          modalData={showBannerDeleteModal.data}
         />
       )}
     </div>
