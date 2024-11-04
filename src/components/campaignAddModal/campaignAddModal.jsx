@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./campaignAddModal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,7 @@ const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
     campaignFees: "",
     imageUploded: null,
   });
+  const campaignAddImageRef = useRef();
 
   // api based on tab
   const apiBasedOnTab = () => {
@@ -81,21 +82,39 @@ const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
     try {
       const res = await axios.post(apiBasedOnTab(), formData);
 
-      if (res.status === 201) {
+      if (res.status !== 201) {
         alert(res.data.message);
+        return;
       }
+      alert(res.data.message);
+      handleClose();
     } catch (error) {
       console.log(`error in creating new Campaign error: ${error}`);
     }
   };
 
+  // close handler
+  const handleClose = () => {
+    campaignAddImageRef.current.value = null;
+    setNewCampaignFormData({
+      campaignName: "",
+      link: "",
+      startDate: "",
+      endDate: "",
+      campaignFees: "",
+      imageUploded: null,
+    });
+    closeHandler();
+  };
+
   return (
     <div
-      className={`campaign-addmodal-wrapper ${isShow ? "campaign-addmodal-show" : "campaign-addmodal-hide"
-        }`}
+      className={`campaign-addmodal-wrapper ${
+        isShow ? "campaign-addmodal-show" : "campaign-addmodal-hide"
+      }`}
     >
       <div className="campaign-addmodal-container">
-        <span onClick={closeHandler}>
+        <span onClick={handleClose}>
           <FontAwesomeIcon icon={faX} style={{ color: "#ff0000" }} />
         </span>
         <h2>Add New Campaign</h2>
@@ -198,6 +217,7 @@ const CampaignAddModal = ({ isShow, closeHandler, tab }) => {
                 type="file"
                 accept="image/*"
                 style={{ display: "none" }}
+                ref={campaignAddImageRef}
                 onChange={(e) =>
                   setNewCampaignFormData({
                     ...newCampaignFormData,
