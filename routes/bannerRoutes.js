@@ -144,7 +144,7 @@ router.delete("/:id", async (req, res) => {
     }
 
     // Delete the image from S3
-    await deleteImageFromS3(banner.imageUrl);
+
 
     // Delete the banner from the database
     await Banner.findByIdAndDelete(id);
