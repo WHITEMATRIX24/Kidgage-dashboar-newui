@@ -12,7 +12,7 @@ body {
   width: 100%;
   height: 80%;
   padding: 10px;
-  margin-top: 5%;
+
 
 }
 
@@ -24,8 +24,8 @@ body {
 }
 
 .campaign-heading-h3 {
-  font-size: 35px;
-  padding-left: 10px;
+  font-size: 25px;
+
 }
 
 
@@ -38,7 +38,6 @@ body {
   /* height: 500px; */
   border-radius: 10px;
   /* box-shadow: 50px; */
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   /* max-height: 100%; */
   height: 500px;
   overflow-y: scroll;
@@ -46,15 +45,25 @@ body {
 
 .grid-banner-container {
   display: grid;
-  grid-template-columns: 60% 25% auto;
+  grid-template-columns: 30% 50% 15%;
   /* background-color:antiquewhite; */
   /* padding: 10px; */
   width: 100%;
   border-bottom: 1px solid gray;
 }
 
+.grid-banner-container-desk {
+  display: grid;
+  grid-template-columns: 20% 60% 15%;
+  /* background-color:antiquewhite; */
+  /* padding: 10px; */
+  width: 100%;
+  border-bottom: 1px solid gray;
+}
+
+
 .grid-item {
-  padding: 15px;
+  padding: 10px;
   /* font-size: 15px; */
   align-items: center;
   width: 100%;
@@ -65,31 +74,36 @@ body {
 } */
 .home-banner-img {
 
-  width: 655px;
-  height: 245px;
+  width: 255px;
+  height: 100px;
 }
 
 .desktop-banner-img {
-  width: 442px;
-  height: 614px;
+  width: 152px;
+  height: 214px;
+  margin-right: 20px;
+
 }
 
 .mobile-banner-img {
-  width: 634px;
-  height: 342px;
+  width: 300px;
+  height: 102px;
 }
 
 .add-campaign-button {
-  background-color: blue;
+  background-color: #027ffd;
   color: white;
   border: none;
   border-radius: 10px;
   padding: 10px;
-  font-size: medium;
+  font-size: 15px;
+
+  /* Add this line for spacing */
 }
 
+
 .campaign-button-container {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   float: right;
   /* padding: 20px; */
   /* margin-right: 20px; */
@@ -153,11 +167,11 @@ body {
 }
 
 input:checked+.slider {
-  background-color: #2196F3;
+  background-color: #027ffd;
 }
 
 input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #027ffd#2196F3;
 }
 
 input:checked+.slider:before {

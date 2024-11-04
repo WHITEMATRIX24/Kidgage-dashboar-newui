@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomeCampaignAddModal from "../../components/campaignAddModal/campaignAddModal";
 import CampaignEditModal from "../../components/campaignEditModal/campaignEditModal";
-
+import Appbar from '../../components/common/appbar/Appbar';
 function Campaigns() {
   const [showHomeBannerModal, setShowHomeBannerModal] = useState({
     isShow: false,
@@ -45,7 +45,10 @@ function Campaigns() {
   const closeBannerEditModal = () => {
     setShowBannerEditModal({ isShow: false, tab: null, data: null });
   };
-
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-GB").replace(/\//g, ".");
+  };
   const fetchBanners = async () => {
     setLoading(true);
     try {
@@ -93,6 +96,7 @@ function Campaigns() {
 
   return (
     <div className="campaign-container">
+      <Appbar />
       <div className="campaign-heading">
         {" "}
         <h1 className="campaign-heading-h3"> Campaigns</h1>
@@ -153,15 +157,16 @@ function Campaigns() {
                         <p>{item.bookingLink}</p>
                         <div className="campaign-date-container">
                           {" "}
-                          <p>Starting Date :{item.startDate}</p>{" "}
-                          <p>Ending Date :{item.endDate}</p>
+                          <p>Starting Date :{formatDate(item.startDate)}</p>{" "}
+                          <p>Ending Date: {formatDate(item.endDate)}</p>
                         </div>
                       </div>
                     </div>
                     <div className="grid-item ">
                       <div className="campaign-actions">
                         <label class="switch">
-                          <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>                          <span class="slider round"></span>
+                          <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>
+                          <span class="slider round"></span>
                         </label>
                         <FontAwesomeIcon
                           icon={faPenToSquare}
@@ -182,20 +187,26 @@ function Campaigns() {
             </div>
 
             <div className='tab'>
-              <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch"></input>
-              <label for="tab-2" class="tab-label">Desktop Banner</label>
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-2"
+                class="tab-switch"
+                checked={selectedTab === "tab-2"}
+                onChange={() => setSelectedTab("tab-2")}
+              ></input>              <label for="tab-2" class="tab-label">Desktop Banner</label>
               <div className='tab-content'>
 
                 <div className='campaign-button-container'>
                   <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("desktop")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
                 </div>
-                {DesktopBanners.map((item) => (<div className='grid-banner-container'>
-                  <div className='grid-item '><div style={{ width: '100%' }}><img className='desktop-banner-img' src={item.imageUrl} alt='no image' /></div></div>
+                {DesktopBanners.map((item) => (<div className='grid-banner-container-desk'>
+                  <div className='grid-item '><div ><img className='desktop-banner-img' src={item.imageUrl} alt='no image' /></div></div>
                   <div className='grid-item '>
                     <div className='campaign-details'>
                       <p>{item.title}</p>
                       <p>{item.bookingLink}</p>
-                      <div className='campaign-date-container' > <p>Starting Date :{item.startDate}</p> <p>Ending Date :{item.endDate}</p></div>
+                      <div className='campaign-date-container' > <p>Starting Date :{formatDate(item.startDate)}</p> <p style={{ marginRight: "150px" }}>Ending Date :{formatDate(item.endDate)}</p></div>
                     </div>
                   </div>
                   <div className='grid-item '>
@@ -205,8 +216,8 @@ function Campaigns() {
                         <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>
                         <span class="slider round"></span>
                       </label>
-                        <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} />
-                        <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} />
+                        <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", marginLeft: "20px" }} />
+                        <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", marginLeft: "15px" }} />
                       </div>
                     </div>
                   </div>
@@ -217,8 +228,14 @@ function Campaigns() {
             </div>
 
             <div className='tab'>
-              <input type="radio" name="css-tabs" id="tab-3" checked class="tab-switch"></input>
-              <label for="tab-3" class="tab-label">Mobile Banner</label>
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-3"
+                class="tab-switch"
+                checked={selectedTab === "tab-3"}
+                onChange={() => setSelectedTab("tab-3")}
+              ></input>              <label for="tab-3" class="tab-label">Mobile Banner</label>
               <div className='tab-content'>
 
                 <div className='campaign-button-container'>
@@ -230,7 +247,7 @@ function Campaigns() {
                     <div className='campaign-details'>
                       <p>{item.title}</p>
                       <p>{item.bookingLink}</p>
-                      <div className='campaign-date-container' > <p>Starting Date :{item.startDate}</p> <p>Ending Date :{item.endDate}</p></div>
+                      <div className='campaign-date-container' > <p>Starting Date :{formatDate(item.startDate)}</p> <p>Ending Date :{formatDate(item.endDate)}</p></div>
                     </div>
                   </div>
                   <div className='grid-item '>
