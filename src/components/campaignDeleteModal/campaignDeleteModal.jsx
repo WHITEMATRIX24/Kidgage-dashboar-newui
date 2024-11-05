@@ -44,8 +44,8 @@ const CampaignDeleteModal = ({ isShow, closeHandler, tab, modalData }) => {
     };
 
     return (
-        <div className={`campaign-addmodal-wrapper ${isShow ? "campaign-addmodal-show" : "campaign-addmodal-hide"}`}>
-            <div className="campaign-addmodal-container">
+        <div className={`campaign-deletemodal-wrapper ${isShow ? "campaign-deletemodal-show" : "campaign-deletemodal-hide"}`}>
+            <div className="campaign-deletemodal-container">
                 <span onClick={handleClose}>
                     <FontAwesomeIcon icon={faX} style={{ color: "#ff0000" }} />
                 </span>

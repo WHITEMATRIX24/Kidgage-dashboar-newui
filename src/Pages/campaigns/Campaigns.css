@@ -291,11 +291,13 @@ input:checked+.slider:before {
 @media (min-width:2000px) {
   .campaign-box-container {
     height: 100%;
-    margin-top: 80px;
+
+
   }
 
   .campaign-heading-h3 {
-    font-size: 45px;
+    font-size: 55px;
+    margin-top: 4rem;
   }
 
   .tab-label {

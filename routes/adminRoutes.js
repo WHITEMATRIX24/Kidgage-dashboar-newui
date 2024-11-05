@@ -26,6 +26,19 @@ router.post('/signin', async (req, res) => {
 });
 
 
+// Route to get Admin Details
+router.get("/", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const admin = await Admin.find();
+    res.json(admin);
+  } catch (error) {
+    console.error("Error fetching Admin details:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+
+
 //change password routes here
 router.post('/change-password/:id', async (req, res) => {
   const { currentPassword, newPassword } = req.body;

@@ -7,6 +7,7 @@ import CategoryAddModal from "../../components/categoryAddModal/categoryAddModal
 import axios from "axios";
 import CategoryEditModal from "../../components/categoryEditModal/categoryEditModal";
 import CategoryDeleteModal from "../../components/categoryDeleteModal/categoryDeleteModal";
+import Appbar from "../../components/common/appbar/Appbar";
 
 const CategoryPage = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -68,7 +69,8 @@ const CategoryPage = () => {
 
   return (
     <div className="categorypage-container">
-      <h2>Categories</h2>
+      <Appbar />
+      <h3 className="category-content-h3">Categories</h3>
       <div className="categorypage-content-container">
         <div className="categorypage-content-header">
           <p>Program Categories</p>

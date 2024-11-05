@@ -52,7 +52,7 @@ const InspectionPage = () => {
     <div className="inspectinPage-container">
       <Appbar />
       <div className="inspectionPage-content">
-        <h3 className="inspectionPage-content-h3">Inspection Schedule</h3>
+        <h1 className="inspectionPage-content-h3">Inspection Schedule</h1>
         <div className="inspectionPage-content-container">
           <h3 className="inspectionPage-table-h3">Inspection schedule</h3>
           <div className="inspectionPage-table-wrapper">

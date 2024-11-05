@@ -94,7 +94,7 @@ function InboundRequest() {
     }, []);
 
     return (
-        
+
         <div className="inbound-container">
             <Appbar />
             <div className="inbound-heading">
@@ -102,7 +102,7 @@ function InboundRequest() {
             </div>
             {pendingUsers.length > 0 ? (
                 <div className="inbound-table-container">
-                    <h3   style={{ marginBottom: '1rem' }}>Inbound Requests</h3>
+                    <h3 className="inbound-table-heading">Inbound Requests</h3>
                     <table className="inbound-details">
                         <thead>
                             <tr>
@@ -136,31 +136,27 @@ function InboundRequest() {
                                         <td>{user.location}</td>
                                         <td>{user.phoneNumber}</td>
                                         <td>
-                                            <div
-                                                style={{
-                                                    justifyContent: "space-between",
-                                                    display: "flex",
-                                                    padding: "5px",
-                                                    marginRight: "20px",
-                                                }}
+                                            <div className="inbound-icons"
                                             >
                                                 <FontAwesomeIcon
                                                     icon={faMagnifyingGlass}
-                                                    style={{ color: "#acc9e0", fontSize: "20px" }}
+
                                                     cursor="pointer"
+                                                    className="inbound-icon-search"
                                                     onClick={() => openRequestDetails(user)}
                                                 />
                                                 <FontAwesomeIcon
                                                     icon={faCalendarDays}
-                                                    style={{ color: "#e07a06", fontSize: "20px" }}
 
+                                                    className="inbound-icon-calender"
                                                     cursor='pointer'
                                                     onClick={() => handleCalendarClick(user)}
                                                 />
                                                 <FontAwesomeIcon
                                                     icon={faTrashCan}
-                                                    style={{ color: "#ca0202", fontSize: "20px" }}
+
                                                     cursor="pointer"
+                                                    className="inbound-icon-trash"
                                                     onClick={() => handleRejectPopUpOpenHandler(user)}
                                                 />
                                             </div>

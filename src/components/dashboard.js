@@ -35,6 +35,7 @@ import InspectionPage from "../Pages/inspection/InspectionPage";
 import ActivityProviders from "../Pages/academy/ActivityProviders";
 import Campaigns from "../Pages/campaigns/Campaigns";
 import CategoryPage from "../Pages/category/categoryPage";
+import Settings from "../Pages/settings/Settings";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -194,20 +195,20 @@ const Dashboard = () => {
                 <PromoteCourse />
                 {/* <EditCourseForm /> */}
               </section>
-              <section id="parents" className="db-section">
+              {/* <section id="parents" className="db-section">
                 <AddParentForm />
                 <EditParentForm />
               </section>
               <section id="students" className="db-section">
                 <AddStudentForm />
                 <EditStudentForm onDelete={handleDeleteStudent} />
-              </section>
+              </section> */}
               <section id="campaigns" className="db-section">
                 {/* <EditBannerForm />
                 <AddBannerForm /> */}
                 <Campaigns />
               </section>
-              <section id="event-posters" className="db-section">
+              {/* <section id="event-posters" className="db-section">
                 <EditPosterForm onDelete={handleDeletePoster} />
                 <AddPosterForm />
               </section>
@@ -215,14 +216,14 @@ const Dashboard = () => {
                 <EditAdvertisementForm />
                 <AddAdvertisement />
                 <AddAdvertisement2 />
-              </section>
+              </section> */}
               <section id="categories" className="db-section">
                 {/* <EditCourseCategoryForm />
                 <AddCourseCategoryForm /> */}
                 <CategoryPage />
               </section>
               <section id="settings" className="db-section">
-                <div className="settings-content">
+                {/* <div className="settings-content">
                   <button
                     className="sidebar-heading-button"
                     onClick={handleChangePassword}
@@ -238,7 +239,8 @@ const Dashboard = () => {
                     <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
                     Sign Out
                   </button>
-                </div>
+                </div> */}
+                <Settings />
               </section>
             </>
           )}
