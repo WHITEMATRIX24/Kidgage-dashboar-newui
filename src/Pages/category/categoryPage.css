@@ -23,12 +23,16 @@
 }
 
 .categorypage-content-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 10px;
+}
+.categorypage-content-header1{
+padding-top: 15px;
+float: right;
+
 }
 
-.categorypage-content-header button {
+.categorypage-content-header1 button {
   padding: 10px 15px;
   outline: none;
   border: none;
@@ -37,6 +41,7 @@
   border-radius: 10px;
   font-size: 15px;
   cursor: pointer;
+
 }
 
 .categorypage-content-header button:hover {
@@ -44,7 +49,7 @@
 }
 
 .categorypage-card-container {
-  margin-top: 2rem;
+  margin-top: 5rem;
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
