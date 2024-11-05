@@ -156,4 +156,30 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// banner status updater
+router.put("/update-status/:id", upload.none(), async (req, res) => {
+  const { id } = req.params;
+  const { bannerStatus } = req.body;
+
+  if (!id) {
+    res
+      .status(400)
+      .json({ message: "bad request", error: "Requires banner id" });
+  }
+
+  try {
+    const updateExistingBanner = await MobileBanner.findByIdAndUpdate(
+      id,
+      {
+        status: !bannerStatus,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "toggle success" });
+  } catch (error) {
+    res.status(500).json({ message: "server Error", error });
+  }
+});
+
 module.exports = router;

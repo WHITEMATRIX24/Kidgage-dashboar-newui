@@ -145,7 +145,6 @@ router.delete("/:id", async (req, res) => {
 
     // Delete the image from S3
 
-
     // Delete the banner from the database
     await Banner.findByIdAndDelete(id);
 
@@ -153,6 +152,32 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting banner:", error);
     res.status(500).json({ message: "Server error", error });
+  }
+});
+
+// banner status updater
+router.put("/update-status/:id", upload.none(), async (req, res) => {
+  const { id } = req.params;
+  const { bannerStatus } = req.body;
+
+  if (!id) {
+    res
+      .status(400)
+      .json({ message: "bad request", error: "Requires banner id" });
+  }
+
+  try {
+    const updateExistingBanner = await Banner.findByIdAndUpdate(
+      id,
+      {
+        status: !bannerStatus,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "toggle success" });
+  } catch (error) {
+    res.status(500).json({ message: "server Error", error });
   }
 });
 

@@ -33,8 +33,7 @@ function Campaigns() {
   const [selectedTab, setSelectedTab] = useState("tab-1");
   const [MobileBanners, setMobileBanners] = useState([]);
   const [DesktopBanners, setDesktopBanners] = useState([]);
-  const [checked, setChecked] = useState(false);
-  const toggleChecked = () => setChecked((value) => !value);
+  const [toggleCheckedId, setToggleCheckedId] = useState([]);
 
   // home banner add open modal handler
   const openHomeBannerModalHandler = (tab) =>
@@ -102,13 +101,53 @@ function Campaigns() {
     }
   };
 
+  // toggle handler
+  const toggleHandler = async (tab, bannerId, bannerStatus) => {
+    // toggle api based on tab
+    const toggleApiBasedOnTab = () => {
+      switch (tab) {
+        case "home":
+          return `http://localhost:5001/api/banners/update-status/${bannerId}`;
+        case "desktop":
+          return `http://localhost:5001/api/desktop-banners/update-status/${bannerId}`;
+        case "mobile":
+          return `http://localhost:5001/api/mobile-banners/update-status/${bannerId}`;
+        default:
+          return "";
+      }
+    };
+
+    if (!tab || !bannerId) {
+      alert("camapign toggle data missing");
+      return;
+    }
+
+    // restrict continues call
+    if (toggleCheckedId.find((val) => (val === bannerId ? true : false))) {
+      return;
+    }
+
+    setToggleCheckedId([...toggleCheckedId, bannerId]);
+
+    try {
+      const res = await axios.put(toggleApiBasedOnTab(), { bannerStatus });
+      if (res.status !== 200) {
+        alert("toggle action not successfull");
+      }
+    } catch (error) {
+      console.log(`error in toggling banner id: ${bannerId} error: ${error}`);
+    } finally {
+      setToggleCheckedId((preValue) =>
+        preValue.filter((val) => val !== bannerId)
+      );
+    }
+  };
+
   useEffect(() => {
     fetchBanners();
     fetchMobileBanners();
     fetchDesktopBanners();
   }, []);
-
-  console.log(banners);
 
   return (
     <div className="campaign-container">
@@ -185,8 +224,13 @@ function Campaigns() {
                         <label class="switch">
                           <input
                             type="checkbox"
-                            checked={item.status}
-                            onChange={toggleChecked}
+                            defaultChecked={item.status}
+                            onChange={() =>
+                              toggleHandler("home", item._id, item.status)
+                            }
+                            disabled={toggleCheckedId.find((val) =>
+                              val === item._id ? true : false
+                            )}
                           ></input>
                           <span class="slider round"></span>
                         </label>
@@ -265,8 +309,13 @@ function Campaigns() {
                           <label class="switch">
                             <input
                               type="checkbox"
-                              checked={item.status}
-                              onChange={toggleChecked}
+                              defaultChecked={item.status}
+                              onChange={() =>
+                                toggleHandler("desktop", item._id, item.status)
+                              }
+                              disabled={toggleCheckedId.find((val) =>
+                                val === item._id ? true : false
+                              )}
                             ></input>
                             <span class="slider round"></span>
                           </label>
@@ -343,8 +392,13 @@ function Campaigns() {
                         <label class="switch">
                           <input
                             type="checkbox"
-                            checked={item.status}
-                            onChange={toggleChecked}
+                            defaultChecked={item.status}
+                            onChange={() =>
+                              toggleHandler("mobile", item._id, item.status)
+                            }
+                            disabled={toggleCheckedId.find((val) =>
+                              val === item._id ? true : false
+                            )}
                           ></input>
                           <span class="slider round"></span>
                         </label>
