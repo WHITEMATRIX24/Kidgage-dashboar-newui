@@ -107,8 +107,9 @@ const DashboardPage = () => {
         <div className="dashboardpage-table-container">
           <div className="dashboardpage-tables">
             <div className="dashboardpage-table-header">
-              <h3 className="dashboardpage-table-header-h3">Upcoming Meetings</h3>
-
+              <h3 className="dashboardpage-table-header-h3">
+                Upcoming Meetings
+              </h3>
             </div>
             <div className="dashboardpage-table-wrapper">
               <table className="dashboardpage-table">
@@ -137,7 +138,6 @@ const DashboardPage = () => {
           <div className="dashboardpage-tables">
             <div className="dashboardpage-table-header">
               <h3 className="dashboardpage-table-header-h3">Upcoming Events</h3>
-
             </div>
             <div className="dashboardpage-table-wrapper">
               <table className="dashboardpage-table">
