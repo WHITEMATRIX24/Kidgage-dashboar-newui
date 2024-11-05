@@ -106,3 +106,6 @@
   border-radius: 20px;
   cursor: pointer;
 }
+.campaign-addmodal-form-publishbtn:hover {
+  background-color: #0466c9;
+}

@@ -33,6 +33,9 @@
   font-size: 15px;
   cursor: pointer;
 }
+.categorypage-content-header button:hover {
+  background-color: #0466c9;
+}
 .categorypage-card-container {
   margin-top: 2rem;
   display: flex;
@@ -54,7 +57,7 @@
 .categorypage-card-details {
   display: flex;
   flex-wrap: wrap;
-  padding: 6px 1rem;
+  padding: 6px 0px 6px 0.8rem;
   align-items: center;
 }
 .categorypage-card-details p {
@@ -69,13 +72,17 @@
   background-color: transparent;
   border: none;
   outline: none;
-  padding: 5px 5px;
+  padding: 5px 10px;
   font-size: medium;
   cursor: pointer;
+  border-radius: 20px;
 }
 .categorypage-card-action-edit {
   color: var(--app-blue-color);
 }
 .categorypage-card-action-delete {
   color: red;
+}
+.categorypage-card-action-btn:hover {
+  background-color: var(--app-backgroundcolor-gray);
 }

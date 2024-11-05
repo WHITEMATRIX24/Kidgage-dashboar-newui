@@ -9,6 +9,7 @@ const CategoryAddModal = ({ isShow, closeHandler }) => {
     title: "",
     categoryImage: null,
   });
+  const [isLoading, setIsLoading] = useState(false);
   const categoryImageRef = useRef();
 
   //   create handler
@@ -18,6 +19,8 @@ const CategoryAddModal = ({ isShow, closeHandler }) => {
       alert("Fill form completly");
       return;
     }
+
+    setIsLoading(true);
 
     const newCategoryFormData = new FormData();
 
@@ -39,6 +42,8 @@ const CategoryAddModal = ({ isShow, closeHandler }) => {
       handleClose();
     } catch (error) {
       console.log(`error creating new category error: ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -105,7 +110,9 @@ const CategoryAddModal = ({ isShow, closeHandler }) => {
               }
             />
           </div>
-          <button onClick={handleCreate}>Create</button>
+          <button onClick={handleCreate} disabled={isLoading}>
+            {isLoading ? "please wait" : "Create"}
+          </button>
         </div>
       </div>
     </div>

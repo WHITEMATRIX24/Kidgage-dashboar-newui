@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HomeCampaignAddModal from "../../components/campaignAddModal/campaignAddModal";
 import CampaignEditModal from "../../components/campaignEditModal/campaignEditModal";
-import Appbar from '../../components/common/appbar/Appbar';
+import Appbar from "../../components/common/appbar/Appbar";
 import CampaignDeleteModal from "../../components/campaignDeleteModal/campaignDeleteModal";
 function Campaigns() {
   const [showHomeBannerModal, setShowHomeBannerModal] = useState({
@@ -27,14 +27,14 @@ function Campaigns() {
     idShow: false,
     tab: null,
     data: null,
-  })
+  });
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState("tab-1");
   const [MobileBanners, setMobileBanners] = useState([]);
   const [DesktopBanners, setDesktopBanners] = useState([]);
   const [checked, setChecked] = useState(false);
-  const toggleChecked = () => setChecked(value => !value);
+  const toggleChecked = () => setChecked((value) => !value);
 
   // home banner add open modal handler
   const openHomeBannerModalHandler = (tab) =>
@@ -53,10 +53,10 @@ function Campaigns() {
   };
   const openBannerDeleteModal = (tab, data) => {
     setShowBannnerDeleteModal({ isShow: true, tab, data });
-  }
+  };
   const closeBannerDeleteModal = () => {
-    setShowBannnerDeleteModal({ isShow: false, tab: null, data: null })
-  }
+    setShowBannnerDeleteModal({ isShow: false, tab: null, data: null });
+  };
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString("en-GB").replace(/\//g, ".");
@@ -76,7 +76,9 @@ function Campaigns() {
   const fetchDesktopBanners = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5001/api/desktop-banners/");
+      const response = await axios.get(
+        "http://localhost:5001/api/desktop-banners/"
+      );
       console.log(response.data);
       setDesktopBanners(response.data);
       setLoading(false);
@@ -88,7 +90,9 @@ function Campaigns() {
   const fetchMobileBanners = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5001/api/mobile-banners/");
+      const response = await axios.get(
+        "http://localhost:5001/api/mobile-banners/"
+      );
       // console.log(response.data);
       setMobileBanners(response.data);
       setLoading(false);
@@ -169,7 +173,9 @@ function Campaigns() {
                         <p>{item.bookingLink}</p>
                         <div className="campaign-date-container">
                           {" "}
-                          <p>Starting Date :{formatDate(item.startDate)}</p>{" "}
+                          <p>
+                            Starting Date :{formatDate(item.startDate)}
+                          </p>{" "}
                           <p>Ending Date: {formatDate(item.endDate)}</p>
                         </div>
                       </div>
@@ -177,13 +183,16 @@ function Campaigns() {
                     <div className="grid-item ">
                       <div className="campaign-actions">
                         <label class="switch">
-                          <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>
+                          <input
+                            type="checkbox"
+                            checked={item.status}
+                            onChange={toggleChecked}
+                          ></input>
                           <span class="slider round"></span>
                         </label>
                         <FontAwesomeIcon
                           icon={faPenToSquare}
                           style={{ color: "#106cb1" }}
-
                           onClick={() => openBannerEditModal("home", item)}
                         />
                         <FontAwesomeIcon
@@ -198,7 +207,7 @@ function Campaigns() {
               </div>
             </div>
 
-            <div className='tab'>
+            <div className="tab">
               <input
                 type="radio"
                 name="css-tabs"
@@ -206,40 +215,82 @@ function Campaigns() {
                 class="tab-switch"
                 checked={selectedTab === "tab-2"}
                 onChange={() => setSelectedTab("tab-2")}
-              ></input>              <label for="tab-2" class="tab-label">Desktop Banner</label>
-              <div className='tab-content'>
-
-                <div className='campaign-button-container'>
-                  <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("desktop")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
+              ></input>{" "}
+              <label for="tab-2" class="tab-label">
+                Desktop Banner
+              </label>
+              <div className="tab-content">
+                <div className="campaign-button-container">
+                  <button
+                    className="add-campaign-button"
+                    onClick={() => openHomeBannerModalHandler("desktop")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ color: "#ffffff" }}
+                    />
+                    Add campaign
+                  </button>
                 </div>
-                {DesktopBanners.map((item) => (<div className='grid-banner-container-desk'>
-                  <div className='grid-item '><div ><img className='desktop-banner-img' src={item.imageUrl} alt='no image' /></div></div>
-                  <div className='grid-item '>
-                    <div className='campaign-details'>
-                      <p>{item.title}</p>
-                      <p>{item.bookingLink}</p>
-                      <div className='campaign-date-container' > <p>Starting Date :{formatDate(item.startDate)}</p> <p style={{ marginRight: "150px" }}>Ending Date :{formatDate(item.endDate)}</p></div>
+                {DesktopBanners.map((item) => (
+                  <div className="grid-banner-container-desk">
+                    <div className="grid-item ">
+                      <div>
+                        <img
+                          className="desktop-banner-img"
+                          src={item.imageUrl}
+                          alt="no image"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className='grid-item '>
-
-                    <div className='campaign-actions'>
-                      <div >  <label class="switch">
-                        <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>
-                        <span class="slider round"></span>
-                      </label>
-                        <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", marginLeft: "20px" }} />
-                        <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", marginLeft: "15px" }} onClick={() => openBannerDeleteModal("desktop", item)} />
+                    <div className="grid-item ">
+                      <div className="campaign-details">
+                        <p>{item.title}</p>
+                        <p>{item.bookingLink}</p>
+                        <div className="campaign-date-container">
+                          {" "}
+                          <p>
+                            Starting Date :{formatDate(item.startDate)}
+                          </p>{" "}
+                          <p style={{ marginRight: "150px" }}>
+                            Ending Date :{formatDate(item.endDate)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid-item ">
+                      <div className="campaign-actions">
+                        <div>
+                          {" "}
+                          <label class="switch">
+                            <input
+                              type="checkbox"
+                              checked={item.status}
+                              onChange={toggleChecked}
+                            ></input>
+                            <span class="slider round"></span>
+                          </label>
+                          <FontAwesomeIcon
+                            icon={faPenToSquare}
+                            style={{ color: "#106cb1", marginLeft: "20px" }}
+                            onClick={() => openBannerEditModal("desktop", item)}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            style={{ color: "#d70404", marginLeft: "15px" }}
+                            onClick={() =>
+                              openBannerDeleteModal("desktop", item)
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                </div>))}
-
+                ))}
               </div>
             </div>
 
-            <div className='tab'>
+            <div className="tab">
               <input
                 type="radio"
                 name="css-tabs"
@@ -247,38 +298,70 @@ function Campaigns() {
                 class="tab-switch"
                 checked={selectedTab === "tab-3"}
                 onChange={() => setSelectedTab("tab-3")}
-              ></input>              <label for="tab-3" class="tab-label">Mobile Banner</label>
-              <div className='tab-content'>
-
-                <div className='campaign-button-container'>
-                  <button className='add-campaign-button' onClick={() => openHomeBannerModalHandler("mobile")}><FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff", }} />Add campaign</button>
+              ></input>{" "}
+              <label for="tab-3" class="tab-label">
+                Mobile Banner
+              </label>
+              <div className="tab-content">
+                <div className="campaign-button-container">
+                  <button
+                    className="add-campaign-button"
+                    onClick={() => openHomeBannerModalHandler("mobile")}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      style={{ color: "#ffffff" }}
+                    />
+                    Add campaign
+                  </button>
                 </div>
-                {MobileBanners.map((item) => (<div className='grid-banner-container'>
-                  <div className='grid-item '><div style={{ width: '100%' }}><img className='mobile-banner-img' src={item.imageUrl} /></div></div>
-                  <div className='grid-item '>
-                    <div className='campaign-details'>
-                      <p>{item.title}</p>
-                      <p>{item.bookingLink}</p>
-                      <div className='campaign-date-container' > <p>Starting Date :{formatDate(item.startDate)}</p> <p>Ending Date :{formatDate(item.endDate)}</p></div>
+                {MobileBanners.map((item) => (
+                  <div className="grid-banner-container">
+                    <div className="grid-item ">
+                      <div style={{ width: "100%" }}>
+                        <img
+                          className="mobile-banner-img"
+                          src={item.imageUrl}
+                        />
+                      </div>
+                    </div>
+                    <div className="grid-item ">
+                      <div className="campaign-details">
+                        <p>{item.title}</p>
+                        <p>{item.bookingLink}</p>
+                        <div className="campaign-date-container">
+                          {" "}
+                          <p>
+                            Starting Date :{formatDate(item.startDate)}
+                          </p>{" "}
+                          <p>Ending Date :{formatDate(item.endDate)}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid-item ">
+                      <div className="campaign-actions">
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            checked={item.status}
+                            onChange={toggleChecked}
+                          ></input>
+                          <span class="slider round"></span>
+                        </label>
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{ color: "#106cb1" }}
+                          onClick={() => openBannerEditModal("mobile", item)}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          style={{ color: "#d70404" }}
+                          onClick={() => openBannerDeleteModal("mobile", item)}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className='grid-item '>
-
-                    <div className='campaign-actions'>
-                      <label class="switch">
-                        <input type='checkbox' checked={item.status} onChange={toggleChecked}></input>
-                        <span class="slider round"></span>
-                      </label>
-                      <FontAwesomeIcon icon={faPenToSquare} style={{ color: "#106cb1", }} />
-                      <FontAwesomeIcon icon={faTrash} style={{ color: "#d70404", }} onClick={() => openBannerDeleteModal("mobile", item)} />
-
-                    </div>
-                  </div>
-
-                </div>))}
-
-
-
+                ))}
               </div>
             </div>
           </div>

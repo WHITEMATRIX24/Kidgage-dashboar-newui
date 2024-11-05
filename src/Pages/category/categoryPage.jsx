@@ -6,6 +6,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import CategoryAddModal from "../../components/categoryAddModal/categoryAddModal";
 import axios from "axios";
 import CategoryEditModal from "../../components/categoryEditModal/categoryEditModal";
+import CategoryDeleteModal from "../../components/categoryDeleteModal/categoryDeleteModal";
 
 const CategoryPage = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -13,6 +14,10 @@ const CategoryPage = () => {
   const [categoryEditModalState, setCategoryEditModalState] = useState({
     isShow: false,
     data: null,
+  });
+  const [categoryDeleteModalState, setCategoryDeleteModalState] = useState({
+    isShow: false,
+    categoryId: null,
   });
 
   // Add categroy modal handler
@@ -35,6 +40,16 @@ const CategoryPage = () => {
       data: null,
     });
 
+  // delete category modal open handler
+  const deleteCategoryModalOpenHandler = (categoryId) => {
+    setCategoryDeleteModalState({ isShow: true, categoryId });
+  };
+
+  // delete category modal close handler
+  const deleteCategoryModalCloseHandler = (categoryId) => {
+    setCategoryDeleteModalState({ isShow: false, categoryId: null });
+  };
+
   // initial data handler
   const initialCategoryDataHandler = async () => {
     try {
@@ -44,23 +59,6 @@ const CategoryPage = () => {
       setCategoryData(res.data);
     } catch (error) {
       console.log(`error in fetching categories error: ${error}`);
-    }
-  };
-
-  // category delete handler
-  const deleteCategoryHandler = async (categoryId) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:5001/api/course-category/delete/${categoryId}`
-      );
-
-      if (res.status === 200) {
-        alert("successfully delete category");
-        return;
-      }
-      alert(res.data.message);
-    } catch (error) {
-      console.log(`error in deleting category error: ${error}`);
     }
   };
 
@@ -91,7 +89,7 @@ const CategoryPage = () => {
                   </button>
                   <button
                     className="categorypage-card-action-btn categorypage-card-action-delete"
-                    onClick={() => deleteCategoryHandler(category._id)}
+                    onClick={() => deleteCategoryModalOpenHandler(category._id)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
@@ -114,6 +112,14 @@ const CategoryPage = () => {
           isShow={categoryEditModalState.isShow}
           closeHandler={categoryEditModalCloseHandler}
           categoryData={categoryEditModalState.data}
+        />
+      )}
+      {/* delete modal */}
+      {categoryDeleteModalState.isShow && categoryDeleteModalState.isShow && (
+        <CategoryDeleteModal
+          isShow={categoryDeleteModalState.isShow}
+          closeHandler={deleteCategoryModalCloseHandler}
+          categoryDeleteId={categoryDeleteModalState.categoryId}
         />
       )}
     </div>

@@ -10,6 +10,7 @@ const CategoryEditModal = ({ isShow, closeHandler, categoryData }) => {
     categoryImage: categoryData.image || null,
   });
   const [categoryImagelocalUrl, setCategoryImagelocalUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const categoryImageRef = useRef();
 
   //   handle upload image local url
@@ -26,6 +27,8 @@ const CategoryEditModal = ({ isShow, closeHandler, categoryData }) => {
       alert("Fill form completly");
       return;
     }
+
+    setIsLoading(true);
 
     const newCategoryFormData = new FormData();
 
@@ -47,6 +50,8 @@ const CategoryEditModal = ({ isShow, closeHandler, categoryData }) => {
       handleClose();
     } catch (error) {
       console.log(`error creating new category error: ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,7 +113,12 @@ const CategoryEditModal = ({ isShow, closeHandler, categoryData }) => {
               }
             />
           </div>
-          <button onClick={() => handleCreate(categoryData._id)}>Update</button>
+          <button
+            onClick={() => handleCreate(categoryData._id)}
+            disabled={isLoading}
+          >
+            {isLoading ? "please wait" : "Update"}
+          </button>
         </div>
       </div>
     </div>

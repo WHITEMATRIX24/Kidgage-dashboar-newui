@@ -16,6 +16,7 @@ const CampaignEditModal = ({ isShow, closeHandler, tab, modalData }) => {
     imageUploded: modalData.imageUrl || null,
   });
   const [uploadImageUrl, setUploadImageUrl] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const campaignAddImageRef = useRef();
 
   // api based on tab
@@ -71,6 +72,8 @@ const CampaignEditModal = ({ isShow, closeHandler, tab, modalData }) => {
       return;
     }
 
+    setIsLoading(true);
+
     const isoStartDate = new Date(startDate).toISOString();
     const isoEndDate = new Date(endDate).toISOString();
 
@@ -93,6 +96,8 @@ const CampaignEditModal = ({ isShow, closeHandler, tab, modalData }) => {
       handleClose();
     } catch (error) {
       console.log(`error in creating new Campaign error: ${error}`);
+    } finally {
+      setIsLoading(true);
     }
   };
 
@@ -234,8 +239,9 @@ const CampaignEditModal = ({ isShow, closeHandler, tab, modalData }) => {
             <button
               className="campaign-addmodal-form-publishbtn"
               onClick={(e) => handlePublish(e)}
+              disabled={isLoading}
             >
-              Publish
+              {isLoading ? "please wait" : "update"}
             </button>
           </div>
         </form>
