@@ -95,7 +95,7 @@ function Settings() {
             <div className="email">
               <div className='email-data'>
                 <div><p>Email</p></div>
-                <div style={{ marginLeft: "140px" }}>
+                <div className='email-data1' style={{ marginLeft: "140px" }}>
                   <p>{sessionStorage.getItem('email')}</p>
                 </div>
               </div>
@@ -138,7 +138,7 @@ function Settings() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <button onClick={handleChangePassword}>Submit</button>
+            <button className='first-child' onClick={handleChangePassword}>Submit</button>
             <button onClick={() => setIsModalOpen(false)}>Cancel</button>
             {message && <p>{message}</p>}
           </div>

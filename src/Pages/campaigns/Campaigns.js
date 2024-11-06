@@ -304,7 +304,7 @@ function Campaigns() {
                     </div>
                     <div className="grid-item ">
                       <div className="campaign-actions">
-                        <div>
+                      
                           {" "}
                           <label class="switch">
                             <input
@@ -331,7 +331,7 @@ function Campaigns() {
                               openBannerDeleteModal("desktop", item)
                             }
                           />
-                        </div>
+                      
                       </div>
                     </div>
                   </div>

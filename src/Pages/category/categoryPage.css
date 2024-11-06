@@ -113,5 +113,22 @@ float: right;
     font-size: 55px;
     padding-bottom: 10px;
   }
-
+  .categorypage-content-header1 button,.categorypage-content-header{
+    font-size: 35px;
+  
+  }
+  .categorypage-card-details p {
+    font-size: 25px;
+  }
+  .categorypage-card{
+    width: 30rem;
+  }
+  .categorypage-card img {
+    height: 21rem;
+  }
+  .categorypage-card-action-btn {
+    font-size: 35px;
+  }
+  
+ 
 }
