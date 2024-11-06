@@ -123,7 +123,7 @@
 }
 
 /* Primary button (e.g., submit) */
-.modal-content button:first-child {
+.first-child {
   background-color: #4CAF50;
   color: white;
 }
@@ -137,4 +137,32 @@
 .modal-content p {
   font-size: 0.9rem;
   color: #333;
+}
+
+
+@media(min-width:2000px){
+  .settings-heading,
+  .settings-menu,
+  .heading-container,.username,
+  .email,
+  .password p
+  {
+    font-size: 35px;
+  }
+  .modal-content{
+    width: 50%;
+    height: 30%;
+    padding: 50px;
+  }
+  .modal-content h3,.modal-content input{
+    font-size: 2.3rem;
+  }
+  .modal-content button{
+    font-size: 2.3rem;
+   
+  }
+  .email-data1{
+    margin-left: 150px;
+  }
+  
 }

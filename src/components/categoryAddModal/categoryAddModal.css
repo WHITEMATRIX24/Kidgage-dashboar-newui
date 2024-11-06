@@ -85,3 +85,12 @@
 .category-addmodal-form-container button:hover {
   background-color: #0466c9;
 }
+@media(min-width:2000px){
+  .category-addmodal-container {
+    width: 56rem;
+    min-height: 45rem;
+  }
+  .category-addmodal-form-imageuploder-container img {
+    height: 22rem;
+  }
+}

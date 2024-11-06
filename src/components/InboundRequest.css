@@ -4,18 +4,12 @@
   box-sizing: border-box;
 }
 
-/* body{
-    background-color: rgb(224, 239, 237);
-    font-family: "Poppins", sans-serif;
-} */
 .inbound-container {
   width: 100%;
   height: 85vh;
   padding: 10px;
-  /* font-family: "Poppins", sans-serif; */
-
+ 
 }
-
 .inbound-table-container {
   background-color: white;
   margin-top: 2%;

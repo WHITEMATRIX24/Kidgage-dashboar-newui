@@ -109,3 +109,17 @@
 .campaign-addmodal-form-publishbtn:hover {
   background-color: #0466c9;
 }
+@media(min-width:2000px){
+  .campaign-addmodal-container {
+   width: 68rem;
+    min-height: 37rem;
+  }
+  .campaign-addmodal-container h2{
+    font-size: 35px;
+  }
+  .campaign-addmodal-form-fieldcontainer p,.campaign-addmodal-form-publishbtn{
+    font-size: 25px;
+  }
+  
+  
+}
