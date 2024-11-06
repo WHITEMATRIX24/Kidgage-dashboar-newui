@@ -48,22 +48,23 @@ function Settings() {
     setShowPassword(!showPassword);
   };
 
-  const handleChangePassword = async () => {
-    try {
-      // Ensure adminsettings._id is defined before making the request
-      if (!adminsettings._id) {
-        setMessage("Admin ID not found.");
-        return;
-      }
+  const handleChangePassword = async (currentPassword, newPassword) => {
+    const adminId = sessionStorage.getItem('adminId');
 
-      const response = await axios.post(`http://localhost:5001/api/admin/change-password/${adminsettings._id}`, {
+    if (!adminId) {
+      console.warn("Admin ID not found in sessionStorage");
+    }
+
+
+    try {
+      const response = await axios.post(`http://localhost:5001/api/admin/change-password/${adminId}`, {
         currentPassword,
         newPassword,
       });
-      setMessage(response.data.message);
-      setIsModalOpen(false); // Close modal on success
+      alert(response.data.message);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Error changing password');
+      console.error('Error changing password:', error);
+      alert(error.response?.data.message || 'Password change failed');
     }
   };
 
@@ -138,7 +139,7 @@ function Settings() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-            <button className='first-child' onClick={handleChangePassword}>Submit</button>
+            <button className='first-child' onClick={() => handleChangePassword(currentPassword, newPassword)}>Submit</button>
             <button onClick={() => setIsModalOpen(false)}>Cancel</button>
             {message && <p>{message}</p>}
           </div>

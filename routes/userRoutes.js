@@ -313,13 +313,13 @@ router.post("/verify/:id", async (req, res) => {
   try {
     const { email, username, phone, fullName, role } = req.body;
 
-    // Check if the admin with this email already exists
+    // Check if the admin with this username already exists
     const existingAdmin = await Admin.findOne({ name: username });
     if (existingAdmin) {
-      console.log("Admin with this email already exists");
+      console.log("Admin with this username already exists");
       return res
         .status(400)
-        .json({ message: "Admin with this email already exists" });
+        .json({ message: "Admin with this username already exists" });
     }
 
     // Hash the phone number to use as password
@@ -339,20 +339,28 @@ router.post("/verify/:id", async (req, res) => {
     await admin.save();
     console.log("Admin saved successfully:", admin);
     const url = "https://main.d3781xttwrodcq.amplifyapp.com/";
-    // Update the user verification status
+
+    // Set today's date for expiryDate
+    const today = new Date();
+
+    // Update the user verification status and expiry date
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      { verificationStatus: "accepted" },
+      {
+        verificationStatus: "accepted",
+        expiryDate: today,
+      },
       { new: true }
     );
 
-    console.log("User verification status updated:", user);
+    console.log("User verification status and expiry date updated:", user);
+
     const welcomeMessage = `
     Dear ${fullName},
     
     We are happy to inform you that your account has been verified by KidGage.
     To get started, please login using the following credentials: 
-    Link to Activity Manager:${url}
+    Link to Activity Manager: ${url}
     Username: ${username}
     Password: ${phone}
     
@@ -360,6 +368,7 @@ router.post("/verify/:id", async (req, res) => {
     
     Welcome to KidGage Team!
   `;
+
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
@@ -370,10 +379,10 @@ router.post("/verify/:id", async (req, res) => {
 
     // Set up email data
     const mailOptions = {
-      from: "whitematrix2024@gmail.com", // sender address
-      to: email, // recipient email address
-      subject: "Welcome to KidGage!", // Subject of the email
-      text: welcomeMessage, // Plain text body
+      from: "whitematrix2024@gmail.com",
+      to: email,
+      subject: "Welcome to KidGage!",
+      text: welcomeMessage,
     };
 
     // Send email
@@ -382,7 +391,7 @@ router.post("/verify/:id", async (req, res) => {
 
     // Send a response back to the client
     res.status(200).json({
-      message: "User verified and admin account created successfully",
+      message: "User verified, admin account created successfully, and expiry date set.",
       user,
     });
   } catch (error) {
@@ -390,6 +399,7 @@ router.post("/verify/:id", async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
 
 // Rejection endpoint
 router.post("/reject/:id", async (req, res) => {
