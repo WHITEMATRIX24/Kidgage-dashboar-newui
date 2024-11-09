@@ -43,8 +43,11 @@ const RequestsPopup = ({ show, closeRequests, selectedUser }) => {
     <>
       <div className="popup-overlay"></div>
       <div className="popup-window" ref={popupRef}>
-        <button className="close-button" onClick={closeRequests}>
-          <FontAwesomeIcon icon={faTimes} />
+        <button className="request-popup-close-button" onClick={closeRequests}>
+          <FontAwesomeIcon
+            icon={faTimes}
+            className="request-popup-close-icon"
+          />
         </button>
         <h3>Request Details</h3>
         <div className="request-popup-wrapper">
@@ -55,15 +58,24 @@ const RequestsPopup = ({ show, closeRequests, selectedUser }) => {
                 <a
                   href={selectedUser?.website}
                   target="_blank"
-                  className="request-popup-header-icon-globe"
+                  className="request-popup-header-icon-globe-container"
                 >
-                  <FontAwesomeIcon icon={faGlobe} size="xl" color="#ffffff" />
+                  <FontAwesomeIcon
+                    icon={faGlobe}
+                    size="xl"
+                    color="#ffffff"
+                    className="request-popup-header-icon-globe"
+                  />
                 </a>
                 <a
                   href={`https://www.instagram.com/${selectedUser?.instaId}/`}
                   target="_blank"
                 >
-                  <FontAwesomeIcon icon={faInstagram} size="2xl" />
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    size="2xl"
+                    className="request-popup-header-icon-instagram"
+                  />
                 </a>
               </div>
             </div>

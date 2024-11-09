@@ -9,37 +9,11 @@
   background-color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
   z-index: 1000;
-  padding: 30px;
+  padding: 20px 30px;
   border-radius: 10px;
   box-sizing: border-box;
-}
-
-@media (min-width: 1900px) {
-  .popup-window {
-    width: 900px;
-    min-height: 600px;
-  }
-}
-
-@media (max-width: 1500px) {
-  .popup-window {
-    width: 600px;
-    min-height: 400px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .popup-window {
-    width: 500px;
-    min-height: 400px;
-  }
-}
-
-@media (max-width: 768px) {
-  .popup-window {
-    width: 350px;
-    min-height: 400px;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-window h3 {
@@ -69,15 +43,14 @@
 }
 
 /* Close button styling */
-.close-button {
+.request-popup-close-button {
   background: none;
   border: none;
   color: #999;
   font-size: 16px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
+  margin-bottom: 0.5rem;
+  margin-left: auto;
 }
 
 .close-button:hover {
@@ -96,10 +69,10 @@
   align-items: center;
   border-bottom: 1px solid var(--app-backgroundcolor-gray);
   padding-bottom: 1rem;
-  padding-right: 5px;
 }
 .request-popup-header h4 {
   max-width: 30rem;
+  margin: 0px;
 }
 
 .request-popup-header-icons {
@@ -108,7 +81,7 @@
   gap: 1rem;
 }
 
-.request-popup-header-icon-globe {
+.request-popup-header-icon-globe-container {
   background-color: var(--app-blue-color);
   padding: 7px;
   border-radius: 30px;
@@ -150,17 +123,13 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 1rem;
+  width: fit-content;
 }
 
 .pending-form-contacts-container {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-}
-
-.pending-form h4 {
-  margin: 0;
-  font-size: 20px;
 }
 
 .tab-buttons {
@@ -306,4 +275,49 @@
   /* Prevent text wrapping */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   /* Optional shadow for effect */
+}
+
+/* media query */
+
+@media (min-width: 2000px) {
+  .popup-window {
+    width: 1400px;
+    min-height: 600px;
+    padding: 30px 35px;
+  }
+  .popup-window h3 {
+    font-size: 40px;
+  }
+  .request-popup-header h4 {
+    max-width: 50rem;
+    font-size: 40px;
+  }
+  .request-popup-header-icon-globe-container {
+    padding: 10px;
+    border-radius: 50%;
+  }
+  .request-popup-header-icon-instagram {
+    width: 4rem;
+    height: 4rem;
+  }
+  .request-popup-header-icon-globe {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .request-popup-content {
+    font-size: 25px;
+    gap: 3rem;
+  }
+  .pending-form {
+    gap: 3rem;
+  }
+  .request-popup-download-button {
+    padding: 20px 40px;
+    font-size: 25px;
+    border-radius: 30px;
+  }
+  .request-popup-close-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
