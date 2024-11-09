@@ -75,9 +75,9 @@ const CategoryPage = () => {
         <div className="categorypage-content-header">
           <h4>Program Categories</h4>
         </div>
-       <div className="categorypage-content-header1">
-         <button  onClick={categoryAddModalOpenHandler}>Add Category</button>
-         </div>
+        <div className="categorypage-content-header1">
+          <button onClick={categoryAddModalOpenHandler}>+ Add Category</button>
+        </div>
         <div className="categorypage-card-container">
           {categoryData.map((category) => (
             <div className="categorypage-card" key={category._id}>

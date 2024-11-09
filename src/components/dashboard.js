@@ -191,12 +191,12 @@ const Dashboard = () => {
               <section id="academies" className="db-section">
                 <ActivityProviders />
               </section>
-              <section id="inspections" className="db-section">
-                <ViewCourses />
-                {/* <AddCourseForm /> */}
-                <PromoteCourse />
-                {/* <EditCourseForm /> */}
-              </section>
+              {/* <section id="inspections" className="db-section">
+                <ViewCourses /> */}
+              {/* <AddCourseForm /> */}
+              {/* <PromoteCourse /> */}
+              {/* <EditCourseForm /> */}
+              {/* </section> */}
               {/* <section id="parents" className="db-section">
                 <AddParentForm />
                 <EditParentForm />

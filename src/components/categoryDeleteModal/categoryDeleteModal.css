@@ -17,6 +17,7 @@
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.05);
 }
+
 .category-deletemodal-container {
   background-color: white;
   width: 30rem;
@@ -30,14 +31,19 @@
   align-items: center;
   position: relative;
 }
+
 .category-deletemodal-container h2 {
-  color: var(--app-blue-color);
-  font-size: 3rem;
+  color: black;
+  padding: 20px;
+  font-size: 25px;
 }
+
 .category-deletemodal-btn-container {
   display: flex;
   gap: 2rem;
+  padding-bottom: 20px;
 }
+
 .category-deletemodal-btn-container button {
   padding: 10px 15px;
   outline: none;
@@ -47,10 +53,11 @@
   cursor: pointer;
   color: white;
 }
+
 .category-deletemodal-btn-cancel {
   background-color: green;
 }
+
 .category-deletemodal-btn-delete {
   background-color: rgb(188, 17, 17);
 }
-

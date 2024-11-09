@@ -29,12 +29,12 @@ const CategoryDeleteModal = ({ isShow, closeHandler, categoryDeleteId }) => {
 
   return (
     <div
-      className={`category-deletemodal-wrapper ${
-        isShow ? "category-deletemodal-show" : "category-deletemodal-hide"
-      }`}
+      className={`category-deletemodal-wrapper ${isShow ? "category-deletemodal-show" : "category-deletemodal-hide"
+        }`}
     >
       <div className="category-deletemodal-container">
-        <h2>Are you Sure</h2>
+        <h2>Delete category</h2>
+        <p>Are you sure you want to delete this category?</p>
         <div className="category-deletemodal-btn-container">
           <button
             onClick={closeHandler}

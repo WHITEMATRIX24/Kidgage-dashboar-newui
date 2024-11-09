@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./course.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Appbar from "../../components/common/appbar/Appbar";
 import AddCourseForm from "../../components/AddCourseForm";
+import CourseDeleteModal from "../../components/courseDeleteModal/courseDeleteModal"; // Import the modal
 
 const CoursePage = () => {
     const [courseData, setCourseData] = useState([]);
     const [error, setError] = useState(null);
     const [provider, setProvider] = useState(null);
     const [activeTab, setActiveTab] = useState("Programs Offered");
-    const [imageIndexes, setImageIndexes] = useState({}); // Keeps track of the current image index for each course
+    const [imageIndexes, setImageIndexes] = useState({});
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteCourseId, setDeleteCourseId] = useState(null);
 
     const fetchProviderAndCourses = async () => {
         setError(null);
@@ -32,23 +34,40 @@ const CoursePage = () => {
             const coursesResponse = await axios.get(
                 `http://localhost:5001/api/courses/by-providers`,
                 {
-                    params: {
-                        providerIds: [userId],
-                    },
+                    params: { providerIds: [userId] },
                 }
             );
             setCourseData(coursesResponse.data);
 
-            // Initialize the image indexes for each course
             const initialIndexes = {};
             coursesResponse.data.forEach((course) => {
-                initialIndexes[course._id] = 0; // Start with the first image for each course
+                initialIndexes[course._id] = 0;
             });
             setImageIndexes(initialIndexes);
         } catch (error) {
             console.log(`Error fetching courses: ${error}`);
             setError("Error fetching courses");
         }
+    };
+
+    const deleteCourse = async (id) => {
+        try {
+            const res = await axios.delete(`http://localhost:5001/api/courses/delete/${id}`);
+            if (res.status === 200) {
+                setCourseData((prevData) => prevData.filter(course => course._id !== id));
+                alert("Course deleted successfully");
+            } else {
+                alert(res.data.message);
+            }
+        } catch (error) {
+            console.error("Error deleting course:", error);
+            alert("Failed to delete course");
+        }
+    };
+
+    const handleDeleteClick = (id) => {
+        setDeleteCourseId(id);
+        setShowDeleteModal(true);
     };
 
     useEffect(() => {
@@ -60,14 +79,14 @@ const CoursePage = () => {
             setImageIndexes((prevIndexes) => {
                 const newIndexes = { ...prevIndexes };
                 courseData.forEach((course) => {
-                    const imageCount = course.images.length; // Assuming each course has an array of images
+                    const imageCount = course.images.length;
                     newIndexes[course._id] = (prevIndexes[course._id] + 1) % imageCount;
                 });
                 return newIndexes;
             });
-        }, 3000); // Change image every 3 seconds
+        }, 3000);
 
-        return () => clearInterval(interval); // Cleanup interval on component unmount
+        return () => clearInterval(interval);
     }, [courseData]);
 
     return (
@@ -104,15 +123,9 @@ const CoursePage = () => {
                                     <div className="categorypage-card-details">
                                         <p>{course.name}</p>
                                         <div className="categorypage-card-actions-container">
-                                            {/* <button
-                                                className="categorypage-card-action-btn categorypage-card-action-edit"
-                                                onClick={() => alert("Edit Course")}
-                                            >
-                                                <FontAwesomeIcon icon={faPenToSquare} />
-                                            </button> */}
                                             <button
                                                 className="categorypage-card-action-btn categorypage-card-action-delete"
-                                                onClick={() => alert("Delete Course")}
+                                                onClick={() => handleDeleteClick(course._id)}
                                             >
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </button>
@@ -126,6 +139,19 @@ const CoursePage = () => {
                     <AddCourseForm providerId={provider ? provider._id : null} />
                 )}
             </div>
+
+            {/* Render the delete modal */}
+            {showDeleteModal && (
+                <CourseDeleteModal
+                    isShow={showDeleteModal}
+                    closeHandler={() => setShowDeleteModal(false)}
+                    courseDeleteId={deleteCourseId}
+                    onConfirmDelete={() => {
+                        deleteCourse(deleteCourseId);
+                        setShowDeleteModal(false);
+                    }}
+                />
+            )}
         </div>
     );
 };
