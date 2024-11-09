@@ -38,7 +38,7 @@ import Campaigns from "../Pages/campaigns/Campaigns";
 import CategoryPage from "../Pages/category/categoryPage";
 import Settings from "../Pages/settings/Settings";
 import ProviderDetails from "../Pages/provider/provider";
-
+import AdminCoursePage from "../Pages/adminCourse/adminCourse";
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -191,8 +191,12 @@ const Dashboard = () => {
               <section id="academies" className="db-section">
                 <ActivityProviders />
               </section>
-              {/* <section id="inspections" className="db-section">
-                <ViewCourses /> */}
+              <section id="courses" className="db-section">
+                <AdminCoursePage />
+              </section>
+              {/* 
+              {/* <section id="inspections" className="db-section"> */}
+              {/* <ViewCourses /> */}
               {/* <AddCourseForm /> */}
               {/* <PromoteCourse /> */}
               {/* <EditCourseForm /> */}

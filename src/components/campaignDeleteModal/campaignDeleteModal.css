@@ -42,6 +42,7 @@
 
 .campaign-deletemodal-container h2 {
     color: black;
+    padding-bottom: 30px;
 }
 
 .campaign-deletemodal-delete {
@@ -61,7 +62,8 @@
     padding: 8px 20px;
     border: none;
 }
-.modal-actions{
+
+.modal-actions {
     padding-top: 30px;
     display: flex;
     align-items: center;
