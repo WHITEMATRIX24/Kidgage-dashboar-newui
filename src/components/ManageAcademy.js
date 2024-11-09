@@ -170,7 +170,7 @@ const ManageAcademy = () => {
 
     // Create a new FormData object to send both text fields and file uploads
     const formDataToSend = new FormData();
-    formDataToSend.append("licenseNo", formData.licenseNo);
+    // formDataToSend.append("licenseNo", formData.licenseNo);
 
     if (formData.academyImgFile) {
       formDataToSend.append("academyImg", formData.academyImgFile); // Append Academy Image file
@@ -531,7 +531,7 @@ const ManageAcademy = () => {
           <div className="editmodal-container">
             <h3>Please Update your profile to continue</h3>
             <form onSubmit={handleSubmit}>
-              <div>
+              {/* <div>
                 <label>License No:</label>
                 <input
                   type="text"
@@ -540,7 +540,7 @@ const ManageAcademy = () => {
                   onChange={handleInputChange}
                   required
                 />
-              </div>
+              </div> */}
               <div>
                 <label>
                   Academy Image

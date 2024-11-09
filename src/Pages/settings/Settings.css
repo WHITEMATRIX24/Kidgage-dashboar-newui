@@ -11,7 +11,7 @@
 }
 
 .settings-heading {
-  margin-top: 10%;
+  margin-top: 2rem;
   margin-left: 0;
   margin-bottom: 1rem;
   color: rgba(17, 151, 224, 0.951);
@@ -29,7 +29,7 @@
   border-radius: 10px;
   box-shadow: 10px;
   padding: 2.5rem;
-  height: 500px;
+  height: 75vh;
 
 }
 
@@ -103,21 +103,21 @@
 }
 
 /* Input fields styling */
-.modal-content input {
+/* .modal-content input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-}
+} */
 
 /* Submit and cancel button styling */
 .modal-content button {
   padding: 10px 20px;
   margin: 10px 5px;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   font-size: 1rem;
   cursor: pointer;
 }
@@ -126,6 +126,7 @@
 .first-child {
   background-color: #4CAF50;
   color: white;
+
 }
 
 .modal-content button:last-child {
@@ -139,30 +140,46 @@
   color: #333;
 }
 
+.passwordchange-input {
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #d9dadb;
+  outline: none;
+  margin: 10px 0;
+  background-color: var(--app-backgroundcolor-gray);
+  color: var(--app-text-blueshade);
+  width: 100%;
+}
 
-@media(min-width:2000px){
+@media(min-width:2000px) {
+
   .settings-heading,
   .settings-menu,
-  .heading-container,.username,
+  .heading-container,
+  .username,
   .email,
-  .password p
-  {
+  .password p {
     font-size: 35px;
   }
-  .modal-content{
+
+  .modal-content {
     width: 50%;
     height: 30%;
     padding: 50px;
   }
-  .modal-content h3,.modal-content input{
+
+  .modal-content h3,
+  .modal-content input {
     font-size: 2.3rem;
   }
-  .modal-content button{
+
+  .modal-content button {
     font-size: 2.3rem;
-   
+
   }
-  .email-data1{
+
+  .email-data1 {
     margin-left: 150px;
   }
-  
+
 }

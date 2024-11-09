@@ -26,9 +26,10 @@
   border-bottom: 1px solid gray;
   padding: 10px;
 }
-.categorypage-content-header1{
-padding-top: 15px;
-float: right;
+
+.categorypage-content-header1 {
+  padding-top: 15px;
+  float: right;
 
 }
 
@@ -107,28 +108,63 @@ float: right;
   background-color: var(--app-backgroundcolor-gray);
 }
 
+.tab-button {
+  background-color: transparent;
+  border: none;
+  color: black;
+  /* Default color for non-active tabs */
+  font-size: 15px;
+  /* Default size for h3 */
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-right: 30px;
+}
+
+.tab-button.active {
+  color: #2196F3;
+  /* Color for active tab */
+}
+
+
+
+
+
+
 @media (min-width: 2000px) {
+
   .category-content-h3 {
     padding-top: 1rem;
     font-size: 55px;
     padding-bottom: 10px;
   }
-  .categorypage-content-header1 button,.categorypage-content-header{
+
+  .categorypage-content-header1 button,
+  .categorypage-content-header {
     font-size: 35px;
-  
+
   }
+
   .categorypage-card-details p {
     font-size: 25px;
   }
-  .categorypage-card{
+
+  .categorypage-card {
     width: 30rem;
   }
+
   .categorypage-card img {
     height: 21rem;
   }
+
   .categorypage-card-action-btn {
     font-size: 35px;
   }
-  
- 
+
+  .tab-button {
+    font-size: 35px;
+    /* Larger size on large screens */
+  }
+
+
 }

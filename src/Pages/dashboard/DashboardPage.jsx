@@ -10,11 +10,13 @@ const DashboardPage = () => {
   const [coursesCounts, setCoursesCounts] = useState(0);
   const [leadsGeneratedCount, setLeadsGeneratedCount] = useState(0);
   const [upcommingMeetingsData, setUpcommingMeetingsData] = useState([]);
+  const [upcommingExpiresData, setUpcomingExpiresData] = useState([])
 
   // Activity Provider initial data fetching
   const activityProviderInitialDataHandler = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/users/all");
+      const res = await axios.get("http://localhost:5001/api/users/accepted");
+      // setUpcomingExpires(res)
       const count = res.data.length;
       setActiveProviderCounts(count);
     } catch (error) {
@@ -73,13 +75,52 @@ const DashboardPage = () => {
     }
   };
 
+  //upcoming expires data fetch
+
+  const upcommingExpiresInitialDataHandler = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5001/api/users/accepted"
+      );
+      // console.log(response);
+      setUpcomingExpiresData(response.data)
+    } catch (error) {
+      console.log(
+        `error in fetching upcomming meetings data in dashboard error: ${error}`
+      );
+    }
+  };
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-GB").replace(/\//g, ".");
+  };
+  const formatDateTime = (dateStr) => {
+    const date = new Date(dateStr);
+
+    // Get the date in DD.MM.YYYY format
+    const formattedDate = date.toLocaleDateString("en-GB").replace(/\//g, ".");
+
+    // Get the time in HH:MM AM/PM format
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 12 AM/PM case
+    const formattedTime = `${hours}:${minutes} ${ampm}`;
+
+    return `${formattedDate} ${formattedTime}`;
+  };
   useEffect(() => {
     activityProviderInitialDataHandler();
     campaignsInitialDataHandler();
     coursesInitialDataHandler();
     leadsGeneratedinitialDataHandler();
     upcommingMeetingsInitialDataHandler();
+    upcommingExpiresInitialDataHandler();
   }, []);
+
+  // console.log(upcommingExpires);
+
 
   return (
     <div className="dashboardpage-container">
@@ -107,9 +148,8 @@ const DashboardPage = () => {
         <div className="dashboardpage-table-container">
           <div className="dashboardpage-tables">
             <div className="dashboardpage-table-header">
-              <h3 className="dashboardpage-table-header-h3">
-                Upcoming Meetings
-              </h3>
+              <h3 className="dashboardpage-table-header-h3">Upcoming Meetings</h3>
+
             </div>
             <div className="dashboardpage-table-wrapper">
               <table className="dashboardpage-table">
@@ -126,7 +166,7 @@ const DashboardPage = () => {
                       <tr key={meetings._id}>
                         <td>{meetings.fullName}</td>
                         <td>
-                          {toRedableDateAndTime(meetings.meetingScheduleDate)}
+                          {formatDateTime(meetings.meetingScheduleDate)}
                         </td>
                         <td>{meetings.location}</td>
                       </tr>
@@ -137,23 +177,26 @@ const DashboardPage = () => {
           </div>
           <div className="dashboardpage-tables">
             <div className="dashboardpage-table-header">
-              <h3 className="dashboardpage-table-header-h3">Upcoming Events</h3>
+              <h3 className="dashboardpage-table-header-h3">Upcoming Expires</h3>
+
             </div>
             <div className="dashboardpage-table-wrapper">
               <table className="dashboardpage-table">
                 <thead>
                   <tr>
                     <th>Academy Name</th>
-                    <th>Meeting Date</th>
+                    <th>Expiry Date</th>
                     <th>Location</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>kidga Academy</td>
-                    <td>27.03.2021</td>
-                    <td>Office, Qata dhoha</td>
-                  </tr>
+                  {upcommingExpiresData &&
+                    upcommingExpiresData.map((expires) => (<tr>
+                      <td>{expires.fullName}</td>
+                      <td> {formatDate(expires.expiryDate)}</td>
+                      <td>{expires.location}</td>
+                    </tr>))}
+
                 </tbody>
               </table>
             </div>

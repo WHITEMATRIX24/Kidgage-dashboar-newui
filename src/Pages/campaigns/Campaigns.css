@@ -3,23 +3,28 @@
   margin: 0px;
   box-sizing: border-box;
 }
+
 body {
   font-family: "Poppins", sans-serif;
 }
+
 .campaign-container {
   width: 100%;
   height: 80%;
   padding: 10px;
 }
+
 .campaign-heading {
   margin-top: 2%;
   margin-left: 0;
   margin-bottom: 1rem;
   color: rgba(17, 151, 224, 0.951);
 }
+
 .campaign-heading-h3 {
   font-size: 25px;
 }
+
 .campaign-box-container {
   background-color: white;
   margin-top: 2%;
@@ -30,9 +35,10 @@ body {
   border-radius: 10px;
   /* box-shadow: 50px; */
   /* max-height: 100%; */
-  height: 500px;
+  height: 80vh;
   overflow-y: scroll;
 }
+
 .grid-banner-container {
   display: grid;
   grid-template-columns: 30% 50% 15%;
@@ -41,6 +47,7 @@ body {
   width: 100%;
   border-bottom: 1px solid gray;
 }
+
 .grid-banner-container-desk {
   display: grid;
   grid-template-columns: 20% 60% 15%;
@@ -49,6 +56,7 @@ body {
   width: 100%;
   border-bottom: 1px solid gray;
 }
+
 .grid-item {
   padding: 10px;
   /* font-size: 15px; */
@@ -63,15 +71,18 @@ body {
   width: 255px;
   height: 100px;
 }
+
 .desktop-banner-img {
   width: 152px;
   height: 214px;
   margin-right: 20px;
 }
+
 .mobile-banner-img {
   width: 300px;
   height: 102px;
 }
+
 .add-campaign-button {
   background-color: #027ffd;
   color: white;
@@ -82,12 +93,14 @@ body {
 
   /* Add this line for spacing */
 }
+
 .campaign-button-container {
   padding-bottom: 20px;
   float: right;
   /* padding: 20px; */
   /* margin-right: 20px; */
 }
+
 .campaign-actions {
   max-width: 100%;
   display: flex;
@@ -284,14 +297,17 @@ input:checked+.slider:before {
     line-height: 1rem;
     height: 5rem;
   }
+
   .campaign-details p {
     padding: 5px;
     font-size: 20px;
   }
-  .add-campaign-button{
+
+  .add-campaign-button {
     font-size: 35px;
     padding: 15px;
   }
+
   .campaign-actions {
     font-size: 35px;
   }

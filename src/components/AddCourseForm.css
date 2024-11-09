@@ -2,16 +2,22 @@
 .add-course-form-container {
     display: flex;
     flex-direction: column;
-    max-width: 900px;
-    /* min-height: 500px; */
-    margin: 20px auto;
+    width: 70vw;
+    /* Set width to 70% of viewport width */
+    height: 70vh;
+    /* Set height to 70% of viewport height */
+
+    margin: auto;
     padding: 25px;
     border: 1px solid #e0e0e0;
     border-radius: 30px;
     background-color: #ffffffb8;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    overflow-y: auto;
+    /* Allow scrolling if content exceeds container height */
 }
+
 
 .add-course-form-header {
     display: flex;
@@ -20,7 +26,7 @@
     cursor: pointer;
     padding-bottom: 10px;
     border-bottom: 2px solid #9f9e9e91;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -28,31 +34,28 @@
 .add-course-form-header h2 {
     margin: 0;
     font-size: 1.5em;
-    color: #E26936;
+    color: #2196F3;
 }
 
 .add-course-form {
     width: 90%;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
 
 .add-course-form input,
 .add-course-form textarea {
-        width: 100%;
-        max-width: 800px;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        box-sizing: border-box;
-        background-color: #f9f9f9;
-        color: #727272;
-        outline: none;
-        transition: border-color 0.3s;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 1px solid #d9dadb;
+    outline: none;
+    background-color: var(--app-backgroundcolor-gray);
+    color: var(--app-text-blueshade);
+
 }
-.add-course-form select{
+
+.add-course-form select {
     width: 100%;
     max-width: 800px;
     padding: 10px 10px;
@@ -64,20 +67,22 @@
     outline: none;
     transition: border-color 0.3s;
 }
-.add-course-form .fee-structure .currency-symbol{
+
+.add-course-form .fee-structure .currency-symbol {
     margin-top: -30px;
 }
+
 .add-course-form input:focus,
 .add-course-form select:focus,
 .add-course-form textarea:focus {
-    border: 1px solid #E26936;
-    box-shadow: 0 0 5px rgba(226, 105, 54, 0.5);
+    border: 1px solid #2196F3;
+    box-shadow: 0 0 5px rgba(176, 168, 164, 0.5);
 }
 
 .add-course-form input:hover,
 .add-course-form select:hover,
 .add-course-form textarea:hover {
-    border: 1px solid #E26936;
+    border: 1px solid #2196F3;
 }
 
 /* Autofill styles */
@@ -112,6 +117,7 @@
     flex-wrap: wrap;
     gap: 15px;
 }
+
 .days-selection .days-checkbox {
     width: 18px;
     height: 18px;
@@ -138,12 +144,11 @@
 .add-course-form .add-time-slot-btn,
 .add-course-form button[type="submit"] {
     padding: 10px 20px;
-    background-color: #387CB8;
+    background-color: transparent;
     width: 180px;
     border: none;
     border-radius: 20px;
-    color: white;
-    margin-bottom: 10px;
+    color: var(--app-blue-color);
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
@@ -152,7 +157,7 @@
 .add-course-form .add-time-slot-btn:hover,
 .add-course-form .rem-button:hover,
 .add-course-form button[type="submit"]:hover {
-    background-color: #2a5f8e;
+    background-color: transparent;
     transform: scale(1.05);
 }
 
@@ -163,7 +168,7 @@
 }
 
 .add-course-form .rem-button:hover {
-    color: #c0392b;
+    color: #5889cc;
     background-color: transparent;
 }
 
@@ -171,7 +176,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    
+
 }
 
 .add-course-form .search-provider-group input {
@@ -192,7 +197,7 @@
 
 .add-course-form .checkbox-label input {
     margin-right: 5px;
-    
+
 }
 
 .add-course-group {
@@ -204,6 +209,7 @@
     display: flex;
     gap: 40%;
 }
+
 .add-upload-label-group {
     display: flex;
     gap: 45%;
@@ -219,7 +225,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #E26936;
+    background-color: #dce7f0;
     color: white;
     border: none;
     border-radius: 50%;
@@ -239,22 +245,27 @@
     transform: scale(1.1);
 }
 
-.form-group .add-duration-group input{
-padding: 10px;
+.form-group .add-duration-group input {
+    padding: 10px;
 }
+
 .add-duration-label-group {
     display: flex;
     gap: 42%;
 }
+
 .add-location-label-group {
     display: flex;
-    }
-    .add-location-label-group :nth-child(1){
-        margin-right: 5%;
-        }
-        .add-location-label-group :nth-child(2){
-            margin-right: 20%;
-            }
+}
+
+.add-location-label-group :nth-child(1) {
+    margin-right: 5%;
+}
+
+.add-location-label-group :nth-child(2) {
+    margin-right: 20%;
+}
+
 .add-course-form .search-provider-button {
     background-color: transparent;
     border: none;
@@ -276,18 +287,27 @@ padding: 10px;
 }
 
 .add-days-group label {
-    color: #387cb8c7;
+    color: black;
 }
+
 /* .add-time-slot-btn {
     margin-left: 69%;
 } */
 .btn-grpp {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Ensures vertical alignment */
-    width: 100%; /* Adjust based on the container size */
-    margin-bottom: 15px; /* Optional, for spacing */
-  }
+    align-items: center;
+    /* Ensures vertical alignment */
+    width: 100%;
+    /* Adjust based on the container size */
+    margin-bottom: 15px;
+    /* Optional, for spacing */
+}
+
+.addcourse-submit button {
+    background-color: #2196F3 !important;
+}
+
 @media (max-width: 1200px) {
 
     .add-time-slot-btn {
@@ -295,10 +315,11 @@ padding: 10px;
     }
 }
 
-.form-group label{
-    color: #387cb8c7;
+.form-group label {
+    color: black;
 
 }
+
 /* Media Queries */
 @media (max-width: 768px) {
     .add-course-form-container {
@@ -307,19 +328,25 @@ padding: 10px;
         padding-right: 30px;
 
     }
-    .add-course-form-header{
+
+    .add-course-form-header {
         margin: 10px;
         font-size: .8em;
     }
+
     .add-course-form {
         width: 100%;
         padding: 10px;
         font-size: 12px;
     }
-    .add-course-form label{
-        color: #387CB8;
+
+    .add-course-form label {
+        color: black;
     }
-    .add-course-form input::placeholder,.add-course-form select, .add-course-form input{
+
+    .add-course-form input::placeholder,
+    .add-course-form select,
+    .add-course-form input {
         font-size: 12px;
     }
 
@@ -337,16 +364,18 @@ padding: 10px;
         flex-direction: row;
         gap: 5px;
     }
-    
+
     .time-slot {
         flex-direction: row;
         gap: 5px;
     }
-    .add-course-form .add-time-slot-btn{
+
+    .add-course-form .add-time-slot-btn {
         padding: 10px 10px;
         width: 150px;
         font-size: 12px;
     }
+
     .add-course-form button[type="submit"] {
         padding: 10px 10px;
         width: 130px;
@@ -354,17 +383,19 @@ padding: 10px;
     }
 
 }
-.side-by-side2{
+
+.side-by-side2 {
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
+
 @media (max-width: 480px) {
     .add-course-form-header h2 {
         font-size: 1.2em;
     }
 
-    
+
 
     .add-course-form input,
     .add-course-form select,
@@ -374,7 +405,8 @@ padding: 10px;
         font-size: 14px;
         padding: 10px;
     }
-    .side-by-side2{
+
+    .side-by-side2 {
         display: flex;
         flex-direction: column;
     }
@@ -382,7 +414,7 @@ padding: 10px;
 
 /* Add to your existing CSS file */
 
- .interest-input-group {
+.interest-input-group {
     display: flex;
     align-items: flex-start;
     margin-bottom: 1rem;
@@ -396,17 +428,21 @@ padding: 10px;
 }
 
 .interest-input-group .add-interest-btn {
-    color: #E26936; /* Change as needed */
+    color: #2196F3;
+    /* Change as needed */
     background-color: transparent;
     border: none;
     margin-right: 0.5rem;
     cursor: pointer;
 }
+
 .interest-input-group .add-interest-btn:hover {
-    color: #E26936; /* Change as needed */
+    color: #2196F3;
+    /* Change as needed */
     background-color: transparent;
     transform: scale(1.1);
 }
+
 .interest-box {
     border: 1px solid #ddd;
     padding: 1rem;
@@ -472,6 +508,7 @@ padding: 10px;
     margin: 10px 0;
     font-size: 1.2em;
 }
+
 .button-container {
     display: flex;
     justify-content: center;
@@ -482,7 +519,7 @@ padding: 10px;
     display: flex;
     align-items: center;
     gap: 5px;
-    background-color: #E26936;
+    background-color: #2196F3;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -499,8 +536,10 @@ padding: 10px;
 .view-banner-button svg {
     font-size: 1em;
 }
-.edit-banner-button, .delete-banner-button {
-    background: #E26936;
+
+.edit-banner-button,
+.delete-banner-button {
+    background: #2196F3;
     border-radius: 20px;
     border: none;
     cursor: pointer;
@@ -510,7 +549,8 @@ padding: 10px;
     padding: 10px;
 }
 
-.edit-banner-button:hover, .delete-banner-button:hover {
+.edit-banner-button:hover,
+.delete-banner-button:hover {
     color: #fff;
     background: #c0392b;
 }
@@ -528,6 +568,7 @@ padding: 10px;
 .file-name {
     color: #666;
 }
+
 #students-table {
     width: 90%;
     border-collapse: collapse;
@@ -549,7 +590,7 @@ padding: 10px;
     margin: 10px 0;
     padding: 10px 15px;
     border: none;
-    background-color: #E26936;
+    background-color: #2196F3;
     color: white;
     border-radius: 4px;
     cursor: pointer;
@@ -558,6 +599,7 @@ padding: 10px;
 .back-to-events-button:hover {
     background-color: #c0392b;
 }
+
 /* Existing CSS */
 
 .banner-list {
@@ -578,7 +620,7 @@ padding: 10px;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    max-height:150px ;
+    max-height: 150px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -597,7 +639,8 @@ padding: 10px;
     gap: 10px;
 }
 
-.edit-banner-button, .delete-banner-button {
+.edit-banner-button,
+.delete-banner-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -606,7 +649,8 @@ padding: 10px;
     margin: 5px;
 }
 
-.edit-banner-button:hover, .delete-banner-button:hover {
+.edit-banner-button:hover,
+.delete-banner-button:hover {
     color: #0056b3;
 }
 
@@ -623,6 +667,7 @@ padding: 10px;
 .file-name {
     color: #666;
 }
+
 .edit-fields {
     margin-top: 10px;
 }
@@ -646,7 +691,7 @@ padding: 10px;
     flex: 1;
     max-width: 800px;
     min-height: 60px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -664,47 +709,53 @@ padding: 10px;
     right: 10px;
     top: 10px;
 }
+
 @media (max-width: 600px) {
-    .p-student-card{
+    .p-student-card {
         min-height: 100px;
         display: flex;
         flex-direction: column;
-        
+
     }
-    .p-student-actions{
+
+    .p-student-actions {
         position: relative;
         top: 0;
         right: 0;
     }
 }
+
 /* Optional: Overlay background */
-.label-img-grp{
+.label-img-grp {
     justify-content: space-between;
     gap: 0px;
 }
 
-@media  (min-width: 1920px) and (max-width: 2560px) {
-.add-course-form-container{
-    max-width: 1900px;
-}    
-.add-course-form .add-time-slot-btn{
-    padding: 10px 15px;
-    width: 200px;
-    border-radius: 30px;
-    font-size: 20px;
-}
-.add-course-form button[type="submit"] {
-    padding: 15px 15px;
-    width: 300px;
-    font-size: 20px;
-    border-radius: 30px;
-}
-.days-selection .days-checkbox {
-    width: 24px;
-    height: 24px;
-    margin-top: 10px;
-    margin-left: 24px;
-}
+@media (min-width: 1920px) and (max-width: 2560px) {
+    .add-course-form-container {
+        max-width: 1900px;
+    }
+
+    .add-course-form .add-time-slot-btn {
+        padding: 10px 15px;
+        width: 200px;
+        border-radius: 30px;
+        font-size: 20px;
+    }
+
+    .add-course-form button[type="submit"] {
+        padding: 15px 15px;
+        width: 300px;
+        font-size: 20px;
+        border-radius: 30px;
+    }
+
+    .days-selection .days-checkbox {
+        width: 24px;
+        height: 24px;
+        margin-top: 10px;
+        margin-left: 24px;
+    }
 }
 
 
@@ -726,32 +777,37 @@ padding: 10px;
 
 .course-item {
     display: flex;
-    justify-content: space-between; /* This pushes the button to the right */
+    justify-content: space-between;
+    /* This pushes the button to the right */
     align-items: center;
     padding: 5px;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
 }
-.course-item p{
+
+.course-item p {
     text-align: right;
 }
+
 .course-name {
     font-size: 16px;
     font-weight: bold;
 }
 
-.add-course-form .course-item button{
+.add-course-form .course-item button {
     border-radius: 30px;
     padding: 5px;
     width: 180px;
     font-size: smaller;
     background-color: #387CB8;
 }
+
 @media (min-width:1500px) {
-    .add-course-form .course-item button{
+    .add-course-form .course-item button {
         width: 25%;
     }
 }
+
 /* .add-course-form .course-item:hover,.add .course-item::selection{
     background-color: #2a5f8e;
 } */
@@ -774,9 +830,10 @@ padding: 10px;
     align-items: center;
 }
 
-.save-btn{
+.save-btn {
     align-self: flex-end;
 }
-.request-div{
-    font-family: 'Poppins',serif;
+
+.request-div {
+    font-family: 'Poppins', serif;
 }

@@ -26,7 +26,7 @@
 .add-course-form-header h2 {
     margin: 0;
     font-size: 1.5em;
-    color: #E26936;
+    color: #2196F3;
     font-weight: 400;
 }
 
@@ -36,12 +36,14 @@
     margin: 0 auto;
     padding: 20px;
 }
+
 .add-course-form input::placeholder,
 .add-course-form select::placeholder,
 .add-course-form textarea::placeholder {
     color: #727272;
 
 }
+
 .add-course-form input,
 .add-course-form select,
 .add-course-form textarea {
@@ -62,14 +64,14 @@
 .add-course-form input:focus,
 .add-course-form select:focus,
 .add-course-form textarea:focus {
-    border: 1px solid #E26936;
+    border: 1px solid #2196F3;
     box-shadow: 0 0 5px rgba(226, 105, 54, 0.5);
 }
 
 .add-course-form input:hover,
 .add-course-form select:hover,
 .add-course-form textarea:hover {
-    border: 1px solid #E26936;
+    border: 1px solid #2196F3;
 }
 
 /* Autofill styles */
@@ -90,7 +92,7 @@
     border-radius: 20px;
     background-color: #f9f9f9;
     color: #000066;
-    
+
 }
 
 .add-course-form .fee-structure .currency-symbol {
@@ -120,10 +122,10 @@
     margin-bottom: 10px;
 }
 
-.add-course-form .add-time-slot-btn,
+/* .add-course-form .add-time-slot-btn,
 .add-course-form button[type="submit"] {
     padding: 10px 15px;
-    background-color: #387CB8;
+    background-color: transparent;
     border: none;
     border-radius: 20px;
     color: white;
@@ -131,14 +133,14 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-}
+} */
 
-.add-course-form .add-time-slot-btn:hover,
+/* .add-course-form .add-time-slot-btn:hover,
 .add-course-form .rem-button:hover,
 .add-course-form button[type="submit"]:hover {
     background-color: #2a5f8e;
     transform: scale(1.05);
-}
+} */
 
 .add-course-form .rem-button {
     color: #2a5f8e;
@@ -180,7 +182,7 @@
 .add-course-group {
     display: flex;
     gap: 10px;
-    
+
 }
 
 .add-course-label-group {
@@ -244,7 +246,7 @@
 }
 
 .file-upload {
-    border: 1px solid #E26936;
+    border: 1px solid #2196F3;
 }
 
 
@@ -298,11 +300,12 @@
         gap: 5px;
     }
 
-    .add-course-form .add-time-slot-btn{
+    .add-course-form .add-time-slot-btn {
         padding: 10px 10px;
         width: 130px;
         font-size: 10px;
     }
+
     .add-course-form button[type="submit"] {
         padding: 10px 10px;
         width: 130px;
@@ -314,13 +317,16 @@
     .add-course-form-header h2 {
         font-size: 1.2em;
     }
-    .add-course-form .search-provider-button{
+
+    .add-course-form .search-provider-button {
         padding: 0px;
         margin-right: 0px;
     }
+
     .add-course-form .search-provider-group {
-       gap: 8px;
+        gap: 8px;
     }
+
     .add-course-form input,
     .add-course-form select,
     .add-course-form textarea,
@@ -330,43 +336,59 @@
         padding: 10px;
     }
 }
-@media  (min-width: 1920px) and (max-width: 2560px) {
+
+@media (min-width: 1920px) and (max-width: 2560px) {
     .add-course-form-header h2 {
         font-size: 1.6em;
     }
-    .add-course-form-container{
+
+    .add-course-form-container {
         max-width: 1400px;
         font-size: 24px;
         margin-left: 200px;
-    }    
-    .add-course-form{
+    }
+
+    .add-course-form {
         max-width: 1200px;
     }
-    .add-course-form input, .add-course-form textarea, .add-course-form select, .add-course-form .fee-structure select, .add-course-form .fee-structure input{
+
+    .add-course-form input,
+    .add-course-form textarea,
+    .add-course-form select,
+    .add-course-form .fee-structure select,
+    .add-course-form .fee-structure input {
         max-width: 1200px;
         font-size: 20px;
     }
-    .add-course-form input, .add-course-form select,.add-course-form .fee-structure select, .add-course-form .fee-structure input{
+
+    .add-course-form input,
+    .add-course-form select,
+    .add-course-form .fee-structure select,
+    .add-course-form .fee-structure input {
         padding: 15px 30px;
         border-radius: 30px;
     }
-    .add-course-form .fee-structure .currency-symbol{
+
+    .add-course-form .fee-structure .currency-symbol {
         font-size: 24px;
     }
-    .add-course-form .add-time-slot-btn{
+
+    .add-course-form .add-time-slot-btn {
         padding: 10px 15px;
         width: 200px;
         border-radius: 30px;
         font-size: 20px;
     }
+
     .add-course-form button[type="submit"] {
         padding: 15px 15px;
         width: 300px;
         font-size: 20px;
         border-radius: 30px;
     }
+
     .add-course-form .search-provider-group input {
         padding: 15px 30px;
     }
-    
-    }
+
+}

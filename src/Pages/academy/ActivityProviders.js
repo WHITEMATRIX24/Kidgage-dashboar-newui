@@ -22,20 +22,21 @@ function ActivityProviders() {
         try {
             setLoading(true);
 
-            const response = await axios.get('http://localhost:5001/api/users/allUser');
+            const response = await axios.get('http://localhost:5001/api/users/allUser', {
+                params: {
+                    verificationStatus: 'accepted'
+                }
+            });
             console.log(response.data);
-            setUsers(response.data); // Set the all user data
-            // } else if (activeTab === 'accepted') {
-            //     const response = await axios.get('http://localhost:5001/api/users/accepted'); // Adjust the endpoint for accepted users
-            //     setAcceptedUsers(response.data); // Set the accepted users data
+            setUsers(response.data);
 
         } catch (error) {
             console.error('There was an error fetching the users!', error);
-
         } finally {
             setLoading(false); // Stop loading after fetch
         }
     };
+
     const openRequestDetails = (user) => {
         setSelectedUser(user);
         setShowRequestPopup(true);
@@ -67,13 +68,13 @@ function ActivityProviders() {
                 {loading ? (
                     <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'red' }}> Loading...</h1>
                 ) : Users?.length > 0 ? (<div className='activity-table-container'>
-                 <div style={{position:'sticky',top:'0',padding:'15px',backgroundColor:'white'}}>  <h3 className="activity-table-h3" style={{ marginBottom: '3px' }}>Activity Providers</h3></div>
+                    <div style={{ position: 'sticky', top: '0', padding: '15px', backgroundColor: 'white' }}>  <h3 className="activity-table-h3" style={{ marginBottom: '3px' }}>Activity Providers</h3></div>
                     <table className='activity-details '>
-                    
+
                         <thead className='activity-table-head'>
                             <th>Academy Name </th>
                             <th> Request Date</th>
-                            <th> Address</th>
+                            <th>Location</th>
                             <th>Contact Number</th>
                             <th>No. of Classes</th>
                             <th></th>
@@ -89,17 +90,16 @@ function ActivityProviders() {
                                 </div></td>
 
                                 <td >{item.requestFiledDate}</td>
-                                <td className='activity-address'> Doha</td>
+                                <td className='activity-address'>{item.location}</td>
                                 <td >{item?.phoneNumber}</td>
-                                < td >5</td>
+                                < td >{item.noOfCourses}</td>
 
                                 <td>
                                     <div style={{ justifyContent: 'space-between', alignItems: 'center', display: 'flex', padding: '5px' }} >
                                         <div>
                                             <FontAwesomeIcon
                                                 icon={faMagnifyingGlass}
-                                                style={{ color: "#acc9e0", fontSize: "20px", marginRight: "20px" }}
-
+                                                className='activity-icon'
                                                 onClick={() => openRequestDetails(item)}
                                             />
                                             {showRequestPopup && selectedUser && (

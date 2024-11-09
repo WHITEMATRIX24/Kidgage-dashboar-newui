@@ -140,6 +140,7 @@ const ManageCourse = () => {
               />
             </button>
           </div>
+
           <div
             className="see-courses"
             style={{

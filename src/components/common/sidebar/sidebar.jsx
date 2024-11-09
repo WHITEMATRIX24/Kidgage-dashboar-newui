@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate } from 'react-router-dom';
 import {
   faBook,
   faSchool,
@@ -38,6 +39,14 @@ const Sidebar = ({
     academyImg: null, // Store the file object
     logo: null, // Store the file object
   });
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setTimeout(() => {
+      navigate('/');
+    }, 2000);
+  };
   useEffect(() => {
     // Retrieve adminId and adminRole from sessionStorage
     const storedId = sessionStorage.getItem("adminId");
@@ -204,7 +213,7 @@ const Sidebar = ({
             </a>
           ))}
         </ul>
-        <button className="sidebar-logout-btn">
+        <button className="sidebar-logout-btn" onClick={handleLogout}>
           <FontAwesomeIcon
             icon={faRightFromBracket}
             className="sidebar-logout-icon"

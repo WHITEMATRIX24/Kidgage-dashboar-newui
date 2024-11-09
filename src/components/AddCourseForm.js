@@ -245,7 +245,7 @@ function AddCourseForm({ providerId }) {
   return (
     <div className="">
       <form className="add-course-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Course Name</label>
+        <label htmlFor="name" style={{ color: "black" }}>Course Name</label>
 
         <input
           type="text"
@@ -609,7 +609,7 @@ function AddCourseForm({ providerId }) {
           ))}
         </div>
 
-        <button type="submit" className="submit-button">
+        <button type="submit" className="addcourse-submit">
           Submit
         </button>
         {error && <p className="error-message">{error}</p>}

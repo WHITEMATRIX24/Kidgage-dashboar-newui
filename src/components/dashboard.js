@@ -6,7 +6,8 @@ import "./dashboard.css"; // Ensure correct path
 import AddCourseForm from "./AddCourseForm";
 import EditCourseForm from "./EditCourseForm";
 import AddAcademyForm from "./AddAcademyForm";
-import ManageCourses from "./ManageCourses";
+// import ManageCourses from "./ManageCourses";
+import CoursePage from "../Pages/courses/course";
 import AddParentForm from "./AddParentForm";
 import AddStudentForm from "./AddStudentForm";
 import AddBannerForm from "./AddBannerForm";
@@ -36,6 +37,7 @@ import ActivityProviders from "../Pages/academy/ActivityProviders";
 import Campaigns from "../Pages/campaigns/Campaigns";
 import CategoryPage from "../Pages/category/categoryPage";
 import Settings from "../Pages/settings/Settings";
+import ProviderDetails from "../Pages/provider/provider";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -247,30 +249,16 @@ const Dashboard = () => {
           {adminRole === "provider" && (
             <>
               <section id="academies" className="db-section">
-                <ManageAcademy />
+                <ProviderDetails />
               </section>
               <section id="courses" className="db-section">
-                <ManageCourses />
+                <CoursePage />
               </section>
 
               <section id="settings" className="db-section">
-                <div className="settings-content">
-                  <button
-                    className="sidebar-heading-button"
-                    onClick={handleChangePassword}
-                  >
-                    <FontAwesomeIcon icon={faRedoAlt} className="icon" />
-                    Change Password
-                  </button>
-                  <Divider style={{ margin: "10px 0" }} />
-                  <button
-                    className="sidebar-heading-button"
-                    onClick={handleSignOut}
-                  >
-                    <FontAwesomeIcon icon={faSignOutAlt} className="icon" />
-                    Sign Out
-                  </button>
-                </div>
+
+                <Settings />
+
               </section>
             </>
           )}

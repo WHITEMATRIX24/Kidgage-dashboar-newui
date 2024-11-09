@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Appbar from '../../components/common/appbar/Appbar';
 
 function Settings() {
   const [adminsettings, setAdminSettings] = useState({}); // Initialize as an object
@@ -72,11 +73,12 @@ function Settings() {
     <>
       {Object.keys(adminsettings).length > 0 ? (
         <div className="settings-container">
+          <Appbar />
           <div className="settings-heading">
             <h1>Settings</h1>
-            <div className='settings-menu'>
+            {/* <div className='settings-menu'>
               <p>Home</p>{'>'}<p>Settings</p>
-            </div>
+            </div> */}
           </div>
           <div className="settings-data-container">
             <div className="heading-container">
@@ -87,7 +89,7 @@ function Settings() {
             </div>
             <div className="username">
               <div className='uname-data'>
-                <div style={{ alignItems: 'center' }}><p>Username</p></div>
+                <div style={{ alignItems: 'center' }}><p>Name</p></div>
                 <div style={{ alignItems: 'center', marginLeft: "100px" }}>
                   <p>{sessionStorage.getItem('Name')}</p>
                 </div>
@@ -95,8 +97,8 @@ function Settings() {
             </div>
             <div className="email">
               <div className='email-data'>
-                <div><p>Email</p></div>
-                <div className='email-data1' style={{ marginLeft: "140px" }}>
+                <div><p>UserId</p></div>
+                <div className='email-data1' style={{ marginLeft: "100px" }}>
                   <p>{sessionStorage.getItem('email')}</p>
                 </div>
               </div>
@@ -104,12 +106,12 @@ function Settings() {
             <div className="password">
               <div className='pwd-data'>
                 <div><p>Password</p></div>
-                <div style={{ marginLeft: "110px", fontSize: '20px' }}>
+                <div style={{ marginLeft: "80px", fontSize: '20px' }}>
                   <p>{showPassword ? adminsettings.password : maskedPassword}</p>
                 </div>
-                <div style={{ marginLeft: "25px", cursor: 'pointer' }} onClick={togglePasswordVisibility}>
+                {/* <div style={{ marginLeft: "25px", cursor: 'pointer' }} onClick={togglePasswordVisibility}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} style={{ marginTop: '8px' }} />
-                </div>
+                </div> */}
                 <div
                   style={{ marginLeft: "40px", color: 'blue', fontSize: '13px', marginTop: '5px', cursor: 'pointer' }}
                   onClick={() => setIsModalOpen(true)}
@@ -129,12 +131,14 @@ function Settings() {
             <h3>Change Password</h3>
             <input
               type="password"
+              className="passwordchange-input"
               placeholder="Current Password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
             <input
               type="password"
+              className="passwordchange-input"
               placeholder="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}

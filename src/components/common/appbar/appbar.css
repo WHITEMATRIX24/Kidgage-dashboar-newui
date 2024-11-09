@@ -64,31 +64,113 @@
   color: gray;
 }
 
+.appbar-notification-icon-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.appbar-notification-count {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  background-color: blue;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 6px;
+  font-size: 0.5rem;
+}
+
+/* Centered notification popup */
+.appbar-notification-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 70vh;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  z-index: 10;
+  overflow-y: auto;
+  /* Allows scrolling if content exceeds height */
+  border-radius: 8px;
+  /* Optional: rounded corners */
+}
+
+/* Popup title styling */
+
+.appbar-popup-close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: red;
+  cursor: pointer;
+}
+
+/* Popup title */
+.appbar-notification-popup-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Popup list */
+.appbar-notification-popup-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Popup list items */
+.appbar-notification-popup-item {
+  margin: 10px 0;
+  font-size: 1rem;
+  display: flex;
+  padding: 10px;
+  align-items: flex-start;
+}
+
+.appbar-request-number {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
 /* media query */
 
 @media (min-width: 2000px) {
   .appbar-container {
     margin-bottom: 15px;
   }
+
   .search-inputbar {
     padding: 20px 5px;
     font-size: 25px;
   }
+
   .searchbar-magnifyglass {
     width: 30px;
     height: 30px;
   }
+
   .appbar-serarch-container {
     border-radius: 35px;
   }
+
   .appbar-bellicon {
     height: 45px;
     width: 45px;
   }
+
   .avatar {
     width: 55px;
     height: 55px;
   }
+
   .profile-info h1 {
     font-size: x-large;
   }

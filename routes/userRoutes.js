@@ -756,13 +756,13 @@ router.post(
       }
 
       // Update the license number and verification status
-      user.licenseNo = licenseNo;
-      user.verificationStatus = "verified";
+
+      user.verificationStatus = "accepted";
 
       if (req.files) {
         if (req.files.academyImg && req.files.academyImg[0]) {
           // Delete existing academy image from S3 if it exists
-          if (user.academyImg) await deleteImageFromS3(user.academyImg);
+          // if (user.academyImg) await deleteImageFromS3(user.academyImg);
 
           // Upload new academy image to S3
           user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
@@ -770,7 +770,7 @@ router.post(
 
         if (req.files.logo && req.files.logo[0]) {
           // Delete existing logo from S3 if it exists
-          if (user.logo) await deleteImageFromS3(user.logo);
+          // if (user.logo) await deleteImageFromS3(user.logo);
 
           // Upload new logo to S3
           user.logo = await uploadImageToS3(req.files.logo[0]);
@@ -907,9 +907,17 @@ router.get("/meeting-scheduled-users", async (req, res) => {
 });
 router.get("/allUser", async (req, res) => {
   try {
-    // Fetch all users with the specified fields (username, logo)
-    const users = await User.find();
-    console.log("Fetched Users:", users); // Debugging log
+    const { verificationStatus } = req.query;
+
+    // Define a query object that will filter users based on verificationStatus if provided
+    let query = {};
+    if (verificationStatus) {
+      query.verificationStatus = verificationStatus;
+    }
+
+    // Fetch users with the specified filter
+    const users = await User.find(query);
+    console.log("Fetched Users:", users); // Debugging log to check filtered users
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error.message); // Debugging log for errors

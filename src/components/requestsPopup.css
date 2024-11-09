@@ -14,39 +14,28 @@
     box-sizing: border-box;
 }
 
-@media (min-width:1900px) {
+@media (min-width: 1900px) {
     .popup-window {
         width: 900px;
         min-height: 600px;
-        font-size: 35px;
-    }
-    .pending-form p,h4{
-        font-size: 18px;
-    }
-    .close-button {
-        font-size: 35px;
-        position: absolute;
-        top: 13px;
-        right: 19px;
-        cursor: pointer;
     }
 }
 
-@media (max-width:1500px) {
+@media (max-width: 1500px) {
     .popup-window {
         width: 600px;
         min-height: 400px;
     }
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
     .popup-window {
         width: 500px;
         min-height: 400px;
     }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .popup-window {
         width: 350px;
         min-height: 400px;
@@ -56,7 +45,8 @@
 .popup-window h3 {
     margin-top: 0;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.5em;
+    color: var(--app-blue-color);
 }
 
 .popup-window ul {
@@ -64,8 +54,6 @@
     padding: 0;
     margin: 10px 0;
 }
-
-
 
 .popup-window li {
     padding: 10px;
@@ -84,7 +72,7 @@
 .close-button {
     background: none;
     border: none;
-    color: #f41515;
+    color: #999;
     font-size: 16px;
     position: absolute;
     top: 10px;
@@ -96,18 +84,39 @@
     color: #333;
 }
 
-.pending-form button {
+.request-popup-wrapper {
+    margin-top: 1rem;
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.pending-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: var(--app-text-blueshade);
+    font-size: 15px;
+}
+
+.request-popup-download-button {
     padding: 10px 20px;
-    background-color: #387CB8;
+    background-color: var(--app-blue-color);
     color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.pending-form-contacts-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .pending-form h4 {
     margin: 0;
+    font-size: 20px;
 }
 
 .tab-buttons {
@@ -126,8 +135,8 @@
 
 .tab-buttons button.active {
     background-color: transparent;
-    color: #387CB8;
-    border-bottom: 2px solid #387CB8;
+    color: #387cb8;
+    border-bottom: 2px solid #387cb8;
 }
 
 /* confirmationPopup.css */
@@ -164,7 +173,7 @@
 }
 
 .confirmation-buttons button:nth-child(1) {
-    background-color: #387CB8;
+    background-color: #387cb8;
 }
 
 .confirmation-buttons button:nth-child(2) {
@@ -205,7 +214,7 @@
 }
 
 .rejection-buttons button:nth-child(1) {
-    background-color: #387CB8;
+    background-color: #387cb8;
 }
 
 .rejection-buttons button:nth-child(2) {
@@ -213,15 +222,14 @@
 }
 
 .rejection-window textarea {
-    border: 1px solid #387CB8;
+    border: 1px solid #387cb8;
     width: 90%;
     border-radius: 5px;
     outline: none;
-
 }
 
 .rejection-window textarea:active {
-    border: 1px solid #387CB8;
+    border: 1px solid #387cb8;
 }
 
 .request-count {
@@ -232,7 +240,7 @@
     margin-left: 5px;
     border-radius: 50%;
     /* Makes the div a circle */
-    background-color: #387CB8;
+    background-color: #387cb8;
     /* Background color of the circle */
     color: white;
     /* Text color */

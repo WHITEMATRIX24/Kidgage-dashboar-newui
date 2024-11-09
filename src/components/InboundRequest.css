@@ -8,8 +8,9 @@
   width: 100%;
   height: 85vh;
   padding: 10px;
- 
+
 }
+
 .inbound-table-container {
   background-color: white;
   margin-top: 2%;
@@ -22,10 +23,14 @@
   border-radius: 15px;
   box-shadow: 10px;
   padding: 1.5rem;
-  max-height: 500px;
+  height: 80vh;
   overflow-y: scroll;
 
 
+}
+
+.inbound-table-heading {
+  font-size: 25px;
 }
 
 .inbound-details {
@@ -226,9 +231,8 @@ h2 {
   }
 
   .inbound-table-heading {
-    padding-top: 10px;
-    padding-bottom: 20px;
-    font-size: 30px;
+    font-size: 35px;
+    padding: 20px;
     margin-left: 20px;
   }
 

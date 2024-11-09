@@ -104,12 +104,13 @@ function InboundRequest() {
                 <div className="inbound-table-container">
                     <h3 className="inbound-table-heading">Inbound Requests</h3>
                     <table className="inbound-details">
-                        <thead>
+                        <thead className="table-head">
                             <tr>
                                 <th>Academy Name</th>
                                 <th>Request Date</th>
                                 <th>Address</th>
                                 <th>Contact Number</th>
+                                <th></th>
 
                             </tr>
                         </thead>

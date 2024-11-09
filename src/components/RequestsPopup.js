@@ -39,18 +39,39 @@ const RequestsPopup = ({ show, closeRequests, selectedUser }) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <h3>Request Details</h3>
-        <div className="pending-form">
-          <h4>{selectedUser.username}</h4>
-          <p><strong>Email:</strong> {selectedUser.email}</p>
-          <p><strong>Phone:</strong> {selectedUser.phoneNumber}</p>
-          <p><strong>Status:</strong> {selectedUser.verificationStatus}</p>
-          <p><strong>Location:</strong> {selectedUser.location}</p>
-          <p><strong>Description:</strong> {selectedUser.description}</p>
-          <h5>Authority filling the form:</h5>
-          <p><strong>Full Name:</strong> {selectedUser.fullName}</p>
-          <p><strong>Designation:</strong> {selectedUser.designation}</p>
+        <div className="request-popup-wrapper">
+          <div className="pending-form">
+            <h4>{selectedUser.username}</h4>
+            <div className="pending-form-contacts-container">
+              <p>
+                <strong>Email:</strong> {selectedUser.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {selectedUser.phoneNumber}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedUser.verificationStatus}
+              </p>
+            </div>
+            <p>
+              <strong>Location:</strong> {selectedUser.location}
+            </p>
+            <p>
+              <strong>Description:</strong> {selectedUser.description}
+            </p>
+            <h5>Authority filling the form:</h5>
+            <p>
+              <strong>Full Name:</strong> {selectedUser.fullName}
+            </p>
+            <p>
+              <strong>Designation:</strong> {selectedUser.designation}
+            </p>
+          </div>
         </div>
-        <button onClick={downloadFile} className="download-button">
+        <button
+          onClick={downloadFile}
+          className="request-popup-download-button"
+        >
           Download Uploaded File
         </button>
       </div>
