@@ -53,7 +53,7 @@ const EditAcademyForm = ({ id }) => {
   const handleConfirmDelete = async () => {
     setIsLoading(true);
     try {
-      await axios.delete(`http://localhost:5001/api/users/academy/${user._id}`);
+      await axios.delete(`https://kidgage-dashboar-newui.onrender.com/api/users/academy/${user._id}`);
       setUser(null);
       setFormData({
         username: "",
@@ -106,7 +106,7 @@ const EditAcademyForm = ({ id }) => {
 
       try {
         const response = await fetch(
-          `http://localhost:5001/api/users/user/${userId}`
+          `https://kidgage-dashboar-newui.onrender.com/api/users/user/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user details.");
@@ -178,7 +178,7 @@ const EditAcademyForm = ({ id }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/users/edits/${userId}`,
+        `https://kidgage-dashboar-newui.onrender.com/api/users/edits/${userId}`,
         {
           method: "POST",
           body: formDataToSend, // Use FormData for file uploads

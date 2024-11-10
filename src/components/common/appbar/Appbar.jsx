@@ -12,7 +12,7 @@ const Appbar = () => {
     // Fetch pending requests from the backend
     const fetchPendingRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/users/pending"); // Adjust the URL as needed
+        const response = await fetch("https://kidgage-dashboar-newui.onrender.com/api/users/pending"); // Adjust the URL as needed
         const data = await response.json();
         setPendingRequests(data);
       } catch (error) {

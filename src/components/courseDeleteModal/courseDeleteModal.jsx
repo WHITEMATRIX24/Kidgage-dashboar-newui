@@ -11,7 +11,7 @@ const CourseDeleteModal = ({ isShow, closeHandler, courseDeleteId }) => {
             setIsLoading(true);
             try {
                 const res = await axios.delete(
-                    `http://localhost:5001/api/course-category/delete/${courseDeleteId}`
+                    `https://kidgage-dashboar-newui.onrender.com/api/course-category/delete/${courseDeleteId}`
                 );
 
                 if (res.status === 200) {

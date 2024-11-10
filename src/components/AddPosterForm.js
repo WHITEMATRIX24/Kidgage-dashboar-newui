@@ -93,7 +93,7 @@ function AddPosterForm() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/posters/add",
+        "https://kidgage-dashboar-newui.onrender.com/api/posters/add",
         formData,
         {
           headers: {

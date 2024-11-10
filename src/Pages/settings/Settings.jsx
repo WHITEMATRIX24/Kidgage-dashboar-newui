@@ -29,7 +29,7 @@ function Settings() {
   const FetchAdminDetails = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5001/api/admin");
+      const response = await axios.get("https://kidgage-dashboar-newui.onrender.com/api/admin");
       console.log("Admin data:", response.data);  // Check if _id exists
       setAdminSettings(response.data);
       const passwordLength = response.data.password ? response.data.password.length : 12;
@@ -58,7 +58,7 @@ function Settings() {
 
 
     try {
-      const response = await axios.post(`http://localhost:5001/api/admin/change-password/${adminId}`, {
+      const response = await axios.post(`https://kidgage-dashboar-newui.onrender.com/api/admin/change-password/${adminId}`, {
         currentPassword,
         newPassword,
       });

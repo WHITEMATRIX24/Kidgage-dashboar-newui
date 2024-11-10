@@ -30,7 +30,7 @@ function InboundRequest() {
         try {
             setLoading(true);
             const response = await axios.get(
-                "http://localhost:5001/api/users/pending"
+                "https://kidgage-dashboar-newui.onrender.com/api/users/pending"
             );
             setPendingUsers(response.data);
         } catch (error) {
@@ -70,11 +70,11 @@ function InboundRequest() {
         }
 
         try {
-            await axios.post("http://localhost:5001/api/users/updateVerification", {
+            await axios.post("https://kidgage-dashboar-newui.onrender.com/api/users/updateVerification", {
                 userId: selectedUser._id,
                 date: selectedDate.toISOString(),
             });
-            await axios.post("http://localhost:5001/api/users/send-email", {
+            await axios.post("https://kidgage-dashboar-newui.onrender.com/api/users/send-email", {
                 email: selectedUser.email,
                 date: selectedDate.toISOString(),
             });

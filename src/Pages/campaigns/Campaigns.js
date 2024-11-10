@@ -63,7 +63,7 @@ function Campaigns() {
   const fetchBanners = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5001/api/banners");
+      const response = await axios.get("https://kidgage-dashboar-newui.onrender.com/api/banners");
       //   console.log(response.data);
       setBanners(response.data);
       setLoading(false);
@@ -76,7 +76,7 @@ function Campaigns() {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5001/api/desktop-banners/"
+        "https://kidgage-dashboar-newui.onrender.com/api/desktop-banners/"
       );
       console.log(response.data);
       setDesktopBanners(response.data);
@@ -90,7 +90,7 @@ function Campaigns() {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5001/api/mobile-banners/"
+        "https://kidgage-dashboar-newui.onrender.com/api/mobile-banners/"
       );
       // console.log(response.data);
       setMobileBanners(response.data);
@@ -107,11 +107,11 @@ function Campaigns() {
     const toggleApiBasedOnTab = () => {
       switch (tab) {
         case "home":
-          return `http://localhost:5001/api/banners/update-status/${bannerId}`;
+          return `https://kidgage-dashboar-newui.onrender.com/api/banners/update-status/${bannerId}`;
         case "desktop":
-          return `http://localhost:5001/api/desktop-banners/update-status/${bannerId}`;
+          return `https://kidgage-dashboar-newui.onrender.com/api/desktop-banners/update-status/${bannerId}`;
         case "mobile":
-          return `http://localhost:5001/api/mobile-banners/update-status/${bannerId}`;
+          return `https://kidgage-dashboar-newui.onrender.com/api/mobile-banners/update-status/${bannerId}`;
         default:
           return "";
       }
@@ -304,34 +304,34 @@ function Campaigns() {
                     </div>
                     <div className="grid-item ">
                       <div className="campaign-actions">
-                      
-                          {" "}
-                          <label class="switch">
-                            <input
-                              type="checkbox"
-                              defaultChecked={item.status}
-                              onChange={() =>
-                                toggleHandler("desktop", item._id, item.status)
-                              }
-                              disabled={toggleCheckedId.find((val) =>
-                                val === item._id ? true : false
-                              )}
-                            ></input>
-                            <span class="slider round"></span>
-                          </label>
-                          <FontAwesomeIcon
-                            icon={faPenToSquare}
-                            style={{ color: "#106cb1", marginLeft: "20px" }}
-                            onClick={() => openBannerEditModal("desktop", item)}
-                          />
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            style={{ color: "#d70404", marginLeft: "15px" }}
-                            onClick={() =>
-                              openBannerDeleteModal("desktop", item)
+
+                        {" "}
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            defaultChecked={item.status}
+                            onChange={() =>
+                              toggleHandler("desktop", item._id, item.status)
                             }
-                          />
-                      
+                            disabled={toggleCheckedId.find((val) =>
+                              val === item._id ? true : false
+                            )}
+                          ></input>
+                          <span class="slider round"></span>
+                        </label>
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{ color: "#106cb1", marginLeft: "20px" }}
+                          onClick={() => openBannerEditModal("desktop", item)}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          style={{ color: "#d70404", marginLeft: "15px" }}
+                          onClick={() =>
+                            openBannerDeleteModal("desktop", item)
+                          }
+                        />
+
                       </div>
                     </div>
                   </div>

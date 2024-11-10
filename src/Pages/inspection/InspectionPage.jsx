@@ -34,7 +34,7 @@ const InspectionPage = () => {
   const meetingScheduledUserDataHandler = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5001/api/users/meeting-scheduled-users"
+        "https://kidgage-dashboar-newui.onrender.com/api/users/meeting-scheduled-users"
       );
       setMeetingScheduledUsrs(response.data);
     } catch (error) {

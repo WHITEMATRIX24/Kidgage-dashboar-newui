@@ -124,6 +124,11 @@
     /* Ensures logo cell spans most of the row */
 }
 
+.provider-logo {
+    width: 60px;
+    height: 60px;
+}
+
 .academy-image {
     width: 200px;
     height: 150px

@@ -10,11 +10,11 @@ const CampaignDeleteModal = ({ isShow, closeHandler, tab, modalData }) => {
     const apiBasedOnTab = () => {
         switch (tab) {
             case "home":
-                return `http://localhost:5001/api/banners/${modalData._id}`;
+                return `https://kidgage-dashboar-newui.onrender.com/api/banners/${modalData._id}`;
             case "desktop":
-                return `http://localhost:5001/api/desktop-banners/${modalData._id}`;
+                return `https://kidgage-dashboar-newui.onrender.com/api/desktop-banners/${modalData._id}`;
             case "mobile":
-                return `http://localhost:5001/api/mobile-banners/${modalData._id}`;
+                return `https://kidgage-dashboar-newui.onrender.com/api/mobile-banners/${modalData._id}`;
             default:
                 return "";
         }

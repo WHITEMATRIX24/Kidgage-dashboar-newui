@@ -66,7 +66,7 @@ const Sidebar = ({
       const userId = sessionStorage.getItem("userid");
       try {
         const response = await fetch(
-          `http://localhost:5001/api/users/user/${userId}`
+          `https://kidgage-dashboar-newui.onrender.com/api/users/user/${userId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch user details.");
@@ -176,7 +176,7 @@ const Sidebar = ({
       "requests",
       "inspections",
       "academies",
-      "courses",
+      // "courses",
       // "parents",
       // "students",
       "campaigns",

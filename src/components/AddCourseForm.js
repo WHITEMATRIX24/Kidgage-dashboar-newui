@@ -36,7 +36,7 @@ function AddCourseForm({ providerId }) {
     const fetchCourseTypes = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5001/api/course-category/categories"
+          "https://kidgage-dashboar-newui.onrender.com/api/course-category/categories"
         );
         setCourseTypes(response.data);
       } catch (error) {
@@ -188,7 +188,7 @@ function AddCourseForm({ providerId }) {
       });
 
       const response = await axios.post(
-        "http://localhost:5001/api/courses/addcourse",
+        "https://kidgage-dashboar-newui.onrender.com/api/courses/addcourse",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -227,7 +227,7 @@ function AddCourseForm({ providerId }) {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/users/search?query=${searchQuery}`
+        `https://kidgage-dashboar-newui.onrender.com/api/users/search?query=${searchQuery}`
       );
       setSearchResult(response.data);
       setSearchError("");

@@ -33,13 +33,15 @@
 }
 
 .course-deletemodal-container h2 {
-    color: var(--app-blue-color);
-    font-size: 3rem;
+    color: black;
+    padding: 20px;
+    font-size: 25px;
 }
 
 .course-deletemodal-btn-container {
     display: flex;
     gap: 2rem;
+    padding-bottom: 20px;
 }
 
 .course-deletemodal-btn-container button {

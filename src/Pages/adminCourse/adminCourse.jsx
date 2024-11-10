@@ -19,7 +19,7 @@ const AdminCoursePage = () => {
 
     const fetchProviders = async () => {
         try {
-            const response = await axios.get("http://localhost:5001/api/users/accepted");
+            const response = await axios.get("https://kidgage-dashboar-newui.onrender.com/api/users/accepted");
             setProviders(response.data);
         } catch (error) {
             console.error("Error fetching providers:", error);
@@ -29,7 +29,7 @@ const AdminCoursePage = () => {
 
     const fetchCourses = async (providerId) => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/courses/by-providers`, {
+            const response = await axios.get(`https://kidgage-dashboar-newui.onrender.com/api/courses/by-providers`, {
                 params: { providerIds: [providerId] } // Pass providerId as an array
             });
             setCourseData(response.data);
@@ -53,7 +53,7 @@ const AdminCoursePage = () => {
 
     const deleteCourse = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:5001/api/courses/delete/${id}`);
+            const res = await axios.delete(`https://kidgage-dashboar-newui.onrender.com/api/courses/delete/${id}`);
             if (res.status === 200) {
                 setCourseData((prevData) => prevData.filter(course => course._id !== id));
                 alert("Course deleted successfully");

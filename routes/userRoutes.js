@@ -342,6 +342,7 @@ router.post("/verify/:id", async (req, res) => {
 
     // Set today's date for expiryDate
     const today = new Date();
+    today.setFullYear(today.getFullYear() + 1); // Adds 1 year to today's date
 
     // Update the user verification status and expiry date
     const user = await User.findByIdAndUpdate(
@@ -884,11 +885,19 @@ router.post(
       // Convert files to Base64 and update the user record
       if (req.files) {
         if (req.files.academyImg && req.files.academyImg[0]) {
-          user.academyImg = req.files.academyImg[0].buffer.toString("base64"); // Convert Academy Image to Base64
+          // Delete existing academy image from S3 if it exists
+          // if (user.academyImg) await deleteImageFromS3(user.academyImg);
+
+          // Upload new academy image to S3
+          user.academyImg = await uploadImageToS3(req.files.academyImg[0]);
         }
 
         if (req.files.logo && req.files.logo[0]) {
-          user.logo = req.files.logo[0].buffer.toString("base64"); // Convert Logo to Base64
+          // Delete existing logo from S3 if it exists
+          // if (user.logo) await deleteImageFromS3(user.logo);
+
+          // Upload new logo to S3
+          user.logo = await uploadImageToS3(req.files.logo[0]);
         }
         if (req.files.crFile && req.files.crFile[0]) {
           user.crFile = req.files.crFile[0].buffer.toString("base64"); // Convert Logo to Base64

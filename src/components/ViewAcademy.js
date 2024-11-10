@@ -20,7 +20,7 @@ const ViewAcademy = ({ handleSubmit }) => {
     // Fetch users from the backend
     setLoading(true);
     axios
-      .get("http://localhost:5001/api/users/all") // Make sure this matches the actual API route
+      .get("https://kidgage-dashboar-newui.onrender.com/api/users/all") // Make sure this matches the actual API route
       .then((response) => {
         setUsers(response.data);
         setLoading(false);
