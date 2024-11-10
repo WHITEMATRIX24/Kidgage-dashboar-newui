@@ -15,7 +15,7 @@ function ActivityProviders() {
     const fetchUsers = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:5001/api/users/allUser', {
+            const response = await axios.get('https://kidgage-dashboar-newui.onrender.com/api/users/allUser', {
                 params: {
                     verificationStatus: 'accepted'
                 }
