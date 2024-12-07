@@ -86,7 +86,7 @@
   background-color: var(--app-backgroundcolor-gray);
 }
 
-.sidebar-nav-menus .active .sidebar-icon {
+.sidebar-nav-menus .active .activeIcon {
   color: white;
   background-color: var(--app-blue-color);
   padding: 10px 10px;

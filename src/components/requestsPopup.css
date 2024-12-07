@@ -70,6 +70,7 @@
   border-bottom: 1px solid var(--app-backgroundcolor-gray);
   padding-bottom: 1rem;
 }
+
 .request-popup-header h4 {
   max-width: 30rem;
   margin: 0px;
@@ -110,6 +111,7 @@
   flex-direction: column;
   gap: 1rem;
 }
+
 .request-popup-content-bio {
   margin-top: 3rem;
 }
@@ -285,37 +287,46 @@
     min-height: 600px;
     padding: 30px 35px;
   }
+
   .popup-window h3 {
     font-size: 40px;
   }
+
   .request-popup-header h4 {
     max-width: 50rem;
     font-size: 40px;
   }
+
   .request-popup-header-icon-globe-container {
     padding: 10px;
     border-radius: 50%;
   }
+
   .request-popup-header-icon-instagram {
     width: 4rem;
     height: 4rem;
   }
+
   .request-popup-header-icon-globe {
     width: 3.5rem;
     height: 3.5rem;
   }
+
   .request-popup-content {
     font-size: 25px;
     gap: 3rem;
   }
+
   .pending-form {
     gap: 3rem;
   }
+
   .request-popup-download-button {
     padding: 20px 40px;
     font-size: 25px;
     border-radius: 30px;
   }
+
   .request-popup-close-icon {
     width: 2.5rem;
     height: 2.5rem;

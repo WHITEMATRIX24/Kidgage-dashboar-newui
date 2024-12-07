@@ -9,7 +9,7 @@ function InboundRequest() {
                 <div className='heading'> <h1>Inbound Requests</h1></div>
 
                 <div className='table-container'>
-                    <h4>Inbound Requests</h4>
+                    {/* <h4>Inbound Requests</h4> */}
                     <table className='inbound-details '>
 
                         <thead>

@@ -39,6 +39,8 @@ import CategoryPage from "../Pages/category/categoryPage";
 import Settings from "../Pages/settings/Settings";
 import ProviderDetails from "../Pages/provider/provider";
 import AdminCoursePage from "../Pages/adminCourse/adminCourse";
+import ProviderDashboard from "../Pages/providerDashboard/providerDashboard";
+import Enquiries from "../Pages/Enquiries/Enquiries";
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -252,17 +254,21 @@ const Dashboard = () => {
           )}
           {adminRole === "provider" && (
             <>
-              <section id="academies" className="db-section">
-                <ProviderDetails />
+              <section id="dashboard" className="db-section">
+                <ProviderDashboard />
               </section>
+
               <section id="courses" className="db-section">
                 <CoursePage />
               </section>
-
+              <section id="enquiries" className="db-section">
+                <Enquiries />
+              </section>
+              <section id="profile" className="db-section">
+                <ProviderDetails />
+              </section>
               <section id="settings" className="db-section">
-
                 <Settings />
-
               </section>
             </>
           )}

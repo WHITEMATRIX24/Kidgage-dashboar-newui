@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import "./AddCourseForm.css";
+
 function AddCourseForm({ providerId }) {
   const initialCourseState = {
     providerId: providerId,
@@ -243,10 +244,11 @@ function AddCourseForm({ providerId }) {
   };
 
   return (
-    <div className="">
+
+    <div className="course-addmodal-container">
+
       <form className="add-course-form" onSubmit={handleSubmit}>
         <label htmlFor="name" style={{ color: "black" }}>Course Name</label>
-
         <input
           type="text"
           id="name"
@@ -347,7 +349,7 @@ function AddCourseForm({ providerId }) {
               fontSize: "smaller",
               marginBottom: "20px",
               marginLeft: "10px",
-              color: "darkblue",
+              color: "black",
             }}
           >
             {charCount}/{charLimit} characters
@@ -379,7 +381,7 @@ function AddCourseForm({ providerId }) {
             </select>
           </div>
         </div>
-        <label className="selecet-days-label">Select Days:</label>
+        <label className="" style={{ color: 'black' }}>Select Days:</label>
         <div className="form-group add-days-group">
           <div className="days-selection">
             {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
@@ -609,7 +611,7 @@ function AddCourseForm({ providerId }) {
           ))}
         </div>
 
-        <button type="submit" className="addcourse-submit">
+        <button style={{ backgroundColor: 'black' }} type="submit" className="addcourse-submit">
           Submit
         </button>
         {error && <p className="error-message">{error}</p>}
@@ -628,6 +630,7 @@ function AddCourseForm({ providerId }) {
         </div>
       )}
     </div>
+
   );
 }
 

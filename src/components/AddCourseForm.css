@@ -6,7 +6,6 @@
     /* Set width to 70% of viewport width */
     height: 70vh;
     /* Set height to 70% of viewport height */
-
     margin: auto;
     padding: 25px;
     border: 1px solid #e0e0e0;
@@ -14,10 +13,25 @@
     background-color: #ffffffb8;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
-    overflow-y: auto;
+    overflow-y: scroll;
     /* Allow scrolling if content exceeds container height */
 }
 
+.course-addmodal-container {
+    background-color: white;
+    width: 100%;
+    min-height: 30rem;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.05); */
+    display: flex;
+    flex-direction: column;
+    /* gap: 2rem; */
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    align-items: center;
+    position: relative;
+    /* margin-top: px; */
+
+}
 
 .add-course-form-header {
     display: flex;
@@ -31,17 +45,63 @@
     margin-right: 50px;
 }
 
-.add-course-form-header h2 {
+/* .add-course-form-header h2 {
     margin: 0;
     font-size: 1.5em;
     color: #2196F3;
-}
+} */
 
 .add-course-form {
-    width: 90%;
+    width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
+
+}
+
+.loader-container-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style the loading dots */
+.loading-dots-edit span {
+    display: inline-block;
+    width: 25px;
+    /* Adjust size of the dots */
+    height: 25px;
+    /* Adjust size of the dots */
+    margin: 0 4px;
+    /* Adjust spacing between dots */
+    background-color: black;
+    /* Set the color of the dots to black */
+    border-radius: 50%;
+    /* Make them round */
+    animation: bounce 2.2s infinite alternate;
+}
+
+/* Animation for bouncing dots */
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(0);
+    }
+
+    25% {
+        transform: scale(0.5);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    75% {
+        transform: scale(0.5);
+    }
+
+
 }
 
 .add-course-form input,
@@ -75,14 +135,14 @@
 .add-course-form input:focus,
 .add-course-form select:focus,
 .add-course-form textarea:focus {
-    border: 1px solid #2196F3;
+    border: 1px solid #000508;
     box-shadow: 0 0 5px rgba(176, 168, 164, 0.5);
 }
 
 .add-course-form input:hover,
 .add-course-form select:hover,
 .add-course-form textarea:hover {
-    border: 1px solid #2196F3;
+    border: 1px solid #000001;
 }
 
 /* Autofill styles */
@@ -148,7 +208,8 @@
     width: 180px;
     border: none;
     border-radius: 20px;
-    color: var(--app-blue-color);
+    /* color: var(--app-blue-color); */
+    color: black;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
@@ -162,13 +223,13 @@
 }
 
 .add-course-form .rem-button {
-    color: #2a5f8e;
+    color: #000305;
     background-color: transparent;
 
 }
 
 .add-course-form .rem-button:hover {
-    color: #5889cc;
+    color: #000000;
     background-color: transparent;
 }
 
@@ -241,7 +302,7 @@
 }
 
 .floating-button:hover {
-    background-color: #c05a2b;
+    background-color: #000000;
     transform: scale(1.1);
 }
 
@@ -274,6 +335,7 @@
     font-size: 1.5em;
 }
 
+
 .add-course-form .search-provider-button:hover {
     background-color: transparent;
     color: #265279c7;
@@ -305,7 +367,7 @@
 }
 
 .addcourse-submit button {
-    background-color: #2196F3 !important;
+    background-color: #000000 !important;
 }
 
 @media (max-width: 1200px) {
@@ -428,7 +490,7 @@
 }
 
 .interest-input-group .add-interest-btn {
-    color: #2196F3;
+    color: #000000;
     /* Change as needed */
     background-color: transparent;
     border: none;
@@ -437,7 +499,7 @@
 }
 
 .interest-input-group .add-interest-btn:hover {
-    color: #2196F3;
+    color: #000000;
     /* Change as needed */
     background-color: transparent;
     transform: scale(1.1);
@@ -530,7 +592,7 @@
 }
 
 .view-banner-button:hover {
-    background-color: #c05a2b;
+    background-color: #000000;
 }
 
 .view-banner-button svg {
@@ -552,7 +614,7 @@
 .edit-banner-button:hover,
 .delete-banner-button:hover {
     color: #fff;
-    background: #c0392b;
+    background: #0c0908;
 }
 
 .custom-file-upload {
@@ -597,7 +659,7 @@
 }
 
 .back-to-events-button:hover {
-    background-color: #c0392b;
+    background-color: #030100;
 }
 
 /* Existing CSS */
@@ -644,14 +706,14 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #007bff;
+    color: #000101;
     font-size: .8em;
     margin: 5px;
 }
 
 .edit-banner-button:hover,
 .delete-banner-button:hover {
-    color: #0056b3;
+    color: #000000;
 }
 
 .custom-file-upload {
@@ -799,7 +861,7 @@
     padding: 5px;
     width: 180px;
     font-size: smaller;
-    background-color: #387CB8;
+    background-color: #000000;
 }
 
 @media (min-width:1500px) {

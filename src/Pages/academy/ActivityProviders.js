@@ -1,16 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faMagnifyingGlass, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faMagnifyingGlass, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import './ActivityProviders.css';
 import axios from 'axios';
 import Appbar from '../../components/common/appbar/Appbar';
 import RequestsPopup from '../../components/RequestsPopup';
+import ActivityEditModal from '../../components/ActivityEditModal/ActivityEditModal';
+
 
 function ActivityProviders() {
     const [Users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showRequestPopup, setShowRequestPopup] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [updateStatus, setUpdateStatus] = useState([])
+    const [activityEditModalState, setCategoryEditModalState] = useState({
+        isShow: false,
+        data: null,
+    });
 
     const fetchUsers = async () => {
         try {
@@ -37,9 +44,25 @@ function ActivityProviders() {
         setShowRequestPopup(false);
     };
 
+
+    // edit no of class modal Open handler
+    const ActivityClassEditModalOpenHandler = (editModalData) =>
+        setCategoryEditModalState({
+            isShow: true,
+            data: editModalData,
+        });
+
+
+    // edit no of class modal Close handler
+    const ActivityClassEditModalCloseHandler = (editModalData) =>
+        setCategoryEditModalState({
+            isShow: false,
+            data: null,
+        });
+
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [updateStatus]);
 
     return (
         <>
@@ -53,7 +76,7 @@ function ActivityProviders() {
                 ) : Users?.length > 0 ? (
                     <div className='activity-table-container'>
                         <div style={{ position: 'sticky', top: '0', padding: '15px', backgroundColor: 'white' }}>
-                            <h3 className="activity-table-h3" style={{ marginBottom: '3px' }}>Activity Providers</h3>
+                            {/* <h3 className="activity-table-h3" style={{ marginBottom: '3px' }}>Activity Providers</h3> */}
                         </div>
                         <table className='activity-details'>
                             <thead className='activity-table-head'>
@@ -78,7 +101,9 @@ function ActivityProviders() {
                                         <td>{item.requestFiledDate}</td>
                                         <td className='activity-address'>{item.location}</td>
                                         <td>{item?.phoneNumber}</td>
-                                        <td>{item.noOfCourses}</td>
+                                        <td>{item.noOfCourses}
+                                            <FontAwesomeIcon className='activity-btn-edit' icon={faPenToSquare} onClick={() => ActivityClassEditModalOpenHandler(item)} />
+                                        </td>
                                         <td>
                                             <div style={{ justifyContent: 'space-between', alignItems: 'center', display: 'flex', padding: '5px' }}>
                                                 <FontAwesomeIcon
@@ -110,6 +135,15 @@ function ActivityProviders() {
                     </p>
                 )}
             </div>
+            {/* Edit no of class modal */}
+            {activityEditModalState.isShow && (
+                <ActivityEditModal
+                    isShow={activityEditModalState.isShow}
+                    closeHandler={ActivityClassEditModalCloseHandler}
+                    activityData={activityEditModalState.data}
+                    setUpdateStatus={setUpdateStatus}
+                />
+            )}
         </>
     );
 }

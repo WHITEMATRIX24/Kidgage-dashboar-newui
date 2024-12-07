@@ -102,7 +102,7 @@ function InboundRequest() {
             </div>
             {pendingUsers.length > 0 ? (
                 <div className="inbound-table-container">
-                    <h3 className="inbound-table-heading">Inbound Requests</h3>
+                    {/* <h3 className="inbound-table-heading">Inbound Requests</h3> */}
                     <table className="inbound-details">
                         <thead className="table-head">
                             <tr>

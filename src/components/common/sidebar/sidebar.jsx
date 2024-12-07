@@ -21,7 +21,7 @@ import {
   faBell,
   faFile,
   faImage,
-  faUser,
+  faUser, faMessage
 } from "@fortawesome/free-regular-svg-icons";
 
 const Sidebar = ({
@@ -98,7 +98,7 @@ const Sidebar = ({
       "inspections",
       "academies",
       "courses",
-      // "parents",
+      "profile",
       // "students",
       "campaigns",
       // "event-posters",
@@ -146,11 +146,12 @@ const Sidebar = ({
     requests: faBell,
     inspections: faFile,
     dashboard: faBorderAll,
-    // parents: faUsers,
+    profile: faUsers,
     // students: faUserGraduate,
     campaigns: faImage,
     // "event-posters": faImages,
     settings: faCog,
+    enquiries: faMessage,
     // advertisements: faAd, // or faBullseye or faMegaphone
   };
 
@@ -169,6 +170,32 @@ const Sidebar = ({
       toggleSidebar(); // Close sidebar on smaller screens
     }
   };
+  useEffect(() => {
+    if (adminRole === "Provider") {
+      setActiveItem('dashboard')
+      document.getElementsByClassName("sidebar-logout-icon")[0].style.color = "white"
+      document.getElementsByClassName("sidebar-logout-icon")[0].style.backgroundColor = "#b3aea6"
+      document.getElementsByClassName("sidebar-logout-btn")[0].style.color = "grey"
+    }
+  }, [adminRole])
+  useEffect(() => {
+    if (adminRole == "Provider") {
+      document.getElementsByClassName("active")[0].style.color = "black"
+      document.getElementsByClassName("active")[0].style.borderLeftColor = "#b3aea6"
+      document.getElementsByClassName("activeIcon")[0].style.backgroundColor = "black"
+      const notActiveElement = document.getElementsByClassName("notActive")
+      for (var i = 0; i < notActiveElement.length; i++) {
+        notActiveElement[i].style.color = "grey";
+      }
+      const sidebarIcons = document.getElementsByClassName("sidebar-icon")
+      for (var i = 0; i < sidebarIcons.length; i++) {
+        sidebarIcons[i].style.color = "white";
+        sidebarIcons[i].style.backgroundColor = "#b3aea6"
+      }
+    }
+
+  }, [adminRole, activeItem])
+
 
   const allowedSectionsByRole = {
     admin: [
@@ -177,7 +204,7 @@ const Sidebar = ({
       "inspections",
       "academies",
       // "courses",
-      // "parents",
+      // "profile",
       // "students",
       "campaigns",
       // "event-posters",
@@ -185,7 +212,7 @@ const Sidebar = ({
       "categories",
       "settings",
     ],
-    provider: ["academies", "courses", "settings"],
+    provider: ["dashboard", "courses", "enquiries", "profile", "settings"],
   };
   const allowedSections = allowedSectionsByRole[adminRole.toLowerCase()] || [];
 
@@ -200,12 +227,12 @@ const Sidebar = ({
             <a href={`#${section}`}>
               <li
                 key={section}
-                className={activeItem === section ? "active" : ""}
+                className={activeItem === section ? "active" : "notActive"}
                 onClick={() => handleItemClick(section)}
               >
                 <FontAwesomeIcon
                   icon={icons[section]}
-                  className="sidebar-icon"
+                  className={activeItem === section ? "activeIcon" : "sidebar-icon"}
                 />
                 {section.charAt(0).toUpperCase() +
                   section.slice(1).replace("-", " ")}

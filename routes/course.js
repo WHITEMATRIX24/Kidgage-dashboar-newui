@@ -266,4 +266,81 @@ router.get("/get-all-courses", async (req, res) => {
   }
 });
 
+
+//course status updator
+// router.put('/update-active-status/:id', async (req, res) => {
+//   const  {id}  = req.params;
+//   const {active}  = req.body; // Get 'active' from the body
+
+//   console.log("id",id);
+//   console.log("active status",active);
+
+
+//   // Validate the 'active' value
+//   if (active !== "true" && active !== "false" && typeof active !== "boolean") {
+//     return res.status(400).json({ message: "Invalid 'active' value. It should be 'true' or 'false'." });
+//   }
+
+//   try {
+//     // Update the course's active status in the database
+//     const course = await Course.findByIdAndUpdate(
+//       id,
+//       {
+//         active: active,
+//       },
+//       { new: true }
+//     );
+//       console.log("course",course.active);
+
+//     if (!course) {
+//       return res.status(404).json({ message: "Course not found." });
+//     }
+
+//     res.json(course); // Return the updated course object
+//   } catch (err) {
+//     console.error('Error updating course:', err);
+//     res.status(500).json({ message: "Error updating course" });
+//   }
+// });
+
+router.put('/update-active-status/:id', async (req, res) => {
+  const { id } = req.params;  // Extract 'id' from URL parameters
+  const { active } = req.body;  // Extract 'active' from request body
+
+  console.log("Received id:", id);
+  console.log("Received active status:", active);
+
+  // Check if the 'active' field is valid
+  if (active !== "true" && active !== "false" && typeof active !== "boolean") {
+    return res.status(400).json({ message: "Invalid 'active' value. It should be 'true' or 'false'." });
+  }
+
+  try {
+    // Update the course's active status in the database
+    const course = await Course.findByIdAndUpdate(
+      id,
+      { active: active },  // Update the 'active' field
+      { new: true }        // Return the updated document
+    );
+
+    // Check if the course was found and updated
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    // Log the updated course
+    console.log("Updated course:", course);
+
+    // Respond with the updated course object
+    res.json(course);
+
+  } catch (err) {
+    // Log any error that occurs during the update
+    console.error('Error updating course:', err);
+    res.status(500).json({ message: "Error updating course" });
+  }
+});
+
+
+
 module.exports = router;

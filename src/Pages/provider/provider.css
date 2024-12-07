@@ -13,7 +13,7 @@
 
 .provider-title {
     margin-top: 2rem;
-    color: rgba(17, 151, 224, 0.951);
+    color: black;
 }
 
 .provider-section-title {
@@ -54,14 +54,14 @@
 }
 
 .provider-save-button {
-    background-color: var(--app-blue-color);
-    padding: 10px 15px;
+    background-color: black;
+    padding: 10px 20px;
     color: white;
     border: none;
     outline: none;
-    width: 10rem;
+
     font-size: 15px;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -144,14 +144,14 @@
 
 .edit-icon {
     font-size: 1.5rem;
-    color: var(--app-blue-color);
+    color: black;
     cursor: pointer;
     padding-right: 20px;
     transition: color 0.3s;
 }
 
 .edit-icon:hover {
-    color: var(--app-blue-color);
+    color: rgb(57, 56, 56);
 }
 
 .provider-details .input-row {

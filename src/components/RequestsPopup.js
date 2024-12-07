@@ -5,6 +5,7 @@ import {
   faArrowLeft,
   faLocationDot,
   faGlobe,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import "./requestsPopup.css";
@@ -57,12 +58,19 @@ const RequestsPopup = ({ show, closeRequests, selectedUser }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FontAwesomeIcon
+                  <FontAwesomeIcon style={{ cursor: "pointer", color: "#0080ff" }}
                     icon={faInstagram}
                     size="2xl"
                     className="request-popup-header-icon-instagram"
                   />
                 </a>
+                <button style={{ backgroundColor: "transparent", border: "none", cursor: "pointer", color: "#0080ff" }} onClick={downloadFile}>
+                  <FontAwesomeIcon
+                    icon={faDownload}
+                    size="2xl"
+                    className="request-popup-header-icon-instagram"
+                  />
+                </button>
               </div>
             </div>
             <div className="request-popup-content">
@@ -90,12 +98,12 @@ const RequestsPopup = ({ show, closeRequests, selectedUser }) => {
             </div>
           </div>
         </div>
-        <button
+        {/* <button
           onClick={downloadFile}
           className="request-popup-download-button"
         >
           Download Uploaded File
-        </button>
+        </button> */}
       </div>
     </>
   );

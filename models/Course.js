@@ -34,6 +34,7 @@ const courseSchema = new mongoose.Schema({
     images: [{ type: String, required: true }],
     ageGroup: { type: [ageGroupSchema], required: true },
     promoted: { type: Boolean, default: false },  // Add this field to track promoted courses
+    active: { type: String, required: true },
 
     preferredGender: {
         type: String,

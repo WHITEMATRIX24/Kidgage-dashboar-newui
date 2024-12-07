@@ -84,7 +84,7 @@ const AdminSignIn = () => {
           />
         </div>
         <form className="aform-sign-in" onSubmit={handleSubmit}>
-          <h2>Admin's Sign-In</h2>
+          <h2>Sign-In</h2>
           <input
             type="text"
             name="name"

@@ -75,16 +75,16 @@ function Settings() {
         <div className="settings-container">
           <Appbar />
           <div className="settings-heading">
-            <h1>Settings</h1>
+            <h1 style={{ color: sessionStorage.getItem('adminRole') === 'provider' ? 'black' : 'inherit' }}>Settings</h1>
             {/* <div className='settings-menu'>
               <p>Home</p>{'>'}<p>Settings</p>
             </div> */}
           </div>
           <div className="settings-data-container">
             <div className="heading-container">
-              <h4>Settings</h4>
+              <h4></h4>
               <Link style={{ textDecoration: 'none' }} onClick={handleLogout}>
-                <span className='logout'><h4>Logout</h4></span>
+                <span className='logout'><h4 style={{ color: sessionStorage.getItem('adminRole') === 'provider' ? 'black' : 'inherit' }}>Logout</h4></span>
               </Link>
             </div>
             <div className="username">

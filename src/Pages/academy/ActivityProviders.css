@@ -39,6 +39,11 @@ body {
 
 }
 
+.activity-btn-edit {
+  font-size: 15px;
+  margin-left: 45px;
+}
+
 .activity-details {
   border-collapse: collapse;
   width: 97%;
@@ -89,8 +94,9 @@ td {
 .activity-table-head {
   color: gray;
   position: sticky;
-  top: 63px;
+  top: 0px;
   background-color: white;
+
 
 }
 

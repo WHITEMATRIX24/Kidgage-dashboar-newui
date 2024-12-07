@@ -942,4 +942,34 @@ router.get("/allUser", async (req, res) => {
   }
 });
 
+//updating activiy details-no of classes
+
+router.put("/update-activity/:id", async (req, res) => {
+  const { id } = req.params;
+  const { noOfCourses } = req.body;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update basic user info
+    user.noOfCourses = noOfCourses;
+
+    // Save the updated user
+    await user.save();
+
+    // Send the updated user as response
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Internal server error. Please try again later." });
+  }
+});
+
+
+
+
+
 module.exports = router;

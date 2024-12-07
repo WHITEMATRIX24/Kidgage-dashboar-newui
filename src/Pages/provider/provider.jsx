@@ -116,9 +116,9 @@ const ProviderDetails = () => {
             <h1 className="provider-title">Provider Details</h1>
 
             <div className="provider-details-content">
-                <div className="provider-section-title">
+                {/* <div className="provider-section-title">
                     <h3>Provider Details</h3>
-                </div>
+                </div> */}
                 <table className="provider-details-table">
                     <tbody>
                         <tr className="provider-logo-row no-border">
