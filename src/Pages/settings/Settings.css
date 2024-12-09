@@ -13,6 +13,7 @@
 .settings-heading {
   margin-top: 2rem;
   margin-left: 0;
+  font-size: 20px;
   margin-bottom: 1rem;
   color: rgba(17, 151, 224, 0.951);
 }
@@ -153,13 +154,16 @@
 
 @media(min-width:2000px) {
 
-  .settings-heading,
+  .settings-heading {
+    font-size: 40px;
+  }
+
   .settings-menu,
   .heading-container,
   .username,
   .email,
   .password p {
-    font-size: 35px;
+    font-size: 25px;
   }
 
   .modal-content {

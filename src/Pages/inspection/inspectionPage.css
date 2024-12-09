@@ -109,7 +109,7 @@
 /* media Query */
 @media (min-width: 2000px) {
   .inspectionPage-content-h3 {
-    font-size: 55px;
+    font-size: 45px;
     padding-top: 2rem;
     padding-bottom: 1rem;
     font-weight: 200px;

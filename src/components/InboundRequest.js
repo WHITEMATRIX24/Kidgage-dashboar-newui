@@ -98,7 +98,7 @@ function InboundRequest() {
         <div className="inbound-container">
             <Appbar />
             <div className="inbound-heading">
-                <h1>Inbound Requests</h1>
+                <h3>Inbound Requests</h3>
             </div>
             {pendingUsers.length > 0 ? (
                 <div className="inbound-table-container">

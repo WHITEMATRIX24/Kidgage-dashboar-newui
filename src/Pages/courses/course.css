@@ -83,6 +83,18 @@
 
 @media(min-width:2000px) {
     .coursepage-content-heading {
-        font-size: 35px;
+        font-size: 40px;
     }
+
+    .add_course_btn {
+        font-size: 25px;
+
+    }
+
+    .course_tab-button {
+        font-size: 35px;
+
+    }
+
+
 }

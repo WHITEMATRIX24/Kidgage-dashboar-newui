@@ -187,10 +187,18 @@
 /* Responsive adjustments */
 @media(min-width: 2000px) {
 
-    .provider-title,
+    .provider-title {
+        font-size: 45px;
+    }
+
     .provider-section-title h3,
     .provider-details-table td {
         font-size: 25px;
+    }
+
+    .provider-logo {
+        width: 100px;
+        height: 100px;
     }
 
     .modal-content {
@@ -203,4 +211,15 @@
     .modal-content button {
         font-size: 2.3rem;
     }
+
+    .provider-details .label-cell {
+        min-width: 300px;
+
+    }
+
+    .edit-icon {
+        font-size: 2.5rem;
+
+    }
+
 }

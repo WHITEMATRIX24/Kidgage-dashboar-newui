@@ -75,7 +75,7 @@ function Settings() {
         <div className="settings-container">
           <Appbar />
           <div className="settings-heading">
-            <h1 style={{ color: sessionStorage.getItem('adminRole') === 'provider' ? 'black' : 'inherit' }}>Settings</h1>
+            <h3 style={{ color: sessionStorage.getItem('adminRole') === 'provider' ? 'black' : 'inherit' }}>Settings</h3>
             {/* <div className='settings-menu'>
               <p>Home</p>{'>'}<p>Settings</p>
             </div> */}

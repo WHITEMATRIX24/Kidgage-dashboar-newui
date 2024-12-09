@@ -30,7 +30,7 @@
 }
 
 .inbound-table-heading {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .inbound-details {
@@ -92,6 +92,7 @@ table th {
   margin-top: 2%;
   margin-left: 0;
   margin-bottom: 1rem;
+  font-size: 20px;
   color: rgba(17, 151, 224, 0.951);
 }
 
@@ -224,7 +225,7 @@ h2 {
 
 @media (min-width: 2000px) {
   .inbound-heading {
-    font-size: 35px;
+    font-size: 40px;
     padding-top: 2rem;
     font-weight: 200px;
 

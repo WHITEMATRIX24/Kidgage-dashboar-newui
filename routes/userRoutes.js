@@ -21,10 +21,12 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.zoho.com",
+  port: 465, // Use 587 for TLS
+  secure: true, // true for 465, false for 587
   auth: {
-    user: "whitematrix2024@gmail.com",
-    pass: "tkxj mgpk cewx crni", // your sender Gmail password or app-specific password
+    user: "hello@kidgage.com", // Your Zoho Mail email address
+    pass: "t0zHp1RBgsmX", // Your Zoho Mail password or app password
   },
 });
 async function uploadImageToS3(file) {
@@ -121,7 +123,7 @@ router.post("/send-email", (req, res) => {
         .padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
       const mailOptions = {
-        from: "whitematrix2024@gmail.com",
+        from: "hello@kidgage.com",
         to: email, // Using the recipient's email from req.body
         subject: `Event Reminder: Meeting on ${formattedDate} at ${formattedTime}`,
         html: `<p>Your meeting is scheduled on ${formattedDate} at ${formattedTime}.</p>
@@ -371,16 +373,18 @@ router.post("/verify/:id", async (req, res) => {
   `;
 
     const transporter = nodemailer.createTransport({
-      service: "Gmail",
+      host: "smtp.zoho.com",
+      port: 465, // Use 587 for TLS
+      secure: true, // true for 465, false for 587
       auth: {
-        user: "whitematrix2024@gmail.com",
-        pass: "tkxj mgpk cewx crni",
+        user: "hello@kidgage.com", // Your Zoho Mail email address
+        pass: "t0zHp1RBgsmX", // Your Zoho Mail password or app password
       },
     });
 
     // Set up email data
     const mailOptions = {
-      from: "whitematrix2024@gmail.com",
+      from: "hello@kidgage.com",
       to: email,
       subject: "Welcome to KidGage!",
       text: welcomeMessage,
@@ -414,16 +418,18 @@ router.post("/reject/:id", async (req, res) => {
   try {
     // Configure the email transporter
     const transporter = nodemailer.createTransport({
-      service: "Gmail",
+      host: "smtp.zoho.com",
+      port: 465, // Use 587 for TLS
+      secure: true, // true for 465, false for 587
       auth: {
-        user: "whitematrix2024@gmail.com",
-        pass: "tkxj mgpk cewx crni",
+        user: "hello@kidgage.com", // Your Zoho Mail email address
+        pass: "t0zHp1RBgsmX", // Your Zoho Mail password or app password
       },
     });
 
     // Construct the email message
     const mailOptions = {
-      from: "whitematrix2024@gmail.com",
+      from: "hello@kidgage.com",
       to: email,
       subject: "Application Rejected",
       text: `Dear ${fullName},
@@ -636,42 +642,65 @@ router.put(
 );
 
 // New route to delete academy by id
-router.delete("/academy/:id/:message", async (req, res) => {
-  const { id, message } = req.params;
+router.delete("/academy/:id/:email", async (req, res) => {
+  const { id, email } = req.params;
+  const { message } = req.body;
 
   try {
-    const deletedAcademy = await User.findByIdAndDelete(id);
+    console.log("Request Params:", { id, email });
+    console.log("Request Body:", { message });
 
+    // Delete academy
+    const deletedAcademy = await User.findByIdAndDelete(id);
     if (!deletedAcademy) {
+      console.error(`No academy found with ID: ${id}`);
       return res.status(404).json({ message: "Academy not found" });
     }
-    // Delete all courses associated with this academy
-    await Course.deleteMany({ providerId: id });
 
-    // email functionality
+    console.log("Deleted Academy:", deletedAcademy);
 
-    // nodemailer initializing
+    // Delete associated courses
+    const deletedCourses = await Course.deleteMany({ providerId: id });
+    console.log("Deleted Courses:", deletedCourses);
+
+    // Send email
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.zoho.com",
+      port: 465,
+      secure: true,
       auth: {
-        user: "whitematrix2024@gmail.com",
-        pass: "tkxj mgpk cewx crni",
+        user: "hello@kidgage.com",
+        pass: "t0zHp1RBgsmX",
       },
     });
 
-    // mail sending
-
     await transporter.sendMail({
-      from: "whitematrix2024@gmail.com",
-      to: "anulisba@gmail.com",
-      subject: "Rejection from kidgage",
-      text: message,
-      html: `<b>${message}</b>`,
+      from: "hello@kidgage.com",
+      to: email,
+      subject: "Rejection from Kidgage",
+      text: `Dear Activity Provider,
+    
+    We regret to inform you that your application has been rejected for the following reason:
+    
+    "${message}"
+    
+    If you have any questions or need further assistance, please feel free to reach out to us.
+    
+    Best regards,  
+    Kidgage Support Team`,
+      html: `
+        <p>Dear ${deletedAcademy.name},</p>
+        <p>We regret to inform you that your application has been rejected for the following reason:</p>
+        <blockquote style="font-style: italic; color: #555;">"${message}"</blockquote>
+        <p>If you have any questions or need further assistance, please feel free to reach out to us.</p>
+        <p>Best regards,</p>
+        <p><b>Kidgage Support Team</b></p>
+      `,
     });
 
-    res
-      .status(200)
-      .json({ message: "Academy and associated courses deleted successfully" });
+    res.status(200).json({
+      message: "Academy and associated courses deleted successfully",
+    });
   } catch (error) {
     console.error("Error deleting academy and courses:", error);
     res

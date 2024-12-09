@@ -135,11 +135,16 @@
 
   .category-content-h3 {
     padding-top: 1rem;
-    font-size: 55px;
+    font-size: 45px;
     padding-bottom: 10px;
   }
 
-  .categorypage-content-header1 button,
+  .categorypage-content-header1 button {
+
+    font-size: 25px;
+
+  }
+
   .categorypage-content-header {
     font-size: 35px;
 
