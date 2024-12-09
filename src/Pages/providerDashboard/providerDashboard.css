@@ -14,7 +14,7 @@
 }
 
 .provider-dashboard-content-h3 {
-  color: black;
+  color: var(--app-grey-color);
   font-size: x-large;
 
 }
@@ -107,7 +107,7 @@
 
 /* colors  */
 .provider-dashboardpage-textcolor {
-  color: black;
+  color: var(--app-grey-color);
 }
 
 /* media query */
